@@ -18,9 +18,7 @@
   }
   
   &__header {
-    &:has(.section__desc) {
-      margin-bottom: 70px;
-    }
+    margin-bottom: 70px;
   }
   
   &__body {

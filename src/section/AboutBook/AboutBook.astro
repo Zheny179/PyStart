@@ -1,44 +1,30 @@
 ---
-import Card from "@/components/Card/Card.astro"
-import Ellipse from "@/components/Ellipse/Ellipse.astro"
 import SecondarySection
-  from "@/layouts/Section/SecondarySection/SecondarySection.astro"
-import gearsImg from '@/assets/images/about-book/gears.svg'
-import codeLineImg from '@/assets/images/about-book/code-line.svg'
-
-const aboutBookCards = [
-  {
-    title: 'Структура учебника',
-    desc: 'Она построена по принципу последовательного усложнения. Мы начинаем с самых фундаментальных понятий: переменных, базовых типов данных и простейших операций, постепенно переходя к управляющим конструкциям, функциям и встроенным коллекциям. Каждая глава является логическим продолжением предыдущей, поэтому материалы выстроены в строгой последовательности, нарушать которую без крайней необходимости не рекомендуется. Внутри каждого раздела вы найдёте теоретические блоки, где объясняется не только синтаксис, но и принципы работы. ',
-    img: gearsImg.src,
-    /*
-    *  '' (default) | right-to-left
-    * */
-    contentPosition: '',
-  },
-  {
-    title: 'От теории к практике',
-    desc: 'К каждому теоретическому фрагменту прикреплены практические примеры с детальной подсветкой синтаксиса, где цветом выделены ключевые слова, строки, числа и комментарии. Вы сможете копировать фрагменты, запускать их в своём окружении и сразу наблюдать результат. Особое место в структуре отведено интерактивным тестам и задачам на закрепление. Они расположены в конце ключевых разделов и служат не для выставления оценок, а для мгновенной диагностики вашего понимания материала. Если вы ответите неверно, система укажет на правильный вариант, но более ценным будет процесс самостоятельного поиска причины ошибки в тексте главы.',
-    img: codeLineImg.src,
-    contentPosition: 'right-to-left'
-  },
-]
+  from '@/layouts/Section/SecondarySection/SecondarySection.astro'
+import './AboutBook.scss'
+import TextPlate from "@/components/TextPlate/TextPlate.astro";
+import Ellipse from "@/components/Ellipse/Ellipse.astro";
 ---
 
 <SecondarySection
   className="about-book"
-  title="Как устроен учебник"
-  desc="Учебник разделен на последовательные главы, каждая из которых закрывает конкретный пласт знаний и создает фундамент для следующей темы."
+  title="О учебнике"
 >
   <Ellipse
-    color="purple"
-    bottom="-260px"
-    left="-360px"
+    color="white"
+    top="0%"
+    left="-22%"
+    blur="100px"
   />
+
   <Ellipse
-    color="purple"
-    top="-300px"
-    right="-400px"
+    color="yellow"
+    width="500px"
+    height="500px"
+    bottom="0%"
+    right="-23%"
+    blur="100px"
   />
-  <Card items={aboutBookCards} />
+
+  <TextPlate />
 </SecondarySection>

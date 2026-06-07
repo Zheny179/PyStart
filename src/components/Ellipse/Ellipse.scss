@@ -44,4 +44,12 @@
       rgba(234, 179, 8, 0) 70%
     );
   }
+  
+  &--white {
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(234, 179, 8, 0) 70%
+    );
+  }
 }
