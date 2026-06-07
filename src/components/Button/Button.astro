@@ -1,0 +1,59 @@
+---
+import './Button.scss'
+
+const {
+  className = '',
+  isDisabled = false,
+  label,
+  isLabelHidden = false,
+  target,
+  type = 'button',
+  /*
+  * '' (default) | transparent | black
+  * */
+  mode = '',
+  iconName = '',
+  /*
+  *  'before' | 'after'
+  * */
+  iconPosition = 'after',
+  href,
+  extraAttrs,
+} = Astro.props
+
+const isLink = href !== undefined
+const Component = isLink ? 'a' : 'button'
+const linkProps = {href, target}
+const buttonProps = {type}
+const specificProps = isLink ? linkProps : buttonProps
+const title = isLabelHidden ? label : undefined
+---
+
+<Component
+  class:list={[className, 'button', {
+    [`button--${mode}`]: mode,
+  }]}
+  disabled={isDisabled}
+  title={title}
+  aria-label={title}
+  {...specificProps}
+  {...extraAttrs}
+>
+  {iconName && iconPosition === 'before' && (
+    <img
+      src={iconName}
+      alt=""
+    />
+  )}
+
+  {!isLabelHidden && (
+    <span class="button__label">{label}</span>
+  )}
+
+  {iconName && iconPosition === 'after' && (
+    <img
+      src={iconName}
+      alt=""
+    />
+  )}
+</Component>

@@ -1,0 +1,73 @@
+.button {
+  padding: 7px 15px;
+  border-radius: 5px;
+  box-shadow: none;
+  background: var(--neon-green);
+  border: none;
+  transition-duration: var(--transition-duration);
+  display: inline-flex;
+  column-gap: 10px;
+  position: relative;
+  align-items: center;
+  
+  &--transparent {
+    background-color: transparent;
+  }
+  
+  &--normal {
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  &--black {
+    box-shadow: 0 0 5px 0 var(--neon-blue);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 15px 20px;
+    background-color: transparent;
+    column-gap: 25px;
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--color-white);
+    cursor: pointer;
+    
+    &:hover {
+      color: var(--neon-green);
+      text-shadow: 0 0 12px var(--neon-green);
+    }
+  }
+  
+  &:hover {
+    &::before {
+      opacity: 1;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+  }
+  
+  &:active {
+    scale: (1.02);
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 7px 0 #a3ffa5;
+    opacity: 0;
+    transition: 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 0 7px 0 #a3ffa5;
+    }
+    
+    50% {
+      box-shadow: 0 0 10px 0 #a3ffa5;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+:root {
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  
+  --neon-green: #0f8;
+  --neon-blue: #00d4ff;
+  --neon-purple: #b44aff;
+  --neon-pink: #ff2d95;
+  --neon-yellow: #ffe854;
+  
+  --text-primary: #e8e8f0;
+  --text-secondary: #8888a0;
+  --text-muted: #55556a;
+  
+  --border-color: #2a2a3a;
+  
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --bg-code: #0d0d14;
+  --second-color: #ff4500;
+  
+  --border: var(--border-width-s) solid var(--border-color);
+  
+  --border-width-l: 4px;
+  --border-width-m: 3px;
+  --border-width-s: 1px;
+  
+  --border-radius-l: 12px;
+  --border-radius-m: 10px;
+  --border-radius-s: 8px;
+  --border-radius-xs: 6px;
+  --border-radius-xxs: 5px;
+  --border-radius-xxxs: 4px;
+  
+  --font-family-base: 'Ubuntu';
+  --font-family-secondary: 'JetBrainsMono';
+  
+  --container-width: #{$container-desktop-width}px;
+  --container-padding-x: 16px;
+  
+  --section-padding-y: #{fluid(75, 40)};
+  
+  --transition-duration: 0.2s;
+  --transition-duration-longer: 0.4s;
+}

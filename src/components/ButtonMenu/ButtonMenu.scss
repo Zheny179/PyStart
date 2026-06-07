@@ -1,0 +1,21 @@
+.hamburger {
+  @include flex-center;
+  @include square(60px);
+  
+  flex-direction: column;
+  border-radius: 100%;
+  background-color: var(--bg-secondary);
+  border: var(--border);
+  gap: 7px;
+  
+  &:hover {
+    box-shadow: 0 0 4px 0 var(--neon-blue);
+  }
+  
+  &__line {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background-color: var(--color-white);
+  }
+}
