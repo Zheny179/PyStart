@@ -1,0 +1,55 @@
+---
+import './Accordion.scss'
+
+const {
+  title,
+  id,
+  name,
+  isOpen,
+} = Astro.props
+---
+
+
+<div class="accordion">
+  <details
+    class="accordion__details"
+    name={name}
+    open={isOpen}
+  >
+    <summary class="accordion__summary">
+      <h2 class="accordion__title h3">
+        <span
+          role="term"
+          aria-details={id}
+        >
+          {title}
+        </span>
+      </h2>
+      <span class="accordion__button">
+          <svg
+            width="19"
+            height="11"
+            viewBox="0 0 19 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.48837 2.725L16.8384 10.075C17.0884 10.325 17.38 10.446 17.7134 10.438C18.0467 10.43 18.3384 10.3007 18.5884 10.05C18.8384 9.79933 18.9634 9.50767 18.9634 9.175C18.9634 8.84233 18.8384 8.55067 18.5884 8.3L10.9134 0.6C10.7134 0.4 10.4884 0.25 10.2384 0.15C9.98837 0.0500001 9.73837 0 9.48837 0C9.23837 0 8.98837 0.0500001 8.73837 0.15C8.48837 0.25 8.26337 0.4 8.06337 0.6L0.363372 8.3C0.113372 8.55 -0.00762791 8.846 0.000372093 9.188C0.00837209 9.53 0.137705 9.82567 0.388372 10.075C0.639039 10.3243 0.930705 10.4493 1.26337 10.45C1.59604 10.4507 1.88771 10.3257 2.13837 10.075L9.48837 2.725Z"
+              fill="white"
+            />
+          </svg>
+        </span>
+    </summary>
+  </details>
+  <div
+    class="accordion__content"
+    id={id}
+    role="defenition"
+  >
+    <div class="accordion__content-inner">
+      <div class="accordion__content-body">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>

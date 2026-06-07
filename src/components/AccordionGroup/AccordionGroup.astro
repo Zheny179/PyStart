@@ -1,0 +1,13 @@
+---
+import './AccordionGroup.scss';
+import Accordion from "@/components/Accordion/Accordion.astro";
+
+
+const {
+  className,
+} = Astro.props
+---
+
+<ul class:list={[className, 'accordion-group']}>
+  <slot />
+</ul>
