@@ -1,0 +1,48 @@
+.section {
+  padding-block: 100px;
+  display: grid;
+  overflow: hidden;
+  
+  &--neon-stroke {
+    position: relative;
+    
+    &::before {
+      @include abs-x;
+      
+      content: '';
+      height: 3px;
+      width: 100%;
+      box-shadow: 0 0 30px 1px rgba(0, 212, 255, 0.67);
+      background-color: rgba(0, 212, 255, 0.12);
+    }
+  }
+  
+  &__header {
+    &:has(.section__desc) {
+      margin-bottom: 70px;
+    }
+  }
+  
+  &__body {
+    position: relative;
+  }
+  
+  &__info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    color: var(--text-primary);
+  }
+  
+  &__title {
+    font-size: 28px;
+    text-shadow: 0 0 4px var(--color-white);
+  }
+  
+  &__desc {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.17;
+  }
+}

@@ -1,0 +1,34 @@
+---
+import './SecondarySection.scss'
+
+const {
+  title,
+  desc,
+  className,
+  neonStroke = true,
+} = Astro.props
+---
+
+<section
+  class:list={[className, 'section', {
+    'section--neon-stroke': neonStroke
+  }]}
+>
+  <div class="container">
+    <header class="section__header">
+      <div class="section__info">
+        <h1 class="section__title">
+          {title}
+        </h1>
+        {desc && (
+          <p class="section__desc">
+            {desc}
+          </p>
+        )}
+      </div>
+    </header>
+    <div class="section__body">
+      <slot />
+    </div>
+  </div>
+</section>
