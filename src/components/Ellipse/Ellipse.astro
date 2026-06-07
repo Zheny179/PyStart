@@ -1,0 +1,34 @@
+---
+import './Ellipse.scss'
+
+const {
+  color = 'blue',
+  width = '400px',
+  height = '400px',
+  top,
+  left,
+  right,
+  bottom,
+  blur = '60px',
+  opacity = '0.15',
+  className,
+} = Astro.props
+
+const style = {
+  width,
+  height,
+  top,
+  left,
+  right,
+  bottom,
+  opacity,
+  filter: `blur(${blur})`,
+}
+---
+
+<div
+  class:list={['ellipse-glare', `ellipse-glare--${color}`, className]}
+  style={style}
+>
+
+</div>

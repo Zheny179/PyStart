@@ -1,0 +1,40 @@
+---
+import './Hero.scss'
+import Button from "@/components/Button/Button.astro"
+import Ellipse from '@/components/Ellipse/Ellipse.astro'
+import arrowLeftIcon from '@/assets/icon/arrow-left.svg'
+---
+
+<section class="hero">
+  <canvas
+    class="hero__bg"
+    id="hero-canvas"
+  ></canvas>
+
+  <Ellipse
+    color="green"
+    top="40%"
+    left="0%"
+  />
+  
+  <Ellipse
+    width="500px"
+    height="500px"
+    bottom="33%"
+    right="-10%"
+  />
+
+  <div class="container hero__inner">
+    <h1 class="hero__title">
+      Пошаговый интерактивный учебник — от основ до
+      продвинутых техник.
+      Код с подсветкой синтаксиса, встроенные примеры и тесты.
+    </h1>
+    <Button
+      className="hero__button"
+      href="/"
+      label="Начать изучение"
+      iconName={arrowLeftIcon.src}
+    />
+  </div>
+</section>
