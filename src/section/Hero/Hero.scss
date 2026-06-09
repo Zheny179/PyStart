@@ -1,6 +1,7 @@
 .hero {
   @include flex-center;
   
+  opacity: 0;
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -19,6 +20,7 @@
     color: var(--text-primary);
     max-width: 1180px;
     margin-bottom: 50px;
+    opacity: 0;
   }
   
   &__bg {
@@ -27,5 +29,10 @@
     
     z-index: 0;
     pointer-events: none;
+    opacity: 0;
+  }
+  
+  &__button {
+    opacity: 0;
   }
 }

@@ -42,3 +42,33 @@ const aboutBookCards = [
   />
   <Card items={aboutBookCards} />
 </SecondarySection>
+
+<script>
+  import {gsap} from 'gsap'
+  import {ScrollTrigger} from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  const hasVisited = sessionStorage.getItem('logo_animated')
+
+  if (!hasVisited) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.how-it-works',
+        start: 'top 50%',
+      }
+    })
+
+    tl.from('.how-it-works .section__header', {
+      opacity: 0,
+      y: 50,
+      duration: 0.6
+    })
+      .from('.card__item', {
+        opacity: 0,
+        y: 50,
+        duration: 0.6,
+        stagger: 0.2
+      }, '-=0.2')
+  }
+</script>

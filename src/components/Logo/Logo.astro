@@ -8,5 +8,60 @@ const {className = ''} = Astro.props
   class:list={['logo', className]}
   href="/"
 >
-  Py:Start
+  <span class="logo__text"></span>
+  <span class="logo__cursor"></span>
 </a>
+
+<script>
+  import {gsap} from 'gsap'
+  import {TextPlugin} from 'gsap/TextPlugin'
+
+  gsap.registerPlugin(TextPlugin)
+
+  const textElements = document.querySelectorAll('.logo__text')
+  const cursorElements = document.querySelectorAll('.logo__cursor')
+
+  textElements.forEach((textElement, index) => {
+    const hasVisited = sessionStorage.getItem('logo_animated')
+
+    const cursorElement = cursorElements[index]
+
+    if (!cursorElement) return
+
+    if (hasVisited) {
+      textElement.textContent = "Py:Start"
+
+      window.dispatchEvent(new CustomEvent('logoAnimationComplete'))
+
+      return
+    }
+
+    const blinkTween = gsap.to(cursorElement, {
+      opacity: 0.4,
+      ease: "power1.out",
+      repeat: -1,
+      yoyo: true,
+      duration: 0.4
+    })
+
+    gsap.timeline()
+      .fromTo(cursorElement, {height: '0%'}, {
+        height: '32px',
+        duration: 0.6,
+        delay: 0.5
+      })
+      .to(textElement, {
+        text: {value: "Py:Start",}, duration: 2, ease: "none",
+      }, "+=0.4")
+      .to(cursorElement, {
+        height: 0,
+        duration: 0.6,
+        onComplete: () => {
+          blinkTween.kill()
+          gsap.set(cursorElement, {display: 'none'})
+
+          window.dispatchEvent(new CustomEvent('logoAnimationComplete'))
+        }
+      }, "+=0.2")
+  })
+</script>

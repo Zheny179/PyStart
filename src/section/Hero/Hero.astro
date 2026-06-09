@@ -16,7 +16,7 @@ import arrowLeftIcon from '@/assets/icon/arrow-left.svg'
     top="40%"
     left="0%"
   />
-  
+
   <Ellipse
     width="500px"
     height="500px"
@@ -38,3 +38,24 @@ import arrowLeftIcon from '@/assets/icon/arrow-left.svg'
     />
   </div>
 </section>
+
+<script>
+  import {gsap} from 'gsap'
+
+  function animation() {
+    gsap.timeline()
+      .to('.hero', {opacity: 1, ease: "power2.out"})
+      .to('.hero__bg', {opacity: 1, duration: 1}, '-=0.5')
+      .fromTo('.hero__title', {x: -20}, {x: 0, duration: 0.4, opacity: 1})
+      .fromTo('.hero__button', {y: -20}, {y: 0, duration: 1, opacity: 1})
+  }
+
+
+  const hasVisited = sessionStorage.getItem('logo_animated')
+
+  if (!hasVisited) {
+    window.addEventListener('logoAnimationComplete', animation)
+  } else {
+    animation()
+  }
+</script>

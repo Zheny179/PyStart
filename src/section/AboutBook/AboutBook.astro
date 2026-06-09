@@ -2,8 +2,8 @@
 import SecondarySection
   from '@/layouts/Section/SecondarySection/SecondarySection.astro'
 import './AboutBook.scss'
-import TextPlate from "@/components/TextPlate/TextPlate.astro";
-import Ellipse from "@/components/Ellipse/Ellipse.astro";
+import TextPlate from "@/components/TextPlate/TextPlate.astro"
+import Ellipse from "@/components/Ellipse/Ellipse.astro"
 ---
 
 <SecondarySection
@@ -28,3 +28,42 @@ import Ellipse from "@/components/Ellipse/Ellipse.astro";
 
   <TextPlate />
 </SecondarySection>
+
+<script>
+  import {gsap} from 'gsap'
+  import {ScrollTrigger} from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  const hasVisited = sessionStorage.getItem('logo_animated')
+
+  if (!hasVisited) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.about-book',
+        start: 'top 50%',
+      }
+    })
+
+    tl.from('.about-book .section__header', {
+      opacity: 0,
+      y: 50,
+      duration: 0.6
+    })
+      .from('.text-plate__header', {
+        opacity: 0,
+        x: 50,
+        ease: 'power3',
+        duration: 0.6,
+        stagger: 0.3
+      }, '-=0.2')
+      .from('.text-plate__body', {
+        opacity: 0,
+        x: -50,
+        ease: 'power3',
+        duration: 0.6,
+        stagger: 0.3
+      }, '-=0.2')
+  }
+
+</script>

@@ -1,8 +1,8 @@
 ---
 import SecondarySection
-  from "@/layouts/Section/SecondarySection/SecondarySection.astro";
-import Accordion from "@/components/Accordion/Accordion.astro";
-import AccordionGroup from "@/components/AccordionGroup/AccordionGroup.astro";
+  from "@/layouts/Section/SecondarySection/SecondarySection.astro"
+import Accordion from "@/components/Accordion/Accordion.astro"
+import AccordionGroup from "@/components/AccordionGroup/AccordionGroup.astro"
 
 const workingProcessSteps = [
   {
@@ -38,3 +38,60 @@ const workingProcessSteps = [
     ))}
   </AccordionGroup>
 </SecondarySection>
+
+<script>
+  import {gsap} from "gsap"
+  import {ScrollTrigger} from "gsap/ScrollTrigger"
+  import {TextPlugin} from "gsap/TextPlugin"
+
+  gsap.registerPlugin(ScrollTrigger, TextPlugin)
+  const hasVisited = sessionStorage.getItem('logo_animated')
+
+  if (!hasVisited) {
+
+    const items = document.querySelectorAll(".accordion-group__item")
+
+    if (items.length > 0) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".how-to-use",
+          start: "top 50%",
+        }
+      })
+
+      gsap.set(items, {opacity: 0, pointerEvents: 'none'})
+
+      items.forEach((item) => {
+        const titleElement = item.querySelector(".accordion__title")
+
+        if (titleElement) {
+          const originalText = titleElement.textContent || ""
+          titleElement.textContent = ""
+
+          tl
+            .fromTo('.how-to-use .section__header', {
+              opacity: 0
+            }, {
+              opacity: 1,
+              duration: 0.7
+            })
+            .to(item, {
+              opacity: 1,
+              duration: 0.4,
+            })
+            .to(titleElement, {
+              text: originalText,
+              duration: originalText.length * 0.02,
+              ease: "none",
+              onStart: () => {
+                gsap.set(item, {pointerEvents: "none"})
+              },
+              onComplete: () => {
+                gsap.set(item, {pointerEvents: "auto"})
+              }
+            }, "-=0.4")
+        }
+      })
+    }
+  }
+</script>
