@@ -3,6 +3,7 @@ import Header from "@/section/Header/Header.astro";
 import Footer from "@/section/Footer/Footer.astro";
 
 const {title = "сайт"} = Astro.props;
+const currentUrl = Astro.url.pathname
 ---
 
 <!doctype html>
@@ -48,15 +49,15 @@ const {title = "сайт"} = Astro.props;
     href="/android-chrome-512x512.png"
   >
   <title>Py:Start | {title}</title>
-  <script>
-    import '../main.js'
-  </script>
 </head>
 <body>
-  <Header />
+  <Header currentUrl={currentUrl} />
   <main>
     <slot />
   </main>
   <Footer />
+  <script>
+    import '@/main'
+  </script>
 </body>
 </html>

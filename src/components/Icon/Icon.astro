@@ -1,0 +1,17 @@
+---
+import './Icon.scss';
+import {Icon} from 'astro-icon/components'
+
+const {
+  className,
+  name,
+  title,
+} = Astro.props
+---
+
+<span class:list={["icon", {className}]}>
+  <Icon
+    name={name}
+    title={title}
+  />
+</span>

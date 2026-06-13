@@ -1,5 +1,5 @@
 .header {
-  padding: 30px 100px;
+  padding: fluid(30, 20) fluid(100, 20);
   border-bottom: transparent;
   position: sticky;
   z-index: 100;
@@ -14,7 +14,7 @@
     to {
       background-color: var(--bg-primary);
       padding-block: 20px;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: var(--border);
     }
   }
   

@@ -1,6 +1,6 @@
 .hamburger {
   @include flex-center;
-  @include square(60px);
+  @include square(fluid(60, 40));
   
   flex-direction: column;
   border-radius: 100%;
@@ -14,7 +14,7 @@
   
   &__line {
     display: block;
-    width: 18px;
+    width: fluid(18, 14);
     height: 2px;
     background-color: var(--color-white);
   }

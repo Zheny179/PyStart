@@ -1,4 +1,6 @@
 .button {
+  @include fluid-text(30, 18);
+  
   padding: 7px 15px;
   border-radius: 5px;
   box-shadow: none;
@@ -6,9 +8,10 @@
   border: none;
   transition-duration: var(--transition-duration);
   display: inline-flex;
+  align-items: center;
   column-gap: 10px;
   position: relative;
-  align-items: center;
+  color: var(--color-black);
   
   &--transparent {
     background-color: transparent;
@@ -32,13 +35,13 @@
     color: var(--color-white);
     cursor: pointer;
     
-    &:hover {
+    @include hover {
       color: var(--neon-green);
       text-shadow: 0 0 12px var(--neon-green);
     }
   }
   
-  &:hover {
+  @include hover {
     &::before {
       opacity: 1;
       animation: pulse 1.5s infinite ease-in-out;

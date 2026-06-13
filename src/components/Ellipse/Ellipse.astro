@@ -9,26 +9,16 @@ const {
   left,
   right,
   bottom,
-  blur = '60px',
-  opacity = '0.15',
+  opacity = '0.05',
   className,
 } = Astro.props
 
 const style = {
-  width,
-  height,
-  top,
-  left,
-  right,
-  bottom,
-  opacity,
-  filter: `blur(${blur})`,
+  width, height, top, left, right, bottom, opacity,
 }
 ---
 
 <div
   class:list={['ellipse-glare', `ellipse-glare--${color}`, className]}
   style={style}
->
-
-</div>
+></div>

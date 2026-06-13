@@ -3,12 +3,16 @@ import './Header.scss'
 import Logo from "@/components/Logo/Logo.astro";
 import ButtonMenu from "@/components/ButtonMenu/ButtonMenu.astro";
 import OverlayMenu from "@/components/OverlayMenu/OverlayMenu.astro";
+
+const {currentUrl} = Astro.props
 ---
 
 <header class="header">
   <div class="header__inner">
     <Logo />
     <ButtonMenu />
-    <OverlayMenu />
+    <OverlayMenu
+      currentUrl={currentUrl}
+    />
   </div>
 </header>

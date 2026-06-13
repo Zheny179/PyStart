@@ -2,7 +2,6 @@
 import './Hero.scss'
 import Button from "@/components/Button/Button.astro"
 import Ellipse from '@/components/Ellipse/Ellipse.astro'
-import arrowLeftIcon from '@/assets/icon/arrow-left.svg'
 ---
 
 <section class="hero">
@@ -34,7 +33,7 @@ import arrowLeftIcon from '@/assets/icon/arrow-left.svg'
       className="hero__button"
       href="/"
       label="Начать изучение"
-      iconName={arrowLeftIcon.src}
+      iconName='arrow-left'
     />
   </div>
 </section>
@@ -43,11 +42,15 @@ import arrowLeftIcon from '@/assets/icon/arrow-left.svg'
   import {gsap} from 'gsap'
 
   function animation() {
+    const isMobile = window.innerWidth <= 767
+    const offsetX = isMobile ? -8 : -20
+    const offsetY = isMobile ? -8 : -20
+
     gsap.timeline()
-      .to('.hero', {opacity: 1, ease: "power2.out"})
-      .to('.hero__bg', {opacity: 1, duration: 1}, '-=0.5')
-      .fromTo('.hero__title', {x: -20}, {x: 0, duration: 0.4, opacity: 1})
-      .fromTo('.hero__button', {y: -20}, {y: 0, duration: 1, opacity: 1})
+      .to('.hero',        { opacity: 1, ease: 'power2.out' })
+      .to('.hero__bg',    { opacity: 1, duration: 1 }, '-=0.5')
+      .fromTo('.hero__title',  { x: offsetX }, { x: 0, duration: 0.4, opacity: 1 })
+      .fromTo('.hero__button', { y: offsetY }, { y: 0, duration: 1,   opacity: 1 })
   }
 
 

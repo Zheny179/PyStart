@@ -1,5 +1,5 @@
 .section {
-  padding-block: 100px;
+  padding-block: var(--section-padding-y);
   display: grid;
   overflow: hidden;
   
@@ -18,7 +18,7 @@
   }
   
   &__header {
-    margin-bottom: 70px;
+    margin-bottom: fluid(70, 30);
   }
   
   &__body {
@@ -26,21 +26,14 @@
   }
   
   &__info {
-    text-align: center;
     display: flex;
+    text-align: center;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: fluid(20, 10);
     color: var(--text-primary);
   }
   
   &__title {
-    font-size: 28px;
     text-shadow: 0 0 3px var(--text-primary);
-  }
-  
-  &__desc {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 1.17;
   }
 }

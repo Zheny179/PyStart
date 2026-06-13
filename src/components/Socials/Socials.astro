@@ -1,38 +1,35 @@
 ---
 import './Socials.scss'
-import gitHubIcon from '@/assets/icon/socials/github.svg'
-import vkIcon from '@/assets/icon/socials/vk.svg'
+import {Icon} from 'astro-icon/components'
 
 const socials = [
   {
-    icon: gitHubIcon.src,
+    icon: 'socials/github',
     link: 'https://github.com/Zheny179',
-    alt: 'Перейти на мой GitHub',
+    title: 'Переход на GitHub',
   },
   {
-    icon: vkIcon.src,
+    icon: 'socials/vk',
     link: 'https://vk.com/doronine777',
-    alt: 'Перейти на мою страницу в Vk',
+    title: 'Переход на VK',
   },
 ]
-const {loadingImg = 'lazy'} = Astro.props
 ---
 
 
 <div class="soc1als">
   <ul class="soc1als__list">
-    {socials.map(({icon, link, alt}) => (
+    {socials.map(({icon, link, title}) => (
       <li class="soc1als__item">
         <a
           class="soc1als__link"
           href={link}
         >
-          <img
+          <Icon
             class="soc1als__img"
-            src={icon}
-            alt={alt}
-            loading={loadingImg}
-          >
+            name={icon}
+            title={title}
+          />
         </a>
       </li>
     ))}

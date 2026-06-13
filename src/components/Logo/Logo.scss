@@ -1,7 +1,9 @@
 .logo {
+  @include fluid-text(32, 18);
+  
   font-family: var(--font-family-secondary), sans-serif;
   font-weight: 700;
-  font-size: 32px;
+  
   color: var(--neon-green);
   text-shadow: 0 0 8px #34c759;
   text-decoration: none;
@@ -11,15 +13,14 @@
   
   &__text {
     display: inline-block;
-    overflow: hidden;
     white-space: nowrap;
     vertical-align: bottom;
   }
   
   &__cursor {
-    display: inline-block;
+    display: none;
     position: relative;
-    width: 8px;
+    width: fluid(8, 1);
     margin-left: 2px;
     vertical-align: middle;
     

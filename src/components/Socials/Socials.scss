@@ -5,11 +5,13 @@
   }
   
   &__link {
+    @include fluid-text(30, 20);
+    
     display: inline-flex;
     border-radius: 100%;
-    padding: 5px;
+    padding: fluid(5, 2);
     
-    &:hover {
+    @include hover {
       box-shadow: 0 0 4px 4px rgba(0, 255, 136, 0.6);
     }
     
@@ -17,5 +19,9 @@
       box-shadow: 0 0 1px 2px rgba(0, 255, 136, 0.6);
       scale: (1.1);
     }
+  }
+  
+  &__img {
+    color: var(--neon-green);
   }
 }

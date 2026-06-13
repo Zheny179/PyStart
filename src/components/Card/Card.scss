@@ -1,13 +1,13 @@
 .card {
   display: flex;
   flex-direction: column;
-  row-gap: 50px;
+  row-gap: fluid(50, 30);
   
   &__item {
     background: #03030a;
     display: flex;
-    column-gap: 50px;
-    padding: 40px;
+    column-gap: fluid(50, 20);
+    padding: fluid(40, 20);
     border-radius: 20px;
     position: relative;
     
@@ -41,20 +41,9 @@
   }
   
   &__title {
-    font-weight: 700;
-    font-size: 20px;
-    text-align: justify;
-    
     .card__item--right-to-left & {
       text-align: right;
     }
-  }
-  
-  &__desc {
-    font-size: 18px;
-    line-height: 1.17;
-    text-align: justify;
-    color: #dbdbdb;
   }
 }
 
@@ -69,5 +58,15 @@
   
   to {
     opacity: 0;
+  }
+}
+
+@include mobile {
+  .card__title {
+    text-align: center;
+  }
+  
+  .card__item--right-to-left .card__title {
+    text-align: center;
   }
 }

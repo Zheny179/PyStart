@@ -1,10 +1,10 @@
 ---
 import '@/styles'
-import Layout from '@/layouts/Layout.astro';
-import Hero from "@/section/Hero/Hero.astro";
-import HowItWorks from "../section/HowItWorks/HowItWorks.astro";
-import AboutBook from '../section/AboutBook/AboutBook.astro'
-import HowToUse from "@/section/HowToUse/HowToUse.astro";
+import Layout from '@/layouts/Layout.astro'
+import Hero from "@/section/Hero/Hero.astro"
+import HowItWorks from "@/section/HowItWorks/HowItWorks.astro"
+import AboutBook from '@/section/AboutBook/AboutBook.astro'
+import HowToUse from "@/section/HowToUse/HowToUse.astro"
 ---
 
 <Layout title="Главная">
@@ -15,31 +15,3 @@ import HowToUse from "@/section/HowToUse/HowToUse.astro";
 </Layout>
 
 
-<script>
-  import {gsap} from 'gsap'
-
-  const hasVisited = sessionStorage.getItem('logo_animated')
-
-  if (!hasVisited) {
-    sessionStorage.setItem('logo_animated', 'true')
-  }
-
-  const ellipses = document.querySelectorAll('.ellipse-glare')
-
-  ellipses.forEach((ellipse) => {
-
-    const randomY = gsap.utils.random(-80, 80)
-    const randomDuration = gsap.utils.random(3, 5)
-
-    gsap.to(ellipse, {
-      y: randomY,
-      duration: randomDuration,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power1.inOut',
-      delay: gsap.utils.random(0, 1.5)
-    })
-  })
-
-
-</script>

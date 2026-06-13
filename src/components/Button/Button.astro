@@ -1,5 +1,6 @@
 ---
 import './Button.scss'
+import Icon from "@/components/Icon/Icon.astro";
 
 const {
   className = '',
@@ -40,10 +41,7 @@ const title = isLabelHidden ? label : undefined
   {...extraAttrs}
 >
   {iconName && iconPosition === 'before' && (
-    <img
-      src={iconName}
-      alt=""
-    />
+    <Icon name={iconName} />
   )}
 
   {!isLabelHidden && (
@@ -51,9 +49,6 @@ const title = isLabelHidden ? label : undefined
   )}
 
   {iconName && iconPosition === 'after' && (
-    <img
-      src={iconName}
-      alt=""
-    />
+    <Icon name={iconName} />
   )}
 </Component>

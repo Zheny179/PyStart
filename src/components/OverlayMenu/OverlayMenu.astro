@@ -1,16 +1,14 @@
 ---
+import {Icon} from 'astro-icon/components'
 import './OverlayMenu.scss'
-import Button from "@/components/Button/Button.astro";
-import starIcon from '@/assets/icon/overlay-menu/star.svg'
-import bookIcon from '@/assets/icon/overlay-menu/book.svg'
-import codeIcon from '@/assets/icon/overlay-menu/code.svg'
-import closeIcon from '@/assets/icon/overlay-menu/close.svg'
+import Button from "@/components/Button/Button.astro"
+
+const {currentUrl} = Astro.props
 
 const menuLinks = [
-  {href: '/', label: 'Главная', iconSrc: starIcon.src,},
-  {href: '/', label: 'Учебник', iconSrc: bookIcon.src,},
-  {href: '/', label: 'Редактор', iconSrc: codeIcon.src,},
-  {label: 'Закрыть', iconSrc: closeIcon.src, isClose: true},
+  {href: '/', label: 'Главная', icon: 'overlay-menu/star',},
+  {href: '/text-book', label: 'Учебник', icon: 'overlay-menu/book',},
+  {href: '/editor', label: 'Редактор', icon: 'overlay-menu/code',},
 ]
 ---
 
@@ -19,15 +17,24 @@ const menuLinks = [
   class="overlay-menu"
 >
   <nav class="overlay-menu__nav">
-    {menuLinks.map(({href, label, iconSrc, isClose}) => (
-      <Button
+    {menuLinks.map(({href, label, icon}) => (
+      <a
+        class:list={['overlay-menu__link', {
+          'is-active': href === currentUrl,
+        }]}
         href={href}
-        label={label}
-        iconName={iconSrc}
-        iconPosition="before"
-        mode="black"
-        extraAttrs={isClose ? {id: 'menu-close-btn'} : {}}
-      />
+      >
+        <Icon name={icon} />
+        {label}
+      </a>
     ))}
+
+    <Button
+      label="Закрыть"
+      iconName="overlay-menu/close"
+      iconPosition="before"
+      mode="black"
+      extraAttrs={{id: 'menu-close-btn'}}
+    />
   </nav>
 </div>

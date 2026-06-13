@@ -1,5 +1,6 @@
 ---
 import './Card.scss'
+import Image from 'astro/components/Image.astro'
 
 const {items = []} = Astro.props
 ---
@@ -15,11 +16,11 @@ const {items = []} = Astro.props
         <h3 class="card__title">{title}</h3>
         <p class="card__desc">{desc}</p>
       </div>
-      <img
+      <Image
+        class="card__img hidden-mobile"
         src={img}
         alt=""
-        loading="lazy"
-      >
+      />
     </div>
   ))}
 </div>

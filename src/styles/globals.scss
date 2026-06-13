@@ -16,16 +16,18 @@ html {
 }
 
 body {
-  @include fluid-text(18, 14);
+  @include fluid-text(18, 16);
   
   display: flex;
   flex-direction: column;
   font-family: var(--font-family-base), sans-serif;
-  //  color: var(--color-gray-60);
   background-color: var(--bg-primary);
   min-height: 100%;
   margin: 0;
   padding: 0;
+  text-wrap: pretty;
+  line-height: 1.25;
+  color: var(--text-primary);
 }
 
 main {
@@ -39,42 +41,31 @@ h4, .h4,
 h5, .h5,
 h6, .h6 {
   color: var(--text-primary);
+  font-weight: 700;
 }
 
 h1, .h1 {
-  //  @include fluid-text(58, 28);
-  
-  font-weight: 700;
+  @include fluid-text(36, 32);
 }
 
 h2, .h2 {
-  //  @include fluid-text(48, 24);
-  
-  font-weight: 700;
+  @include fluid-text(32, 27);
 }
 
 h3, .h3 {
-  //  @include fluid-text(38, 20);
-  
-  font-weight: 700;
+  @include fluid-text(27, 24);
 }
 
 h4, .h4 {
-  //  @include fluid-text(24, 18);
-  
-  font-weight: 600;
+  @include fluid-text(24, 21);
 }
 
 h5, .h5 {
-  //  @include fluid-text(22, 18);
-  
-  font-weight: 500;
+  @include fluid-text(23, 19);
 }
 
 h6, .h6 {
-  //  @include fluid-text(20, 16);
-  
-  font-weight: 500;
+  @include fluid-text(19, 18);
 }
 
 a,
@@ -91,7 +82,7 @@ a {
   color: inherit;
   
   @include hover {
-    color: var(--color-green);
+    color: var(--color-black);
   }
   
   &[class] {
@@ -99,7 +90,7 @@ a {
   }
   
   &:where([class]) {
-    //    display: inline-flex;
+    display: inline-flex;
   }
 }
 
