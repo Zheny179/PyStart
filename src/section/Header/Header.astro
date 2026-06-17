@@ -1,8 +1,12 @@
 ---
 import './Header.scss'
-import Logo from "@/components/Logo/Logo.astro";
-import ButtonMenu from "@/components/ButtonMenu/ButtonMenu.astro";
-import OverlayMenu from "@/components/OverlayMenu/OverlayMenu.astro";
+import Logo from '@/components/Logo/Logo.astro'
+import ButtonMenu from '@/components/ButtonMenu/ButtonMenu.astro'
+import OverlayMenu from '@/components/OverlayMenu/OverlayMenu.astro'
+
+interface Props {
+  currentUrl: string,
+}
 
 const {currentUrl} = Astro.props
 ---

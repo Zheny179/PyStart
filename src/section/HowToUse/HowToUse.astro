@@ -1,7 +1,7 @@
 ---
 import './HowToUse.scss'
 import SecondarySection
-  from "@/layouts/Section/SecondarySection/SecondarySection.astro"
+  from "@/components/Section/SecondarySection/SecondarySection.astro"
 import Accordion from "@/components/Accordion/Accordion.astro"
 import AccordionGroup from "@/components/AccordionGroup/AccordionGroup.astro"
 import {workingProcessSteps} from "@/data/workingProcessSteps"
@@ -18,6 +18,7 @@ import Button from "@/components/Button/Button.astro"
           <Accordion
             title={title}
             name="how-to-use"
+            id="how-to-use"
             isOpen={isOpen}
           >
             {desc}
@@ -27,7 +28,7 @@ import Button from "@/components/Button/Button.astro"
     </AccordionGroup>
     <Button
       className="how-to-use__link"
-      href="/"
+      href="/PyStart/"
       label="Начать изучение"
       mode="black"
     />

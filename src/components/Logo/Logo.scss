@@ -1,38 +1,37 @@
 .logo {
   @include fluid-text(32, 18);
-  
-  font-family: var(--font-family-secondary), sans-serif;
-  font-weight: 700;
-  
-  color: var(--neon-green);
-  text-shadow: 0 0 8px #34c759;
-  text-decoration: none;
+
+  position: relative;
   display: inline-flex;
   align-items: center;
-  position: relative;
+  font-family: var(--font-family-secondary), sans-serif;
+  font-weight: 700;
+  color: var(--neon-green);
+  text-decoration: none;
+  text-shadow: var(--shadow-neon-green-logo);
   
   &__text {
     display: inline-block;
-    white-space: nowrap;
     vertical-align: bottom;
+    white-space: nowrap;
   }
   
   &__cursor {
-    display: none;
     position: relative;
+    display: none;
     width: fluid(8, 1);
     margin-left: 2px;
     vertical-align: middle;
     
     &::before {
       @include abs-center;
-      
-      content: '';
-      height: 100%;
+
       width: 10px;
-      background-color: var(--neon-green);
-      box-shadow: 0 0 8px #34c759;
+      height: 100%;
       margin-left: 5px;
+      content: '';
+      background-color: var(--neon-green);
+      box-shadow: var(--shadow-neon-green-logo);
     }
   }
 }

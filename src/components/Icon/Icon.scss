@@ -1,7 +1,8 @@
 .icon {
-  --iconSize: #{fluid(28, 24)};
+  --icon-size: #{fluid(28, 24)};
   
-  @include square(var(--iconSize));
+  @include square(var(--icon-size));
+
   display: inline-flex;
   align-items: center;
 }

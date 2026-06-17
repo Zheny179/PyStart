@@ -4,12 +4,12 @@
   row-gap: fluid(50, 30);
   
   &__item {
-    background: #03030a;
+    position: relative;
     display: flex;
     column-gap: fluid(50, 20);
     padding: fluid(40, 20);
-    border-radius: 20px;
-    position: relative;
+    background: var(--bg-element-dark);
+    border-radius: var(--border-radius-xl);
     
     &--right-to-left {
       flex-direction: row-reverse;
@@ -19,10 +19,10 @@
     &::after {
       @include abs-cover;
       @include square(100%);
-      
+
+      pointer-events: none;
       content: '';
       border-radius: inherit;
-      pointer-events: none;
     }
     
     &::before {
@@ -48,7 +48,7 @@
 }
 
 @keyframes stroke {
-  from {
+  0% {
     opacity: 0;
   }
   
@@ -56,7 +56,7 @@
     opacity: 1;
   }
   
-  to {
+  100% {
     opacity: 0;
   }
 }

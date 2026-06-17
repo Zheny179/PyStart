@@ -1,10 +1,10 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
   padding: fluid(30, 20) fluid(100, 20);
   border-bottom: transparent;
-  position: sticky;
-  z-index: 100;
-  top: 0;
-  width: 100%;
   animation-name: scrolling-header;
   animation-fill-mode: both;
   animation-timeline: scroll();
@@ -12,15 +12,15 @@
   
   @keyframes scrolling-header {
     to {
-      background-color: var(--bg-primary);
       padding-block: 20px;
+      background-color: var(--bg-primary);
       border-bottom: var(--border);
     }
   }
   
   &__inner {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
   }
 }

@@ -1,6 +1,10 @@
 ---
 import './Logo.scss'
 
+interface Props {
+  className?: string,
+}
+
 const {className = ''} = Astro.props
 ---
 
@@ -62,6 +66,7 @@ const {className = ''} = Astro.props
           blinkTween.kill()
           gsap.set(cursorElement, {display: 'none'})
 
+          sessionStorage.setItem('logo_animated', 'true')
           window.dispatchEvent(new CustomEvent('logoAnimationComplete'))
         }
       }, "+=0.2")

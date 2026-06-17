@@ -1,7 +1,7 @@
 .how-to-use {
   &__inner {
     display: grid;
-    justify-items: center;
     row-gap: fluid(50, 20);
+    justify-items: center;
   }
 }

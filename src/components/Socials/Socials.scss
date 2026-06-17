@@ -8,15 +8,15 @@
     @include fluid-text(30, 20);
     
     display: inline-flex;
-    border-radius: 100%;
     padding: fluid(5, 2);
+    border-radius: 100%;
     
     @include hover {
-      box-shadow: 0 0 4px 4px rgba(0, 255, 136, 0.6);
+      box-shadow: var(--shadow-neon-green-glow);
     }
     
     &:active {
-      box-shadow: 0 0 1px 2px rgba(0, 255, 136, 0.6);
+      box-shadow: 0 0 1px 2px var(--neon-green-alpha-mid);
       scale: (1.1);
     }
   }

@@ -1,6 +1,6 @@
 ---
 import './Hero.scss'
-import Button from "@/components/Button/Button.astro"
+import Button from '@/components/Button/Button.astro'
 import Ellipse from '@/components/Ellipse/Ellipse.astro'
 ---
 
@@ -31,7 +31,7 @@ import Ellipse from '@/components/Ellipse/Ellipse.astro'
     </h1>
     <Button
       className="hero__button"
-      href="/"
+      href="/PyStart/"
       label="Начать изучение"
       iconName='arrow-left'
     />
@@ -40,6 +40,9 @@ import Ellipse from '@/components/Ellipse/Ellipse.astro'
 
 <script>
   import {gsap} from 'gsap'
+  import HeroAnimation from "@/section/Hero/Hero";
+
+  new HeroAnimation()
 
   function animation() {
     const isMobile = window.innerWidth <= 767

@@ -1,6 +1,20 @@
 ---
+import Icon from "@/components/Icon/Icon.astro"
 import './Button.scss'
-import Icon from "@/components/Icon/Icon.astro";
+
+interface Props {
+  className?: string;
+  isDisabled?: boolean;
+  label: string;
+  isLabelHidden?: boolean;
+  target?: string;
+  type?: 'button' | 'submit' | 'reset';
+  mode?: '' | 'transparent' | 'black';
+  iconName?: string;
+  iconPosition?: 'before' | 'after';
+  href?: string;
+  extraAttrs?: Record<string, any>;
+}
 
 const {
   className = '',
@@ -9,14 +23,8 @@ const {
   isLabelHidden = false,
   target,
   type = 'button',
-  /*
-  * '' (default) | transparent | black
-  * */
   mode = '',
   iconName = '',
-  /*
-  *  'before' | 'after'
-  * */
   iconPosition = 'after',
   href,
   extraAttrs,

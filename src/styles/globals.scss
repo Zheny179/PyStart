@@ -20,14 +20,14 @@ body {
   
   display: flex;
   flex-direction: column;
-  font-family: var(--font-family-base), sans-serif;
-  background-color: var(--bg-primary);
   min-height: 100%;
-  margin: 0;
   padding: 0;
-  text-wrap: pretty;
+  margin: 0;
+  font-family: var(--font-family-base), sans-serif;
   line-height: 1.25;
   color: var(--text-primary);
+  text-wrap: pretty;
+  background-color: var(--bg-primary);
 }
 
 main {
@@ -40,8 +40,8 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  color: var(--text-primary);
   font-weight: 700;
+  color: var(--text-primary);
 }
 
 h1, .h1 {
@@ -131,13 +131,13 @@ a {
 }
 
 p {
-  --descMarginBottom: 24px;
+  --desc-margin-bottom: 24px;
   
   margin-block: 0;
 }
 
-p:where(:not([class]):not(:last-child)) {
-  margin-bottom: var(--descMarginBottom);
+p:where(:not([class], :last-child)) {
+  margin-bottom: var(--desc-margin-bottom);
 }
 
 button,
@@ -177,11 +177,11 @@ button {
 }
 
 :where([stroke]:not([stroke='none'], [stroke^='url'])) {
-  stroke: currentColor;
+  stroke: currentcolor;
 }
 
 :where([fill]:not([fill='none'], [fill^='url'])) {
-  fill: currentColor;
+  fill: currentcolor;
 }
 
 svg * {
@@ -192,9 +192,9 @@ svg * {
   *,
   ::before,
   ::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

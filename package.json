@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint:style": "stylelint \"src/**/*.{scss,astro}\"",
+    "lint:style:fix": "stylelint \"src/**/*.{scss,astro}\" --fix"
   },
   "dependencies": {
     "astro": "6.4.4",
@@ -18,6 +20,9 @@
     "sass": "1.100.0"
   },
   "devDependencies": {
-    "@types/node": "25.9.2"
+    "@types/node": "25.9.2",
+    "postcss-html": "1.8.1",
+    "postcss-scss": "4.0.9",
+    "stylelint": "17.13.0"
   }
 }

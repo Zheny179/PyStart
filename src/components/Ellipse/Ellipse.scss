@@ -1,58 +1,58 @@
 .ellipse-glare {
   position: absolute;
   z-index: 0;
+  contain: strict;
   pointer-events: none;
   border-radius: 50%;
   mix-blend-mode: screen;
-  will-change: transform;
   transform: translateZ(0);
-  contain: strict;
+  will-change: transform;
   
   &--blue {
     background: radial-gradient(
       circle,
-      rgba(0, 212, 255, 1) 0%,
-      rgba(0, 212, 255, 0) 70%
+      rgb(0 212 255 / 100%) 0%,
+      rgb(0 212 255 / 0%) 70%
     );
   }
   
   &--green {
     background: radial-gradient(
       circle,
-      rgba(0, 255, 136, 1) 0%,
-      rgba(0, 255, 136, 0) 70%
+      rgb(0 255 136 / 100%) 0%,
+      rgb(0 255 136 / 0%) 70%
     );
   }
   
   &--purple {
     background: radial-gradient(
       circle,
-      rgba(147, 51, 234, 1) 0%,
-      rgba(147, 51, 234, 0) 70%
+      rgb(147 51 234 / 100%) 0%,
+      rgb(147 51 234 / 0%) 70%
     );
   }
   
   &--pink {
     background: radial-gradient(
       circle,
-      rgba(236, 72, 153, 1) 0%,
-      rgba(236, 72, 153, 0) 70%
+      rgb(236 72 153 / 100%) 0%,
+      rgb(236 72 153 / 0%) 70%
     );
   }
   
   &--yellow {
     background: radial-gradient(
       circle,
-      rgba(234, 179, 8, 1) 0%,
-      rgba(234, 179, 8, 0) 70%
+      rgb(234 179 8 / 100%) 0%,
+      rgb(234 179 8 / 0%) 70%
     );
   }
   
   &--white {
     background: radial-gradient(
       circle,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(234, 179, 8, 0) 70%
+      rgb(255 255 255 / 100%) 0%,
+      rgb(234 179 8 / 0%) 70%
     );
   }
   

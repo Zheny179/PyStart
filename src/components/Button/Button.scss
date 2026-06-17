@@ -1,17 +1,17 @@
 .button {
   @include fluid-text(30, 18);
-  
+
+  position: relative;
+  display: inline-flex;
+  column-gap: 10px;
+  align-items: center;
   padding: 7px 15px;
-  border-radius: 5px;
-  box-shadow: none;
+  color: var(--color-black);
   background: var(--neon-green);
   border: none;
+  border-radius: var(--border-radius-xxs);
+  box-shadow: none;
   transition-duration: var(--transition-duration);
-  display: inline-flex;
-  align-items: center;
-  column-gap: 10px;
-  position: relative;
-  color: var(--color-black);
   
   &--transparent {
     background-color: transparent;
@@ -24,20 +24,20 @@
   }
   
   &--black {
-    box-shadow: 0 0 5px 0 var(--neon-blue);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 15px 20px;
-    background-color: transparent;
     column-gap: 25px;
-    font-weight: 700;
+    padding: 15px 20px;
     font-size: 32px;
+    font-weight: 700;
     color: var(--color-white);
     cursor: pointer;
+    background-color: transparent;
+    border: var(--border);
+    border-radius: var(--border-radius-xl);
+    box-shadow: 0 0 5px 0 var(--neon-blue);
     
     @include hover {
       color: var(--neon-green);
-      text-shadow: 0 0 12px var(--neon-green);
+      text-shadow: var(--shadow-neon-green-text);
     }
   }
   
@@ -53,24 +53,24 @@
   }
   
   &::before {
-    content: '';
     position: absolute;
     inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    content: '';
     border-radius: inherit;
-    box-shadow: 0 0 7px 0 #a3ffa5;
+    box-shadow: 0 0 7px 0 var(--neon-green-soft);
     opacity: 0;
     transition: 0.3s ease;
-    pointer-events: none;
-    z-index: -1;
   }
   
   @keyframes pulse {
     0%, 100% {
-      box-shadow: 0 0 7px 0 #a3ffa5;
+      box-shadow: var(--shadow-pulse-s);
     }
     
     50% {
-      box-shadow: 0 0 10px 0 #a3ffa5;
+      box-shadow: var(--shadow-pulse-m);
     }
   }
 }

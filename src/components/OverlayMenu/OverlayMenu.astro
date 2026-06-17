@@ -1,14 +1,18 @@
 ---
 import {Icon} from 'astro-icon/components'
 import './OverlayMenu.scss'
-import Button from "@/components/Button/Button.astro"
+import Button from '@/components/Button/Button.astro'
+
+interface Props {
+  currentUrl: string,
+}
 
 const {currentUrl} = Astro.props
 
 const menuLinks = [
-  {href: '/', label: 'Главная', icon: 'overlay-menu/star',},
-  {href: '/text-book', label: 'Учебник', icon: 'overlay-menu/book',},
-  {href: '/editor', label: 'Редактор', icon: 'overlay-menu/code',},
+  {href: '/PyStart/', label: 'Главная', icon: 'overlay-menu/star',},
+  {href: '/PyStart/text-book/', label: 'Учебник', icon: 'overlay-menu/book',},
+  {href: '/PyStart/editor/', label: 'Редактор', icon: 'overlay-menu/code',},
 ]
 ---
 
@@ -19,9 +23,11 @@ const menuLinks = [
   <nav class="overlay-menu__nav">
     {menuLinks.map(({href, label, icon}) => (
       <a
-        class:list={['overlay-menu__link', {
-          'is-active': href === currentUrl,
-        }]}
+        class:list={[
+          'overlay-menu__link', {
+            'is-active': href === currentUrl,
+          }
+        ]}
         href={href}
       >
         <Icon name={icon} />
@@ -38,3 +44,8 @@ const menuLinks = [
     />
   </nav>
 </div>
+<script>
+  import OverlayMenu from '@/components/OverlayMenu/OverlayMenu'
+
+  new OverlayMenu()
+</script>

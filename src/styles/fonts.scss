@@ -1,23 +1,23 @@
 @font-face {
-  font-family: 'Ubuntu';
-  src: url('/fonts/Ubuntu-Bold.woff2') format('woff2');
+  font-family: Ubuntu;
+  font-style: normal;
   font-weight: bold;
-  font-style: normal;
+  src: url('@/assets/fonts/Ubuntu-Bold.woff2') format('woff2');
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Ubuntu';
-  src: url('/fonts/Ubuntu-Regular.woff2') format('woff2');
+  font-family: Ubuntu;
+  font-style: normal;
   font-weight: normal;
-  font-style: normal;
+  src: url('@/assets/fonts/Ubuntu-Regular.woff2') format('woff2');
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'JetBrainsMono';
-  src: url('/fonts/JetBrainsMono.woff2') format('woff2-variations');
-  src: url('/fonts/JetBrainsMono.woff2') format('woff2') tech('variations');
+  font-family: JetBrainsMono;
   font-weight: 100 1000;
   font-stretch: 25% 151%;
+  src: url('@/assets/fonts/JetBrainsMono.woff2') format('woff2-variations');
+  src: url('@/assets/fonts/JetBrainsMono.woff2') format('woff2') tech('variations');
 }

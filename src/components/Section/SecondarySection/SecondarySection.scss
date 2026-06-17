@@ -1,6 +1,6 @@
 .section {
-  padding-block: var(--section-padding-y);
   display: grid;
+  padding-block: var(--section-padding-y);
   overflow: hidden;
   
   &--neon-stroke {
@@ -8,12 +8,12 @@
     
     &::before {
       @include abs-x;
-      
-      content: '';
-      height: 3px;
+
       width: 100%;
-      box-shadow: 0 0 30px 1px rgba(0, 212, 255, 0.67);
-      background-color: rgba(0, 212, 255, 0.12);
+      height: 3px;
+      content: '';
+      background-color: var(--neon-blue-line-bg);
+      box-shadow: var(--shadow-neon-line);
     }
   }
   
@@ -27,10 +27,10 @@
   
   &__info {
     display: flex;
-    text-align: center;
     flex-direction: column;
     row-gap: fluid(20, 10);
     color: var(--text-primary);
+    text-align: center;
   }
   
   &__title {

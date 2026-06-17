@@ -3,10 +3,10 @@
   @include square(fluid(60, 40));
   
   flex-direction: column;
-  border-radius: 100%;
+  gap: 7px;
   background-color: var(--bg-secondary);
   border: var(--border);
-  gap: 7px;
+  border-radius: 100%;
   
   &:hover {
     box-shadow: 0 0 4px 0 var(--neon-blue);

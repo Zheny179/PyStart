@@ -2,6 +2,12 @@
 import './Socials.scss'
 import {Icon} from 'astro-icon/components'
 
+interface Props {
+  className?: string,
+}
+
+const {className} = Astro.props
+
 const socials = [
   {
     icon: 'socials/github',
@@ -17,7 +23,7 @@ const socials = [
 ---
 
 
-<div class="soc1als">
+<div class:list={['soc1als', className]}>
   <ul class="soc1als__list">
     {socials.map(({icon, link, title}) => (
       <li class="soc1als__item">

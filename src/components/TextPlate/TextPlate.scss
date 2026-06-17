@@ -14,15 +14,15 @@
   }
   
   &__title {
-    color: var(--bg-primary);
-    border-radius: 15px;
     padding: fluid(15, 10);
+    color: var(--bg-primary);
     text-align: center;
     background: var(--neon-green);
+    border-radius: 15px;
   }
   
   &__body {
-    color: #fff;
+    color: var(--color-white);
   }
 }
 

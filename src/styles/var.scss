@@ -1,31 +1,48 @@
 :root {
-  --color-white: #FFFFFF;
-  --color-black: #000000;
+  // ─── Base colors ────────────────────────────────────────────────────
+  --color-white: #FFF;
+  --color-black: #000;
   
+  // ─── Neon palette ───────────────────────────────────────────────────
   --neon-green: #0f8;
   --neon-blue: #00d4ff;
   --neon-purple: #b44aff;
   --neon-pink: #ff2d95;
   --neon-yellow: #ffe854;
+  --neon-green-soft: #a3ffa5;
+  --neon-green-glow: #34c759;
   
-  --text-primary: #DDDDDD;
+  // ─── Neon alpha ─────────────────────────────────────────────────────
+  --neon-green-alpha-high: rgb(0 255 136 / 90%);
+  --neon-green-alpha-mid: rgb(0 255 136 / 60%);
+  --neon-blue-alpha-low: rgb(0 136 255 / 40%);
+  --neon-blue-line-bg: rgb(0 212 255 / 12%);
+  --neon-blue-line-glow: rgb(0 212 255 / 67%);
+  
+  // ─── Text ────────────────────────────────────────────────────────────
+  --text-primary: #DDD;
   --text-secondary: #8888a0;
   --text-muted: #55556a;
+  --text-copyright: #71717a;
   
-  --border-color: #2a2a3a;
-  
+  // ─── Backgrounds ─────────────────────────────────────────────────────
   --bg-primary: #0a0a0f;
   --bg-secondary: #12121a;
   --bg-card: #1a1a24;
   --bg-code: #0d0d14;
+  --bg-element-dark: #03030a;
+  --bg-overlay: #08080b;
   --second-color: #ff4500;
   
+  // ─── Borders ─────────────────────────────────────────────────────────
+  --border-color: #2a2a3a;
   --border: var(--border-width-s) solid var(--border-color);
-  
   --border-width-l: 4px;
   --border-width-m: 3px;
   --border-width-s: 1px;
   
+  // ─── Border radius ────────────────────────────────────────────────────
+  --border-radius-xl: 20px;
   --border-radius-l: 12px;
   --border-radius-m: 10px;
   --border-radius-s: 8px;
@@ -33,15 +50,29 @@
   --border-radius-xxs: 5px;
   --border-radius-xxxs: 4px;
   
+  // ─── Shadows ─────────────────────────────────────────────────────────
+  --shadow-pulse-s: 0 0 7px 0 var(--neon-green-soft);
+  --shadow-pulse-m: 0 0 10px 0 var(--neon-green-soft);
+  
+  // Neon glow ─────────────────────────────────────────────────────────
+  --shadow-neon-green-glow: 0 0 4px 4px var(--neon-green-alpha-mid);
+  --shadow-neon-green-active: 0 4px 50px 0 var(--neon-green-alpha-high);
+  --shadow-neon-green-logo: 0 0 8px var(--neon-green-glow);
+  --shadow-neon-green-text: 0 0 12px var(--neon-green);
+  --shadow-neon-blue-card: 0 4px 40px 0 var(--neon-blue-alpha-low);
+  --shadow-neon-line: 0 0 30px 1px var(--neon-blue-line-glow);
+  
+  // ─── Typography ───────────────────────────────────────────────────────
   --font-family-base: 'Ubuntu';
   --font-family-secondary: 'JetBrainsMono';
   
+  // ─── Layout ───────────────────────────────────────────────────────────
   --container-width: #{$container-desktop-width}px;
   --container-padding-x: 16px;
-  
   --section-padding-x: #{fluid(75, 40)};
   --section-padding-y: #{fluid(100, 25)};
   
+  // ─── Transitions ──────────────────────────────────────────────────────
   --transition-duration: 0.2s;
   --transition-duration-longer: 0.4s;
 }

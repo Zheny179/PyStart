@@ -1,14 +1,14 @@
 .accordion {
   width: 100%;
-  box-shadow: 0 4px 40px 0 rgba(0, 136, 255, 0.4);
-  background: #03030a;
   padding: fluid(30, 20) fluid(55, 20);
-  border-radius: 20px;
+  background: var(--bg-element-dark);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-neon-blue-card);
   transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
   
   
   &:has(&__details[open]) {
-    box-shadow: 0 4px 50px 0 rgba(0, 255, 136, 0.9);
+    box-shadow: var(--shadow-neon-green-active);
   }
   
   &:has(.accordion__arrow) {
@@ -45,10 +45,10 @@
       }
       
       .accordion__button {
-        rotate: 0deg;
         background-color: transparent;
-        border: 1px solid var(--color-white);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        border: var(--border-width-s) solid var(--color-white);
+        box-shadow: 0 0 15px rgb(255 255 255 / 30%);
+        rotate: 0deg;
         
         svg {
           filter: none;
@@ -58,8 +58,8 @@
     
     @include hover {
       .accordion:has(&) {
+        box-shadow: var(--shadow-neon-green-active);
         transform: translateY(-2px);
-        box-shadow: 0 4px 50px 0 rgba(0, 255, 136, 0.9);
       }
     }
     
@@ -71,14 +71,14 @@
   }
   
   &__summary {
-    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-white);
     cursor: pointer;
     user-select: none;
-    color: var(--color-white);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+    list-style: none;
     
     
     &::-webkit-details-marker {
@@ -87,26 +87,26 @@
   }
   
   &__title {
-    text-align: center;
-    color: rgba(0, 255, 136, 0.9);
-    box-shadow: 0 0 4px 4px rgba(0, 255, 136, 0.6);
-    background: #03030a;
-    padding: 15px;
-    display: inline-block;
-    border-radius: 10px;
-    transition-duration: 1.2s;
     position: relative;
+    display: inline-block;
+    padding: 15px;
     overflow: hidden;
+    color: var(--neon-green-alpha-high);
+    text-align: center;
+    background: var(--bg-element-dark);
+    border-radius: var(--border-radius-m);
+    box-shadow: var(--shadow-neon-green-glow);
+    transition-duration: 1.2s;
     
     &::before {
       @include square(100%);
       @include abs-cover;
       
       content: '';
-      transition-duration: 1s;
-      border-radius: 10px;
       background-color: var(--neon-green);
+      border-radius: 10px;
       translate: -100% 0;
+      transition-duration: 1s;
     }
   }
   
@@ -129,10 +129,10 @@
     @include square(50px);
     
     flex-shrink: 0;
-    transition-duration: var(--transition-duration);
+    background-color: var(--color-white);
     border-radius: 100%;
     rotate: 180deg;
-    background-color: var(--color-white);
+    transition-duration: var(--transition-duration);
     
     svg {
       filter: brightness(0);
