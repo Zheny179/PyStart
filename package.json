@@ -1,7 +1,9 @@
 {
   "name": "py_start",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.4",
+  "description": "Интерактивный учебник по Python",
+  "license": "MIT",
   "engines": {
     "node": ">=22.12.0"
   },
