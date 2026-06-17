@@ -34,7 +34,7 @@
 ## 📸 Скриншоты
 
 <div align="center">
-  <img src="./docs/screenshots/home.png" alt="Главная страница" width="800" />
+  <img src="./docs/screenshot.png" alt="Главная страница" />
   <p><em>Главная страница учебника</em></p>
 </div>
 
