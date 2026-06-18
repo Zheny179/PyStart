@@ -1,0 +1,257 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import Button from '@/components/Button/Button.astro'
+import Ellipse from '@/components/Ellipse/Ellipse.astro'
+---
+<Layout title="404">
+  <div class="page">
+    <Ellipse
+      className="blob blob-1"
+      width="500px"
+      height="500px"
+      opacity="0.09"
+      color="pink"
+      bottom="-120px"
+      right="-120px"
+    />
+
+    <Ellipse
+      className="blob blob-2"
+      width="500px"
+      height="500px"
+      opacity="0.09"
+      color="green"
+      top="-160px"
+      left="-160px"
+    />
+
+    <section class="page-404">
+      <div
+        class="glitch"
+        data-text="404"
+      >
+        404
+      </div>
+      <h1 class="title">Упс! Такой страницы нет</h1>
+      <p class="subtitle">
+        Кажется, вы забрели туда, куда не стоило. Страница удалена,
+        перемещена или её вовсе никогда не существовало.
+      </p>
+      <div class="actions">
+        <Button
+          className="btn"
+          label="На главную"
+          href="/PyStart/"
+          mode="black"
+        />
+        <Button
+          className="btn"
+          label="Назад"
+          mode="black"
+          extraAttrs={ { id: 'back-btn' } }
+        />
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap'
+
+  document.querySelector('#back-btn')?.addEventListener(
+    'click',
+    () => history.back()
+  )
+
+  const tl = gsap.timeline({
+    defaults: { ease: 'power3.out' }
+  })
+
+  tl.fromTo('.page-404', {
+    y: 60,
+    opacity: 0,
+  }, {
+    y: 0,
+    opacity: 1,
+    duration: 0.7,
+  })
+    .fromTo('.glitch', {
+      y: 30,
+    }, {
+      y: 0,
+      opacity: 1,
+      duration: 0.6,
+      ease: 'back.out(1.7)'
+    }, '-=0.4')
+    .fromTo('.title', {
+      y: 20,
+    }, {
+      y: 0,
+      opacity: 1,
+      duration: 0.5
+    }, '-=0.2')
+    .fromTo('.subtitle', {
+      y: 20,
+    }, {
+      y: 0,
+      opacity: 1,
+      duration: 0.5
+    }, '-=0.3')
+    .fromTo('.page-404 .button', {
+      y: 20,
+    }, {
+      opacity: 1,
+      y: 0,
+      duration: 0.4,
+      stagger: 0.1,
+      pointerEvents: 'auto',
+    }, '-=0.2')
+
+</script>
+
+<style lang="scss">
+  .actions {
+    :global(.btn) {
+      display: grid;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-inline: auto;
+  }
+
+  .title,
+  .subtitle {
+    opacity: 0;
+  }
+
+  .page {
+    @include flex-center;
+
+    position: relative;
+    min-height: 100vh;
+    padding: 24px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+      transform: translate(30px, -20px) scale(1.08);
+    }
+  }
+
+  .page-404 {
+    display: grid;
+    row-gap: 20px;
+    width: min(700px, 100%);
+    padding: 40px 30px;
+    text-align: center;
+    background-color: rgb(255 255 255 / 4%);
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: var(--border-radius-l);
+    box-shadow: 0 20px 60px rgb(0 0 0 / 35%);
+    backdrop-filter: blur(14px);
+  }
+
+  .glitch {
+    position: relative;
+    display: inline-block;
+    font-size: clamp(96px, 22vw, 180px);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    letter-spacing: -0.04em;
+    background: linear-gradient(
+      135deg,
+      var(--second-color) 0%,
+      var(--neon-yellow) 25%,
+      var(--neon-green-alpha-mid) 50%,
+      var(--neon-purple) 75%,
+      var(--neon-blue-line-bg) 100%
+    );
+    background-clip: text;
+    background-size: 300% 300%;
+    opacity: 0;
+    animation: gradient-flow 6s ease infinite;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    @include abs-cover;
+
+    color: transparent;
+    pointer-events: none;
+    content: attr(data-text);
+    background: inherit;
+    background-clip: text;
+    mix-blend-mode: screen;
+  }
+
+  .glitch::before {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    animation: glitch-top 3.2s infinite steps(2, end);
+  }
+
+  .glitch::after {
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    animation: glitch-bottom 2.8s infinite steps(2, end);
+  }
+
+  @keyframes glitch-top {
+    0%, 92%, 100% {
+      transform: translate(0, 0);
+    }
+
+    93% {
+      transform: translate(-4px, -2px);
+    }
+
+    95% {
+      transform: translate(3px, 1px);
+    }
+
+    97% {
+      transform: translate(-2px, 0);
+    }
+  }
+
+  @keyframes glitch-bottom {
+    0%, 90%, 100% {
+      transform: translate(0, 0);
+    }
+
+    91% {
+      transform: translate(3px, 2px);
+    }
+
+    94% {
+      transform: translate(-3px, -1px);
+    }
+
+    96% {
+      transform: translate(2px, 0);
+    }
+  }
+
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+</style>
