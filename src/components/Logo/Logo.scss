@@ -1,6 +1,6 @@
 .logo {
   @include fluid-text(32, 18);
-
+  
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -25,13 +25,75 @@
     
     &::before {
       @include abs-center;
-
+      
       width: 10px;
       height: 100%;
       margin-left: 5px;
       content: '';
       background-color: var(--neon-green);
       box-shadow: var(--shadow-neon-green-logo);
+    }
+  }
+  
+  &::before,
+  &::after, {
+    @include square(0);
+
+    position: absolute;
+    content: '';
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-s);
+    transition: width 0.25s ease, height 0.25s ease;
+  }
+  
+  &::before {
+    top: 0;
+    left: 0;
+  }
+  
+  &::after {
+    right: 0;
+    bottom: 0;
+  }
+  
+  @include hover {
+    color: inherit;
+    
+    &::after,
+    &::before {
+      @include square(calc(100% + 20px));
+    }
+    
+    &::before {
+      top: -10px;
+      left: -10px;
+      border-top-color: #28a745;
+      border-right-color: #28a745;
+      transition: width 0.25s ease, height 0.25s ease 0.25s;
+    }
+    
+    &::after {
+      right: -10px;
+      bottom: -10px;
+      border-bottom-color: #28a745;
+      border-left-color: #28a745;
+      transition: width 0.25s ease, height 0.25s ease 0.25s;
+    }
+  }
+  
+  &:active {
+    &::before {
+      border-top-color: var(--neon-green);
+      border-right-color: var(--neon-green);
+      filter: drop-shadow(var(--shadow-neon-green-logo));
+      transition: none;
+    }
+    
+    &::after {
+      border-bottom-color: var(--neon-green);
+      border-left-color: var(--neon-green);
+      filter: drop-shadow(var(--shadow-neon-green-logo));
+      transition: none;
     }
   }
 }
