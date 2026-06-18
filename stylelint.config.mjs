@@ -43,6 +43,16 @@ export default {
         ignore: ['blockless-at-rules', 'pseudo-classes']
       }
     ],
+
+    // Разрешить дубли с вендорными префиксами (-webkit-)
+    'declaration-block-no-duplicate-properties': [true, {
+      ignore: ['consecutive-duplicates-with-different-syntaxes']
+    }],
+
+    // Разрешить :global
+    'selector-pseudo-class-no-unknown': [true, {
+      ignorePseudoClasses: ['global']
+    }],
   },
   // Исключаемые папки
   ignoreFiles: [
