@@ -1,0 +1,182 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import AccordionGroup from "@/components/AccordionGroup/AccordionGroup.astro"
+import Accordion from "@/components/Accordion/Accordion.astro"
+import SecondarySection from "@/components/Section/SecondarySection/SecondarySection.astro"
+
+const sections = [
+  {
+    title: "Введение в Python",
+    lessons: [
+      {
+        title: "Урок 1.1 — Введение",
+        href: "/PyStart/lessons/1.1/",
+      },
+      { title: "Урок 1.2 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.3 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.4 — Условия", href: "/PyStart/lessons/1.4/" },
+      { title: "Урок 1.5 — Введение", href: "/PyStart/lessons/1.1/" },
+      { title: "Урок 1.6 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.7 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.8 — Условия", href: "/PyStart/lessons/1.4/" },
+      { title: "Урок 1.9 — Введение", href: "/PyStart/lessons/1.1/" },
+      { title: "Урок 1.10 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.11 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.12 — Условия", href: "/PyStart/lessons/1.4/" },
+      { title: "Урок 1.13 — Введение", href: "/PyStart/lessons/1.1/" },
+      { title: "Урок 1.14 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.15 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.16 — Условия", href: "/PyStart/lessons/1.4/" },
+    ],
+  },
+  {
+    title: "Основы Python 2",
+    lessons: [
+      { title: "Урок 2.1 — Циклы", href: "/PyStart/lessons/2.1/" },
+      { title: "Урок 2.2 — Функции", href: "/PyStart/lessons/2.2/" },
+      { title: "Урок 2.3 — Списки", href: "/PyStart/lessons/2.3/" },
+      { title: "Урок 2.4 — Словари", href: "/PyStart/lessons/2.4/" },
+    ],
+  },
+  {
+    title: "Введение в Python 3",
+    lessons: [
+      {
+        title: "Урок 1.1 — Введение",
+        href: "/PyStart/lessons/1.1/",
+      },
+      { title: "Урок 1.2 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.3 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.4 — Условия", href: "/PyStart/lessons/1.4/" },
+      { title: "Урок 1.5 — Введение", href: "/PyStart/lessons/1.1/" },
+      { title: "Урок 1.6 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.7 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.8 — Условия", href: "/PyStart/lessons/1.4/" },
+      { title: "Урок 1.9 — Введение", href: "/PyStart/lessons/1.1/" },
+      { title: "Урок 1.10 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.11 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.12 — Условия", href: "/PyStart/lessons/1.4/" },
+      { title: "Урок 1.13 — Введение", href: "/PyStart/lessons/1.1/" },
+      { title: "Урок 1.14 — Переменные", href: "/PyStart/lessons/1.2/" },
+      { title: "Урок 1.15 — Типы данных", href: "/PyStart/lessons/1.3/" },
+      { title: "Урок 1.16 — Условия", href: "/PyStart/lessons/1.4/" },
+    ],
+  },
+]
+---
+
+<Layout title='Оглавление'>
+  <SecondarySection
+    neonStroke={false}
+    title='Оглавление'
+  >
+    <AccordionGroup>
+      {
+        sections.map((section) => (
+          <li class='accordion-group__item'>
+            <Accordion
+              title={section.title}
+              id={section.title}
+            >
+              <div class='links'>
+                {section.lessons.map(({ href, title }) => (
+                  <a
+                    class='link'
+                    href={href}
+                  >
+                    {title}
+                  </a>
+                ))}
+              </div>
+            </Accordion>
+          </li>
+        ))
+      }
+    </AccordionGroup>
+  </SecondarySection>
+</Layout>
+
+<style lang='scss'>
+  .links {
+    display: grid;
+    justify-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    padding-inline: 5px;
+    gap: 15px;
+
+    .link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      break-inside: avoid;
+
+      @include hover {
+        color: var(--neon-blue);
+      }
+
+      &:visited {
+        color: var(--neon-green);
+        @include hover {
+          color: var(--text-primary);
+        }
+        &::before {
+          background-color: var(--neon-green);
+        }
+      }
+    }
+
+    a::before {
+      @include square(10px);
+
+      content: "";
+      background-color: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 5px 1px currentColor;
+      display: block;
+      flex-shrink: 0;
+    }
+  }
+</style>
+
+<style is:global>
+  .section__header,
+  .accordion-group__item {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap"
+  import { TextPlugin } from "gsap/TextPlugin"
+  gsap.registerPlugin(TextPlugin)
+
+  const tl = gsap.timeline()
+
+  tl.fromTo(
+    ".section__header",
+    {
+      y: 20,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power4.inOut",
+    }
+  ).to(".accordion-group__item", {
+    opacity: 1,
+    duration: 0.5,
+    stagger: 0.1,
+    ease: "power1.inOut",
+
+    onStart: () => {
+      gsap.set(".accordion-group__item", { pointerEvents: "none" })
+    },
+
+    onComplete: () => {
+      gsap.set(".accordion-group__item", { pointerEvents: "auto" })
+    },
+  })
+</script>
