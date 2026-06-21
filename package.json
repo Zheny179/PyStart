@@ -13,7 +13,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint:style": "stylelint \"src/**/*.{scss,astro}\"",
-    "lint:style:fix": "stylelint \"src/**/*.{scss,astro}\" --fix"
+    "lint:style:fix": "stylelint \"src/**/*.{scss,astro}\" --fix",
+    "format": "prettier --write --plugin=prettier-plugin-astro \"src/**/*.{astro,js,jsx,ts,tsx,mjs,css,json,md}\"",
+    "format:check": "prettier --check --diff --plugin=prettier-plugin-astro \"src/**/*.{astro,js,jsx,ts,tsx,mjs,css,json,md}\""
   },
   "dependencies": {
     "astro": "6.4.4",
@@ -25,6 +27,8 @@
     "@types/node": "25.9.2",
     "postcss-html": "1.8.1",
     "postcss-scss": "4.0.9",
+    "prettier": "3.8.4",
+    "prettier-plugin-astro": "0.14.1",
     "stylelint": "17.13.0"
   }
 }
