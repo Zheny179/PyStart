@@ -1,0 +1,51 @@
+---
+import './Chapter.scss'
+import CollapseButton from '@/components/CollapseButton/CollapseButton.astro'
+import LinksList from '@/components/LinksList/LinksList.astro'
+
+interface Props {
+  className?: string
+}
+
+interface Lesson {
+  label: string
+  href: string
+  isActive?: boolean
+}
+
+interface ChapterData {
+  title: string
+  isOpen?: boolean
+  lessons: Lesson[]
+}
+
+interface Props {
+  className?: string
+  chapter: ChapterData
+}
+
+const { className, chapter } = Astro.props
+---
+
+<div
+  class:list={[
+    'chapter',
+    {
+      'chapter--open': chapter.isOpen,
+    },
+  ]}
+>
+  <CollapseButton
+    className='chapter__header'
+    title={chapter.title}
+    isOpen={chapter.isOpen}
+  />
+
+  <LinksList items={chapter.lessons} />
+</div>
+
+<script>
+  import Chapter from '@/components/Navigation/Chapter/Chapter'
+
+  new Chapter()
+</script>

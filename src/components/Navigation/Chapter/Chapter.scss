@@ -1,0 +1,57 @@
+.chapter {
+  display: grid;
+  transition-duration: var(--transition-duration-longer);
+  transition: grid-template-rows var(--transition-duration) ease;
+  align-content: start;
+  grid-template-rows: auto 0fr;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+
+    border-radius: 15px;
+    background: var(--neon-green);
+    padding: 15px;
+
+    font-weight: 700;
+    font-size: 27px;
+    text-align: justify;
+    color: var(--bg-primary);
+
+    @include hover {
+      box-shadow: var(--shadow-neon-green-glow);
+      background-color: transparent;
+      color: var(--color-white);
+    }
+
+    svg {
+      rotate: 270deg;
+    }
+  }
+
+  &__title {
+    flex: 1;
+  }
+
+  &__arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .chapter__arrow {
+    transform: rotate(90deg);
+  }
+
+  &--open {
+    grid-template-rows: auto 1fr;
+
+    .chapter__arrow {
+      transform: rotate(0deg);
+    }
+
+    .chapter__lessons {
+    }
+  }
+}
