@@ -1,0 +1,130 @@
+.navigation {
+  position: sticky;
+  top: calc(100px + clamp(1.25rem, 1.0639312977rem + 0.7633587786vw, 1.875rem));
+  padding: 20px;
+  box-shadow: 0 0 12px 0 var(--neon-blue);
+  background: #08080b;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  row-gap: 20px;
+  transition:
+    width 0.5s ease 0s,
+    grid-template-rows 0.5s ease 0.5s,
+    row-gap 0.5s ease 0.5s,
+    padding 0.5s ease 0s;
+  max-height: 70vh;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px 0 0 20px;
+
+  &--contents {
+    justify-self: end;
+  }
+
+  &--chapters {
+    border-radius: 0 20px 20px 0;
+  }
+
+  &--collapsed {
+    grid-template-rows: auto 0fr;
+    row-gap: 0;
+    width: 80px;
+
+    transition:
+      grid-template-rows 0.5s ease 0s,
+      row-gap 0.5s ease 0s,
+      width 0.5s ease 0.5s,
+      padding 0.5s ease 0.5s;
+
+    .navigation__nav {
+      @include hide;
+      padding: 0;
+      min-height: 0;
+
+      transition:
+        opacity 0.3s ease 0s,
+        visibility 0.3s ease 0s;
+    }
+
+    .navigation__btn:nth-child(1) {
+      color: var(--neon-green);
+    }
+
+    .navigation__btn--arrow {
+      @include hide;
+      width: 0;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    &--reverse {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 45px;
+    height: 45px;
+    color: var(--color-white);
+    transition:
+      box-shadow var(--transition-duration),
+      rotate 0.1s;
+
+    @include hover {
+    }
+
+    &--arrow {
+      background-color: var(--color-white);
+      border-radius: 50%;
+      color: var(--color-black);
+
+      transition:
+        opacity 0.3s ease 0.2s,
+        visibility 0.3s ease 0.2s;
+
+      @include hover {
+        box-shadow: 0 0 15px var(--neon-green);
+      }
+
+      &.animat {
+        svg {
+          animation: rotateArrow var(--transition-duration-longer) ease;
+        }
+      }
+    }
+  }
+
+  &__nav {
+    transition-duration: var(--transition-duration);
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    overflow-y: auto;
+    padding: 10px;
+    min-height: 0;
+    transition:
+      opacity 0.3s ease 0.7s,
+      visibility 0.3s ease 0.7s;
+  }
+}
+
+@keyframes rotateArrow {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+
+  50% {
+    rotate: -90deg;
+  }
+}

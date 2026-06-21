@@ -1,0 +1,120 @@
+---
+import './Navigation.scss'
+import Chapter from '@/components/Navigation/Chapter/Chapter.astro'
+import Content from '@/components/Navigation/Content/Content.astro'
+
+interface Lesson {
+  label: string
+  href: string
+  isActive?: boolean
+}
+
+interface ChapterData {
+  title: string
+  isOpen?: boolean
+  lessons: Lesson[]
+}
+
+interface ContentData {
+  isActive?: boolean
+  href: string
+  label: string
+}
+
+interface Props {
+  className?: string
+  chapter?: ChapterData[]
+  mode: 'chapters' | 'contents'
+  content?: ContentData[]
+}
+
+const { className, chapter = [], content = [], mode } = Astro.props
+
+const isChapters = mode === 'chapters'
+const isContents = mode === 'contents'
+---
+
+<aside
+  class:list={[
+    'navigation',
+    className,
+    {
+      'navigation--chapters': isChapters,
+      'navigation--contents': isContents,
+    },
+  ]}
+  data-navigation=''
+>
+  <header
+    class:list={[
+      'navigation__header',
+      {
+        'navigation__header--reverse': isContents,
+      },
+    ]}
+  >
+    <button
+      class='navigation__btn'
+      type='button'
+      aria-label='Свернуть панель'
+      data-navigation-button=''
+    >
+      <svg
+        viewBox='0 0 45 45'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          d='M15 13.0931C14.5027 13.0931 14.0258 13.2907 13.6742 13.6423C13.3225 13.9939 13.125 14.4708 13.125 14.9681C13.125 15.4654 13.3225 15.9423 13.6742 16.2939C14.0258 16.6456 14.5027 16.8431 15 16.8431H30C30.4973 16.8431 30.9742 16.6456 31.3258 16.2939C31.6775 15.9423 31.875 15.4654 31.875 14.9681C31.875 14.4708 31.6775 13.9939 31.3258 13.6423C30.9742 13.2907 30.4973 13.0931 30 13.0931H15ZM13.125 22.5C13.125 22.0027 13.3225 21.5258 13.6742 21.1742C14.0258 20.8225 14.5027 20.625 15 20.625H30C30.4973 20.625 30.9742 20.8225 31.3258 21.1742C31.6775 21.5258 31.875 22.0027 31.875 22.5C31.875 22.9973 31.6775 23.4742 31.3258 23.8258C30.9742 24.1775 30.4973 24.375 30 24.375H15C14.5027 24.375 14.0258 24.1775 13.6742 23.8258C13.3225 23.4742 13.125 22.9973 13.125 22.5ZM15 28.1569C14.5027 28.1569 14.0258 28.3544 13.6742 28.706C13.3225 29.0577 13.125 29.5346 13.125 30.0319C13.125 30.5292 13.3225 31.0061 13.6742 31.3577C14.0258 31.7093 14.5027 31.9069 15 31.9069H30C30.4973 31.9069 30.9742 31.7093 31.3258 31.3577C31.6775 31.0061 31.875 30.5292 31.875 30.0319C31.875 29.5346 31.6775 29.0577 31.3258 28.706C30.9742 28.3544 30.4973 28.1569 30 28.1569H15Z'
+          fill='white'
+        >
+        </path>
+        <path
+          fill-rule='evenodd'
+          clip-rule='evenodd'
+          d='M41.25 22.5C41.25 32.8556 32.8556 41.25 22.5 41.25C12.1444 41.25 3.75 32.8556 3.75 22.5C3.75 12.1444 12.1444 3.75 22.5 3.75C32.8556 3.75 41.25 12.1444 41.25 22.5ZM37.5 22.5C37.5 26.4782 35.9196 30.2936 33.1066 33.1066C30.2936 35.9196 26.4782 37.5 22.5 37.5C18.5218 37.5 14.7064 35.9196 11.8934 33.1066C9.08035 30.2936 7.5 26.4782 7.5 22.5C7.5 18.5218 9.08035 14.7064 11.8934 11.8934C14.7064 9.08035 18.5218 7.5 22.5 7.5C26.4782 7.5 30.2936 9.08035 33.1066 11.8934C35.9196 14.7064 37.5 18.5218 37.5 22.5Z'
+          fill='white'
+        >
+        </path>
+      </svg>
+    </button>
+    <button
+      class='navigation__btn navigation__btn--arrow'
+      type='button'
+      aria-label='Открыть меню'
+      data-navigation-button-arrow=''
+    >
+      <svg
+        width='25'
+        height='25'
+        viewBox='0 0 24 24'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          d='M12.0138 14.45L19.3638 7.09997C19.6138 6.84997 19.9054 6.72897 20.2388 6.73697C20.5721 6.74497 20.8638 6.87431 21.1138 7.12497C21.3638 7.37564 21.4888 7.66731 21.4888 7.99997C21.4888 8.33264 21.3638 8.62431 21.1138 8.87497L13.4388 16.575C13.2388 16.775 13.0138 16.925 12.7638 17.025C12.5138 17.125 12.2638 17.175 12.0138 17.175C11.7638 17.175 11.5138 17.125 11.2638 17.025C11.0138 16.925 10.7888 16.775 10.5888 16.575L2.88876 8.87497C2.63876 8.62497 2.51776 8.32897 2.52576 7.98697C2.53376 7.64497 2.6631 7.34931 2.91376 7.09997C3.16443 6.85064 3.4561 6.72564 3.78876 6.72497C4.12143 6.72431 4.4131 6.84931 4.66376 7.09997L12.0138 14.45Z'
+          fill='black'
+        >
+        </path>
+      </svg>
+    </button>
+  </header>
+
+  <nav class='navigation__nav'>
+    {
+      isChapters ? (
+        chapter.map((item) => <Chapter chapter={item} />)
+      ) : (
+        <Content content={content} />
+      )
+    }
+  </nav>
+</aside>
+
+<script>
+  import Navigation from '@/components/Navigation/Navigation'
+  const navigationElements = document.querySelectorAll('[data-navigation]')
+
+  navigationElements.forEach((element) => {
+    new Navigation(element)
+  })
+</script>
