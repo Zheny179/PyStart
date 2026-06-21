@@ -1,19 +1,19 @@
 ---
-import Icon from "@/components/Icon/Icon.astro"
 import './Button.scss'
+import Icon from '@/components/Icon/Icon.astro'
 
 interface Props {
-  className?: string;
-  isDisabled?: boolean;
-  label: string;
-  isLabelHidden?: boolean;
-  target?: string;
-  type?: 'button' | 'submit' | 'reset';
-  mode?: '' | 'transparent' | 'black';
-  iconName?: string;
-  iconPosition?: 'before' | 'after';
-  href?: string;
-  extraAttrs?: Record<string, any>;
+  className?: string
+  isDisabled?: boolean
+  label?: string
+  isLabelHidden?: boolean
+  target?: string
+  type?: 'button' | 'submit' | 'reset'
+  mode?: '' | 'transparent' | 'black'
+  iconName?: string
+  iconPosition?: 'before' | 'after'
+  href?: string
+  extraAttrs?: Record<string, any>
 }
 
 const {
@@ -32,31 +32,31 @@ const {
 
 const isLink = href !== undefined
 const Component = isLink ? 'a' : 'button'
-const linkProps = {href, target}
-const buttonProps = {type}
+const linkProps = { href, target }
+const buttonProps = { type }
 const specificProps = isLink ? linkProps : buttonProps
 const title = isLabelHidden ? label : undefined
 ---
 
 <Component
-  class:list={[className, 'button', {
-    [`button--${mode}`]: mode,
-  }]}
+  class:list={[
+    className,
+    'button',
+    {
+      [`button--${mode}`]: mode,
+    },
+  ]}
   disabled={isDisabled}
   title={title}
   aria-label={title}
   {...specificProps}
   {...extraAttrs}
 >
-  {iconName && iconPosition === 'before' && (
-    <Icon name={iconName} />
-  )}
+  {iconName && iconPosition === 'before' && <Icon name={iconName} />}
 
-  {!isLabelHidden && (
-    <span class="button__label">{label}</span>
-  )}
+  {!isLabelHidden && label && <span class='button__label'>{label}</span>}
 
-  {iconName && iconPosition === 'after' && (
-    <Icon name={iconName} />
-  )}
+  <slot />
+
+  {iconName && iconPosition === 'after' && <Icon name={iconName} />}
 </Component>
