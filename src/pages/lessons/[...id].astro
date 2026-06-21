@@ -1,0 +1,299 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import { getCollection, render } from 'astro:content'
+import Navigation from '@/components/Navigation/Navigation.astro'
+
+/*
+ * getCollection — получить все записи
+ */
+
+export async function getStaticPaths() {
+  const lessonsCollection = await getCollection('lessons')
+
+  return lessonsCollection.map((lesson) => ({
+    params: { id: lesson.id },
+    props: { lesson },
+  }))
+}
+
+const chapterData = [
+  {
+    title: 'Введение в Python',
+    isOpen: true, // Глава раскрыта по умолчанию
+    lessons: [
+      { label: 'Что такое Python', href: '/PyStart/course/python/intro/' },
+      {
+        label: 'Установка Python',
+        href: '/PyStart/course/python/install/',
+        isActive: true,
+      },
+      {
+        label: 'Первая программа',
+        href: '/PyStart/course/python/hello-world/',
+      },
+    ],
+  },
+  {
+    title: 'Основы синтаксиса',
+    isOpen: false,
+    lessons: [
+      { label: 'Переменные', href: '/PyStart/course/python/variables/' },
+      { label: 'Типы данных', href: '/PyStart/course/python/types/' },
+      { label: 'Операторы', href: '/PyStart/course/python/operators/' },
+    ],
+  },
+  {
+    title: 'Управляющие конструкции',
+    isOpen: false,
+    lessons: [
+      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
+      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
+    ],
+  },
+  {
+    title: 'Управляющие конструкции',
+    isOpen: false,
+    lessons: [
+      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
+      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
+    ],
+  },
+  {
+    title: 'Управляющие конструкции',
+    isOpen: false,
+    lessons: [
+      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
+      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
+    ],
+  },
+  {
+    title: 'Управляющие конструкции',
+    isOpen: false,
+    lessons: [
+      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
+      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
+    ],
+  },
+  {
+    title: 'Управляющие конструкции',
+    isOpen: false,
+    lessons: [
+      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
+      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
+    ],
+  },
+]
+
+const { lesson } = Astro.props
+const { Content, headings } = await render(lesson)
+
+const contentsData = headings.map((heading) => ({
+  label: heading.text,
+  href: `#${heading.slug}`,
+}))
+---
+
+<PageLayout title={lesson.data.title}>
+  <main class='page'>
+    <Navigation
+      chapter={chapterData}
+      mode='chapters'
+    />
+    <div class='primary-container'>
+      <h1>{lesson.data.title}</h1>
+      <Content />
+    </div>
+    <Navigation
+      content={contentsData}
+      mode='contents'
+    />
+  </main>
+</PageLayout>
+
+<style lang='scss'>
+  .aside {
+    position: sticky;
+    top: calc(100px + fluid(30, 20));
+
+    border: 1px solid var(--border-color);
+    border-radius: 0 20px 20px 0;
+    padding: 20px;
+    width: 390px;
+    height: 880px;
+    box-shadow: 0 0 12px 0 var(--neon-blue);
+    background: var(--bg-overlay);
+
+    &:nth-last-child(1) {
+      border-radius: 20px 0 0 20px;
+    }
+
+    &__btn {
+      @include square(45px);
+
+      color: var(--color-white);
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      display: inline-flex;
+
+      &--arrow {
+        @include flex-center;
+
+        color: var(--color-black);
+        background-color: var(--color-white);
+        border-radius: 50%;
+      }
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .primary-container {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 25px 30px;
+    box-shadow: 0 0 12px 0 var(--neon-blue);
+    background: var(--bg-overlay);
+  }
+
+  .page {
+    --left-aside-width: 390px;
+    --right-aside-width: 390px;
+
+    display: grid;
+    grid-template-columns: var(--left-aside-width) 1fr var(--right-aside-width);
+    column-gap: 60px;
+    align-items: baseline;
+    transition: all 1s ease 0.1s;
+
+    &:has(.navigation--chapters.navigation--collapsed) {
+      --left-aside-width: 100px;
+    }
+
+    &:has(.navigation--contents.navigation--collapsed) {
+      --right-aside-width: 100px;
+    }
+  }
+</style>
+
+<style lang='scss' is:global>
+  code:not(pre code) {
+    font-family: var(--font-family-secondary), sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.1em;
+    color: var(--neon-green);
+    text-shadow: 0 0 1px var(--neon-green);
+    border-radius: 5px;
+    padding: 3px;
+    box-shadow: 0 0 5px 0 #34c759;
+    background: #08080b;
+  }
+
+  .astro-code {
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 12px 0 var(--neon-blue);
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: var(--bg-primary) !important;
+    font-weight: 700;
+    font-size: 22px;
+  }
+
+  pre.astro-code {
+    counter-reset: line;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    scroll-margin-top: 150px;
+  }
+
+  pre.astro-code .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    margin-right: 1.5rem;
+    text-align: right;
+    color: #6a737d;
+    user-select: none;
+  }
+
+  h1 {
+    color: var(--neon-purple);
+    text-shadow: 0 0 3px 0 #8a38f5;
+  }
+
+  h2 {
+    color: var(--neon-pink);
+    text-shadow: 0 0 3px 0 var(--neon-pink);
+  }
+
+  h3 {
+    color: var(--neon-blue);
+    text-shadow: 0 0 4px 0 var(--neon-blue);
+  }
+
+  h4 {
+    color: var(--neon-green);
+    text-shadow: 0 0 4px 0 var(--neon-green);
+  }
+
+  h5 {
+    color: var(--neon-yellow);
+    text-shadow: 0 0 4px 0 var(--neon-yellow);
+  }
+
+  h6 {
+    color: var(--text-primary);
+    text-shadow: 0 0 4px 0 #dbdbdb;
+  }
+
+  .copy-code-button {
+    border: none;
+    box-shadow: none;
+    font-size: 18px;
+    color: var(--neon-green);
+    padding: 5px;
+  }
+</style>
+
+<script>
+  const codeBlocks = document.querySelectorAll('pre')
+
+  codeBlocks.forEach((preElement) => {
+    const buttonElement = document.createElement('button')
+    buttonElement.textContent = 'Copy'
+    buttonElement.className = 'button button--black copy-code-button'
+    buttonElement.type = 'button'
+    preElement.appendChild(buttonElement)
+    buttonElement.addEventListener('click', async () => {
+      const codeElement = preElement.querySelector('code')
+      const textToCopy = codeElement.textContent
+      try {
+        await navigator.clipboard.writeText(textToCopy)
+
+        buttonElement.textContent = 'Скопировано'
+        buttonElement.style.color = '#fff'
+
+        setTimeout(() => {
+          buttonElement.textContent = 'Copy'
+          buttonElement.style.color = ''
+        }, 2000)
+      } catch (err) {
+        console.error('Не удалось скопировать код:', err)
+        buttonElement.textContent = 'Ошибка'
+      }
+    })
+  })
+</script>
