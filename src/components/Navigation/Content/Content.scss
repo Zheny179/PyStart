@@ -1,0 +1,11 @@
+.content {
+  display: grid;
+  transition-duration: var(--transition-duration-longer);
+  transition: grid-template-rows var(--transition-duration) ease;
+  align-content: start;
+  grid-template-rows: auto 0fr;
+
+  &--open {
+    grid-template-rows: auto 1fr;
+  }
+}

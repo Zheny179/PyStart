@@ -1,0 +1,37 @@
+---
+import './Content.scss'
+import CollapseButton from '@/components/CollapseButton/CollapseButton.astro'
+import LinksList from '@/components/LinksList/LinksList.astro'
+
+interface ContentItem {
+  isActive?: boolean
+  href: string
+  label: string
+}
+
+interface Props {
+  className?: string
+  content?: ContentItem[]
+}
+
+const { className, content = [] } = Astro.props
+---
+
+<div class='content'>
+  <CollapseButton
+    className='chapter__header'
+    title='Введение в Python'
+  />
+
+  <LinksList items={content} />
+</div>
+
+<script>
+  const contentElements = document.querySelectorAll('.content')
+
+  contentElements.forEach((contentElement) => {
+    contentElement.addEventListener('isButtonOpen', (e) => {
+      contentElement.classList.toggle('content--open')
+    })
+  })
+</script>
