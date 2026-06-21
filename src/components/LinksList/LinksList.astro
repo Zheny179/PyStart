@@ -1,0 +1,45 @@
+---
+import './LinksList.scss'
+
+export interface LinkItem {
+  label: string
+  href: string
+  isActive?: boolean
+}
+
+interface Props {
+  items: LinkItem[]
+  class?: string
+  itemClass?: string
+  linkClass?: string
+  activeClass?: string
+}
+
+const {
+  items = [],
+  class: listClass = 'links-list',
+  itemClass = 'links-list__item',
+  linkClass = 'links-list__link h4',
+  activeClass = 'links-list__link--active',
+} = Astro.props
+---
+
+<ul class:list={[listClass]}>
+  {
+    items.map((item) => (
+      <li class:list={[itemClass]}>
+        <a
+          class:list={[
+            linkClass,
+            {
+              [activeClass]: item.isActive,
+            },
+          ]}
+          href={item.href}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>
