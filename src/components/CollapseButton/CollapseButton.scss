@@ -1,0 +1,44 @@
+.collapse-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  justify-content: space-between;
+
+  border-radius: 15px;
+  background: var(--neon-green);
+  padding: 15px;
+
+  font-weight: 700;
+  font-size: 27px;
+  text-align: justify;
+  color: var(--bg-primary);
+  transition-duration: var(--transition-duration);
+
+  @include hover {
+    box-shadow: var(--shadow-neon-green-glow);
+    background-color: transparent;
+    color: var(--color-white);
+  }
+
+  &__title {
+    flex: 1;
+  }
+
+  &__arrow {
+    transition: transform var(--transition-duration) ease;
+    transform: rotate(0deg);
+  }
+
+  &--open {
+    .collapse-button__arrow {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:active {
+    scale: 1.02;
+  }
+}

@@ -1,0 +1,45 @@
+---
+import './CollapseButton.scss'
+
+interface Props {
+  className?: string
+  title: string
+  isOpen?: boolean
+}
+
+const { className = '', title, isOpen = false } = Astro.props
+---
+
+<button
+  class:list={[
+    'collapse-button',
+    className,
+    {
+      'collapse-button--open': isOpen,
+    },
+  ]}
+  type='button'
+  data-collapse-button=''
+>
+  <span class='collapse-button__title'>{title}</span>
+  <svg
+    class='collapse-button__arrow'
+    width='16'
+    height='16'
+    viewBox='0 0 24 24'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M12.0138 14.45L19.3638 7.09997C19.6138 6.84997 19.9054 6.72897 20.2388 6.73697C20.5721 6.74497 20.8638 6.87431 21.1138 7.12497C21.3638 7.37564 21.4888 7.66731 21.4888 7.99997C21.4888 8.33264 21.3638 8.62431 21.1138 8.87497L13.4388 16.575C13.2388 16.775 13.0138 16.925 12.7638 17.025C12.5138 17.125 12.2638 17.175 12.0138 17.175C11.7638 17.175 11.5138 17.125 11.2638 17.025C11.0138 16.925 10.7888 16.775 10.5888 16.575L2.88876 8.87497C2.63876 8.62497 2.51776 8.32897 2.52576 7.98697C2.53376 7.64497 2.6631 7.34931 2.91376 7.09997C3.16443 6.85064 3.4561 6.72564 3.78876 6.72497C4.12143 6.72431 4.4131 6.84931 4.66376 7.09997L12.0138 14.45Z'
+      fill='currentColor'
+    >
+    </path>
+  </svg>
+</button>
+
+<script>
+  import CollapseButton from '@/components/CollapseButton/CollapseButton'
+
+  new CollapseButton()
+</script>
