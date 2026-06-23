@@ -1,5 +1,8 @@
 .collapse-button {
+  @include fluid-text(27, 20);
+
   display: flex;
+  column-gap: 15px;
   align-items: center;
   width: 100%;
   background: none;
@@ -9,10 +12,9 @@
 
   border-radius: 15px;
   background: var(--neon-green);
-  padding: 15px;
+  padding: fluid(15, 5);
 
   font-weight: 700;
-  font-size: 27px;
   text-align: justify;
   color: var(--bg-primary);
   transition-duration: var(--transition-duration);
@@ -40,5 +42,28 @@
 
   &:active {
     scale: 1.02;
+  }
+
+  @include laptop {
+    border: 2px solid var(--text-primary);
+    padding: 15px;
+    background-color: transparent;
+    color: var(--text-primary);
+
+    &:active {
+      scale: 1;
+      background-color: var(--neon-blue-alpha-low);
+    }
+
+    @include hover {
+      box-shadow: none;
+      border-color: var(--neon-green-alpha-mid);
+    }
+
+    &--active {
+      background-color: transparent;
+      border: 2px solid var(--neon-green);
+      color: var(--neon-green);
+    }
   }
 }

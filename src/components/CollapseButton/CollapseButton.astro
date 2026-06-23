@@ -5,9 +5,10 @@ interface Props {
   className?: string
   title: string
   isOpen?: boolean
+  isActive?: boolean
 }
 
-const { className = '', title, isOpen = false } = Astro.props
+const { className = '', title, isOpen = false, isActive = false } = Astro.props
 ---
 
 <button
@@ -16,6 +17,7 @@ const { className = '', title, isOpen = false } = Astro.props
     className,
     {
       'collapse-button--open': isOpen,
+      'collapse-button--active': isActive,
     },
   ]}
   type='button'
