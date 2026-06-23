@@ -5,18 +5,19 @@ import ButtonMenu from '@/components/ButtonMenu/ButtonMenu.astro'
 import OverlayMenu from '@/components/OverlayMenu/OverlayMenu.astro'
 
 interface Props {
-  currentUrl: string,
+  currentUrl: string
 }
 
-const {currentUrl} = Astro.props
+const { currentUrl } = Astro.props
 ---
 
-<header class="header">
-  <div class="header__inner">
+<header class='header'>
+  <div class='header__inner'>
     <Logo />
-    <ButtonMenu />
-    <OverlayMenu
-      currentUrl={currentUrl}
+    <ButtonMenu
+      mode='hamburger'
+      extraAttrs={{ id: 'hamburger-btn' }}
     />
+    <OverlayMenu currentUrl={currentUrl} />
   </div>
 </header>
