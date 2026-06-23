@@ -43,3 +43,21 @@ const {
     ))
   }
 </ul>
+
+<script>
+  const event = new CustomEvent('close-menu', {
+    detail: true,
+    bubbles: true,
+  })
+
+  const linkElements =
+    document.querySelectorAll<HTMLElement>('.links-list__link')
+
+  linkElements.forEach((linkElement) => {
+    linkElement.addEventListener('click', (e) => {
+      const linkCurrent = e.currentTarget
+
+      linkCurrent.dispatchEvent(event)
+    })
+  })
+</script>
