@@ -25,6 +25,7 @@ interface Props {
 }
 
 const { className, chapter } = Astro.props
+const hasActiveLesson = chapter.lessons.some((lesson) => lesson.isActive)
 ---
 
 <div
@@ -36,9 +37,10 @@ const { className, chapter } = Astro.props
   ]}
 >
   <CollapseButton
-    className='chapter__header'
+    className={`chapter__header${hasActiveLesson ? ' chapter__header--active' : ''}`}
     title={chapter.title}
     isOpen={chapter.isOpen}
+    isActive={hasActiveLesson}
   />
 
   <LinksList items={chapter.lessons} />
