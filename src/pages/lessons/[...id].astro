@@ -2,6 +2,8 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import { getCollection, render } from 'astro:content'
 import Navigation from '@/components/Navigation/Navigation.astro'
+import Button from '@/components/Button/Button.astro'
+import ButtonMenu from '@/components/ButtonMenu/ButtonMenu.astro'
 
 /*
  * getCollection — получить все записи
@@ -94,23 +96,46 @@ const contentsData = headings.map((heading) => ({
 ---
 
 <PageLayout title={lesson.data.title}>
-  <main class='page'>
-    <Navigation
-      chapter={chapterData}
-      mode='chapters'
-    />
-    <div class='primary-container'>
-      <h1>{lesson.data.title}</h1>
-      <Content />
+  <main>
+    <nav class='nav visible-laptop'>
+      <ButtonMenu
+        mode='white'
+        extraAttrs={{ 'data-nav-toggle': 'chapters' }}
+      />
+
+      <ButtonMenu
+        mode='contents'
+        extraAttrs={{ 'data-nav-toggle': 'contents' }}
+      />
+    </nav>
+    <div class='page'>
+      <Navigation
+        chapter={chapterData}
+        mode='chapters'
+      />
+      <div class='primary-container'>
+        <h1>{lesson.data.title}</h1>
+        <Content />
+      </div>
+      <Navigation
+        content={contentsData}
+        mode='contents'
+      />
     </div>
-    <Navigation
-      content={contentsData}
-      mode='contents'
-    />
   </main>
 </PageLayout>
 
 <style lang='scss'>
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 15px;
+    border-bottom: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+  }
+
   .aside {
     position: sticky;
     top: calc(100px + fluid(30, 20));
@@ -154,18 +179,24 @@ const contentsData = headings.map((heading) => ({
   .primary-container {
     width: 100%;
     border-radius: 20px 20px 0 0;
-    padding: 25px 30px;
+    padding: fluid(25, 5) fluid(30, 20);
     box-shadow: 0 0 12px 0 var(--neon-blue);
     background: var(--bg-overlay);
+
+    @include laptop {
+      box-shadow: none;
+      background: var(--bg-primary);
+    }
   }
 
   .page {
-    --left-aside-width: 390px;
-    --right-aside-width: 390px;
+    --left-aside-width: #{fluid(390, 200)};
+    --right-aside-width: #{fluid(390, 200)};
 
     display: grid;
-    grid-template-columns: var(--left-aside-width) 1fr var(--right-aside-width);
-    column-gap: 60px;
+    padding-top: 20px;
+    grid-template-columns: var(--left-aside-width) 3fr var(--right-aside-width);
+    column-gap: fluid(60, 0);
     align-items: baseline;
     transition: all 1s ease 0.1s;
 
@@ -176,10 +207,18 @@ const contentsData = headings.map((heading) => ({
     &:has(.navigation--contents.navigation--collapsed) {
       --right-aside-width: 100px;
     }
+
+    @include laptop {
+      display: flex;
+    }
   }
 </style>
 
 <style lang='scss' is:global>
+  /*  * {
+    outline: 1px solid red;
+  }*/
+
   code:not(pre code) {
     font-family: var(--font-family-secondary), sans-serif;
     font-size: 18px;
@@ -294,6 +333,19 @@ const contentsData = headings.map((heading) => ({
         console.error('Не удалось скопировать код:', err)
         buttonElement.textContent = 'Ошибка'
       }
+    })
+  })
+</script>
+
+<script>
+  const CLASS_COLLAPSED = 'navigation--collapsed'
+
+  document.querySelectorAll<HTMLElement>('[data-nav-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.navToggle // 'chapters' | 'contents'
+      const navEl = document.querySelector(`.navigation--${target}`)
+      navEl?.classList.toggle(CLASS_COLLAPSED)
+      document.documentElement.classList.toggle('is-lock')
     })
   })
 </script>
