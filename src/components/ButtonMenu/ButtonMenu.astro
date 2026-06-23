@@ -1,13 +1,67 @@
 ---
 import './ButtonMenu.scss'
+
+interface Props {
+  className?: string
+  mode: 'hamburger' | 'white' | 'arrow' | 'contents'
+  extraAttrs?: Record<string, any>
+  type?: 'button'
+  ariaLabel?: string
+}
+
+const { className, mode, extraAttrs, ariaLabel, type = 'button' } = Astro.props
+
+const isArrowButton = mode === 'arrow'
+const isHamburgerButton = mode === 'hamburger'
+const isWhiteButton = mode === 'white'
+const isContents = mode === 'contents'
 ---
 
 <button
-  class="hamburger"
-  aria-label="Открыть главное меню"
-  aria-expanded="false"
-  id="hamburger-btn"
+  class:list={[
+    className,
+    'button-menu',
+    {
+      'button-menu--white': isWhiteButton,
+      'button-menu--arrow': isArrowButton,
+      'button-menu--contents': isContents,
+    },
+  ]}
+  type={type}
+  aria-label={ariaLabel ?? 'Открыть меню'}
+  aria-expanded='false'
+  {...extraAttrs}
 >
-  <span class="hamburger__line"></span>
-  <span class="hamburger__line"></span>
+  {isHamburgerButton && (
+    <span class='button-menu__line' />
+    <span class='button-menu__line' />
+  )}
+
+  {isWhiteButton && (
+    <span class='button-menu__line' />
+    <span class='button-menu__line' />
+    <span class='button-menu__line' />
+  )}
+
+  {isArrowButton && (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.0138 14.4499L19.3638 7.09993C19.6138 6.84993 19.9054 6.72893 20.2388 6.73693C20.5721 6.74493 20.8638 6.87426 21.1138 7.12493C21.3638 7.37559 21.4888 7.66726 21.4888 7.99993C21.4888 8.33259 21.3638 8.62426 21.1138 8.87493L13.4388 16.5749C13.2388 16.7749 13.0138 16.9249 12.7638 17.0249C12.5138 17.1249 12.2638 17.1749 12.0138 17.1749C11.7638 17.1749 11.5138 17.1249 11.2638 17.0249C11.0138 16.9249 10.7888 16.7749 10.5888 16.5749L2.88876 8.87493C2.63876 8.62493 2.51776 8.32893 2.52576 7.98693C2.53376 7.64493 2.6631 7.34926 2.91376 7.09993C3.16443 6.85059 3.4561 6.72559 3.78876 6.72493C4.12143 6.72426 4.4131 6.84926 4.66376 7.09993L12.0138 14.4499Z" fill="black" />
+    </svg>
+  )}
+
+  {isContents && (
+    <svg
+      width='45'
+      height='45'
+      viewBox='0 0 45 45'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M40.3125 9.62617C40.565 9.77197 40.7801 9.97465 40.9405 10.2181C41.101 10.4616 41.2025 10.7391 41.2369 11.0287L41.25 11.2499V35.6249C41.25 35.954 41.1633 36.2774 40.9988 36.5624C40.8342 36.8474 40.5975 37.0841 40.3125 37.2487C40.0274 37.4132 39.7041 37.4999 39.375 37.4999C39.0459 37.4999 38.7225 37.4132 38.4375 37.2487C36.313 36.0219 33.9201 35.335 31.4684 35.248C29.0167 35.1611 26.5811 35.6768 24.375 36.7499V8.29867C26.9651 7.33119 29.7371 6.94849 32.4924 7.17799C35.2477 7.40749 37.9182 8.24351 40.3125 9.62617ZM20.625 8.30054L20.6269 36.7518C18.5078 35.7202 16.1754 35.2024 13.8188 35.2406C11.4622 35.2787 9.14778 35.8716 7.06312 36.9712L6.45 37.3087L6.25687 37.3912L6.165 37.4212L5.95875 37.4699L5.84438 37.4887L5.625 37.4999H5.54625L5.34 37.4774L5.19562 37.4512L4.99313 37.3912L4.75687 37.2862L4.57875 37.1812L4.41187 37.0555L4.29937 36.9505L4.1625 36.7968L4.0425 36.6299L4.00125 36.5624L3.94125 36.4499L3.85875 36.2568L3.82875 36.1649L3.78 35.9587L3.76125 35.8443L3.75375 35.7524L3.75 11.2499C3.75001 10.9208 3.83665 10.5975 4.00121 10.3124C4.16578 10.0274 4.40247 9.79073 4.6875 9.62617C7.08196 8.24382 9.7525 7.40812 12.5078 7.17895C15.2632 6.94977 18.0351 7.33278 20.625 8.30054Z'
+        fill='white'
+      >
+      </path>
+    </svg>
+  )}
 </button>
