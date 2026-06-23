@@ -1,9 +1,8 @@
 html {
   box-sizing: border-box;
   height: 100%;
-  scrollbar-gutter: stable;
   scroll-behavior: smooth;
-  
+
   &.is-lock {
     overflow: hidden;
   }
@@ -17,7 +16,7 @@ html {
 
 body {
   @include fluid-text(18, 16);
-  
+
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -34,37 +33,49 @@ main {
   flex-grow: 1;
 }
 
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
   font-weight: 700;
   color: var(--text-primary);
 }
 
-h1, .h1 {
+h1,
+.h1 {
   @include fluid-text(36, 32);
 }
 
-h2, .h2 {
+h2,
+.h2 {
   @include fluid-text(32, 27);
 }
 
-h3, .h3 {
+h3,
+.h3 {
   @include fluid-text(27, 24);
 }
 
-h4, .h4 {
+h4,
+.h4 {
   @include fluid-text(24, 21);
 }
 
-h5, .h5 {
+h5,
+.h5 {
   @include fluid-text(23, 19);
 }
 
-h6, .h6 {
+h6,
+.h6 {
   @include fluid-text(19, 18);
 }
 
@@ -80,15 +91,15 @@ svg * {
 
 a {
   color: inherit;
-  
+
   @include hover {
     color: var(--color-black);
   }
-  
+
   &[class] {
     text-decoration: none;
   }
-  
+
   &:where([class]) {
     display: inline-flex;
   }
@@ -115,24 +126,13 @@ a {
   border: none;
 }
 
-:where(
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  ul,
-  ol,
-  dl
-):where([class]) {
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
   margin-block: 0;
 }
 
 p {
   --desc-margin-bottom: 24px;
-  
+
   margin-block: 0;
 }
 
