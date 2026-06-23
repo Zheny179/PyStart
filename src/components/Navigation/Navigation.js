@@ -11,6 +11,7 @@ class Navigation {
   stateClasses = {
     navigationCollapsed: 'navigation--collapsed',
     animate: 'animat',
+    isLock: 'is-lock',
   }
 
   constructor(element) {
@@ -20,7 +21,7 @@ class Navigation {
     this.navigationButtonArrowElement = this.navigationElement.querySelector(
       this.selectors.navigationButtonArrow
     )
-    this.navigationButtonElement = this.navigationElement.querySelector(
+    this.navigationButtonElements = this.navigationElement.querySelectorAll(
       this.selectors.navigationButton
     )
 
@@ -29,12 +30,11 @@ class Navigation {
   }
 
   init() {
-    if (this.navigationButtonElement) {
-      this.navigationButtonElement.addEventListener(
-        'click',
-        this.toggleNavigation
-      )
-    }
+    this.navigationButtonElements.forEach((navigationButtonElement) => {
+      if (navigationButtonElement) {
+        navigationButtonElement.addEventListener('click', this.toggleNavigation)
+      }
+    })
 
     this.initChapters()
 
@@ -56,6 +56,8 @@ class Navigation {
     this.navigationElement.classList.toggle(
       this.stateClasses.navigationCollapsed
     )
+
+    document.documentElement.classList.remove(this.stateClasses.isLock)
   }
 
   animateArrowButton() {

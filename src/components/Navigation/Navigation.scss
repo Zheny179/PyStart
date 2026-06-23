@@ -1,28 +1,54 @@
 .navigation {
   position: sticky;
   top: calc(100px + clamp(1.25rem, 1.0639312977rem + 0.7633587786vw, 1.875rem));
-  padding: 20px;
+  padding: fluid(20, 10);
   box-shadow: 0 0 12px 0 var(--neon-blue);
   background: #08080b;
   display: grid;
   grid-template-rows: auto 1fr;
-  row-gap: 20px;
+
+  row-gap: fluid(20, 10);
   transition:
     width 0.5s ease 0s,
     grid-template-rows 0.5s ease 0.5s,
     row-gap 0.5s ease 0.5s,
+    opacity 0.5s ease 0.5s,
+    visibility 0.5s ease 0.5s,
     padding 0.5s ease 0s;
   max-height: 70vh;
+  max-width: 390px;
   width: 100%;
   overflow: hidden;
   border-radius: 20px 0 0 20px;
 
   &--contents {
     justify-self: end;
+    .button-menu--contents {
+      display: none;
+    }
+    @include laptop {
+      row-gap: 0;
+
+      .button-menu--contents {
+        display: block;
+      }
+
+      .button-menu--white {
+        display: none;
+      }
+    }
   }
 
   &--chapters {
     border-radius: 0 20px 20px 0;
+
+    .button-menu--contents {
+      display: none;
+    }
+
+    @include laptop {
+      row-gap: 0;
+    }
   }
 
   &--collapsed {
@@ -47,10 +73,17 @@
     }
 
     .navigation__btn:nth-child(1) {
+      border-color: var(--neon-green-glow);
+      & > span {
+        background-color: var(--neon-green);
+      }
+    }
+
+    .button-menu--contents {
       color: var(--neon-green);
     }
 
-    .navigation__btn--arrow {
+    .navigation__btn-arrow {
       @include hide;
       width: 0;
     }
@@ -63,38 +96,37 @@
     &--reverse {
       flex-direction: row-reverse;
     }
+
+    @include laptop {
+      margin-bottom: 30px;
+    }
+  }
+
+  .button-menu--contents {
+    @include hover {
+      box-shadow: none;
+      color: var(--color-white);
+    }
   }
 
   &__btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    width: 45px;
-    height: 45px;
-    color: var(--color-white);
-    transition:
-      box-shadow var(--transition-duration),
-      rotate 0.1s;
+    @include square(40px);
+
+    transition-duration: var(--transition-duration);
 
     @include hover {
+      box-shadow: 0 0 15px 0 var(--neon-green);
     }
 
-    &--arrow {
+    &-arrow {
       background-color: var(--color-white);
       border-radius: 50%;
       color: var(--color-black);
-
       transition:
         opacity 0.3s ease 0.2s,
+        box-shadow var(--transition-duration),
+        width 0.3s ease 0.2s,
         visibility 0.3s ease 0.2s;
-
-      @include hover {
-        box-shadow: 0 0 15px var(--neon-green);
-      }
 
       &.animat {
         svg {
@@ -108,13 +140,59 @@
     transition-duration: var(--transition-duration);
     display: flex;
     flex-direction: column;
-    row-gap: 30px;
+    row-gap: fluid(30, 15);
     overflow-y: auto;
-    padding: 10px;
+    padding: fluid(10, 5);
     min-height: 0;
     transition:
       opacity 0.3s ease 0.7s,
       visibility 0.3s ease 0.7s;
+
+    @include laptop {
+      padding: 0;
+    }
+  }
+
+  @include laptop {
+    transition:
+      clip-path 1s cubic-bezier(0.23, -0.66, 0.21, 0.89),
+      padding 0.5s ease 0s;
+    clip-path: circle(0% at 0 20%);
+
+    &--chapters,
+    &--contents {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 20px;
+    }
+
+    &--contents {
+      clip-path: circle(0% at 100% 20%);
+    }
+
+    &--collapsed {
+      clip-path: circle(150% at 0 100%);
+
+      grid-template-rows: auto 1fr;
+      row-gap: 0;
+      width: 100%;
+
+      .navigation__nav {
+        @include show;
+        padding: 0;
+      }
+
+      .navigation__btn-arrow {
+        @include show;
+        width: 40px;
+      }
+    }
   }
 }
 
