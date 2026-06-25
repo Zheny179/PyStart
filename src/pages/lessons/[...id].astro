@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content'
 import Navigation from '@/components/Navigation/Navigation.astro'
 import Button from '@/components/Button/Button.astro'
 import ButtonMenu from '@/components/ButtonMenu/ButtonMenu.astro'
+import { getChapters } from '@/module/getChapters'
 
 /*
  * getCollection — получить все записи
@@ -18,75 +19,13 @@ export async function getStaticPaths() {
   }))
 }
 
-const chapterData = [
-  {
-    title: 'Введение в Python',
-    isOpen: true, // Глава раскрыта по умолчанию
-    lessons: [
-      { label: 'Что такое Python', href: '/PyStart/course/python/intro/' },
-      {
-        label: 'Установка Python',
-        href: '/PyStart/course/python/install/',
-        isActive: true,
-      },
-      {
-        label: 'Первая программа',
-        href: '/PyStart/course/python/hello-world/',
-      },
-    ],
-  },
-  {
-    title: 'Основы синтаксиса',
-    isOpen: false,
-    lessons: [
-      { label: 'Переменные', href: '/PyStart/course/python/variables/' },
-      { label: 'Типы данных', href: '/PyStart/course/python/types/' },
-      { label: 'Операторы', href: '/PyStart/course/python/operators/' },
-    ],
-  },
-  {
-    title: 'Управляющие конструкции',
-    isOpen: false,
-    lessons: [
-      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
-      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
-    ],
-  },
-  {
-    title: 'Управляющие конструкции',
-    isOpen: false,
-    lessons: [
-      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
-      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
-    ],
-  },
-  {
-    title: 'Управляющие конструкции',
-    isOpen: false,
-    lessons: [
-      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
-      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
-    ],
-  },
-  {
-    title: 'Управляющие конструкции',
-    isOpen: false,
-    lessons: [
-      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
-      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
-    ],
-  },
-  {
-    title: 'Управляющие конструкции',
-    isOpen: false,
-    lessons: [
-      { label: 'Условия if/else', href: '/PyStart/course/python/conditions/' },
-      { label: 'Циклы for/while', href: '/PyStart/course/python/loops/' },
-    ],
-  },
-]
-
 const { lesson } = Astro.props
+
+const lessonTitle = lesson.data.title
+const chapterData = await getChapters({
+  currentLessonId: lesson.id,
+})
+
 const { Content, headings } = await render(lesson)
 
 const contentsData = headings.map((heading) => ({
@@ -119,11 +58,31 @@ const contentsData = headings.map((heading) => ({
       </div>
       <Navigation
         content={contentsData}
+        lessonTitle={lessonTitle}
         mode='contents'
       />
     </div>
   </main>
 </PageLayout>
+
+<script>
+  import CopyCode from '@/module/CopyCode'
+  import ScrollSpy from '@/module/ScrollSpy'
+
+  ScrollSpy()
+  CopyCode()
+
+  const CLASS_COLLAPSED = 'navigation--collapsed'
+
+  document.querySelectorAll<HTMLElement>('[data-nav-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.navToggle
+      const navEl = document.querySelector(`.navigation--${target}`)
+      navEl?.classList.toggle(CLASS_COLLAPSED)
+      document.documentElement.classList.toggle('is-lock')
+    })
+  })
+</script>
 
 <style lang='scss'>
   .nav {
@@ -215,9 +174,13 @@ const contentsData = headings.map((heading) => ({
 </style>
 
 <style lang='scss' is:global>
-  /*  * {
-    outline: 1px solid red;
-  }*/
+  blockquote {
+    border: 2px solid var(--neon-green);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 20px 0;
+    font-size: 1.1em;
+  }
 
   code:not(pre code) {
     font-family: var(--font-family-secondary), sans-serif;
@@ -232,17 +195,34 @@ const contentsData = headings.map((heading) => ({
   }
 
   .astro-code {
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: var(--border-radius-xl);
+    padding: 50px 20px;
     box-shadow: 0 0 12px 0 var(--neon-blue);
-    margin: 0;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
     gap: 20px;
     background-color: var(--bg-primary) !important;
     font-weight: 700;
     font-size: 22px;
+    margin: 50px 0;
+    position: relative;
+
+    code {
+      white-space: pre-line;
+      word-wrap: break-word;
+    }
+
+    &::before {
+      content: attr(data-language);
+      position: absolute;
+      top: 5px;
+      left: 20px;
+      color: var(--neon-green-alpha-mid);
+    }
+  }
+
+  .copy-code-button {
+    position: absolute;
+    top: 5px;
+    right: 15px;
   }
 
   pre.astro-code {
@@ -306,46 +286,3 @@ const contentsData = headings.map((heading) => ({
     padding: 5px;
   }
 </style>
-
-<script>
-  const codeBlocks = document.querySelectorAll('pre')
-
-  codeBlocks.forEach((preElement) => {
-    const buttonElement = document.createElement('button')
-    buttonElement.textContent = 'Copy'
-    buttonElement.className = 'button button--black copy-code-button'
-    buttonElement.type = 'button'
-    preElement.appendChild(buttonElement)
-    buttonElement.addEventListener('click', async () => {
-      const codeElement = preElement.querySelector('code')
-      const textToCopy = codeElement.textContent
-      try {
-        await navigator.clipboard.writeText(textToCopy)
-
-        buttonElement.textContent = 'Скопировано'
-        buttonElement.style.color = '#fff'
-
-        setTimeout(() => {
-          buttonElement.textContent = 'Copy'
-          buttonElement.style.color = ''
-        }, 2000)
-      } catch (err) {
-        console.error('Не удалось скопировать код:', err)
-        buttonElement.textContent = 'Ошибка'
-      }
-    })
-  })
-</script>
-
-<script>
-  const CLASS_COLLAPSED = 'navigation--collapsed'
-
-  document.querySelectorAll<HTMLElement>('[data-nav-toggle]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.navToggle // 'chapters' | 'contents'
-      const navEl = document.querySelector(`.navigation--${target}`)
-      navEl?.classList.toggle(CLASS_COLLAPSED)
-      document.documentElement.classList.toggle('is-lock')
-    })
-  })
-</script>
