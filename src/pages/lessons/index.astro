@@ -1,68 +1,11 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import AccordionGroup from "@/components/AccordionGroup/AccordionGroup.astro"
-import Accordion from "@/components/Accordion/Accordion.astro"
-import SecondarySection from "@/components/Section/SecondarySection/SecondarySection.astro"
+import Layout from '@/layouts/Layout.astro'
+import AccordionGroup from '@/components/AccordionGroup/AccordionGroup.astro'
+import Accordion from '@/components/Accordion/Accordion.astro'
+import SecondarySection from '@/components/Section/SecondarySection/SecondarySection.astro'
+import { getChapters } from '@/module/getChapters'
 
-const sections = [
-  {
-    title: "Введение в Python",
-    lessons: [
-      {
-        title: "Урок 1.1 — Введение",
-        href: "/PyStart/lessons/1.1/",
-      },
-      { title: "Урок 1.2 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.3 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.4 — Условия", href: "/PyStart/lessons/1.4/" },
-      { title: "Урок 1.5 — Введение", href: "/PyStart/lessons/1.1/" },
-      { title: "Урок 1.6 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.7 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.8 — Условия", href: "/PyStart/lessons/1.4/" },
-      { title: "Урок 1.9 — Введение", href: "/PyStart/lessons/1.1/" },
-      { title: "Урок 1.10 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.11 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.12 — Условия", href: "/PyStart/lessons/1.4/" },
-      { title: "Урок 1.13 — Введение", href: "/PyStart/lessons/1.1/" },
-      { title: "Урок 1.14 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.15 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.16 — Условия", href: "/PyStart/lessons/1.4/" },
-    ],
-  },
-  {
-    title: "Основы Python 2",
-    lessons: [
-      { title: "Урок 2.1 — Циклы", href: "/PyStart/lessons/2.1/" },
-      { title: "Урок 2.2 — Функции", href: "/PyStart/lessons/2.2/" },
-      { title: "Урок 2.3 — Списки", href: "/PyStart/lessons/2.3/" },
-      { title: "Урок 2.4 — Словари", href: "/PyStart/lessons/2.4/" },
-    ],
-  },
-  {
-    title: "Введение в Python 3",
-    lessons: [
-      {
-        title: "Урок 1.1 — Введение",
-        href: "/PyStart/lessons/1.1/",
-      },
-      { title: "Урок 1.2 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.3 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.4 — Условия", href: "/PyStart/lessons/1.4/" },
-      { title: "Урок 1.5 — Введение", href: "/PyStart/lessons/1.1/" },
-      { title: "Урок 1.6 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.7 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.8 — Условия", href: "/PyStart/lessons/1.4/" },
-      { title: "Урок 1.9 — Введение", href: "/PyStart/lessons/1.1/" },
-      { title: "Урок 1.10 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.11 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.12 — Условия", href: "/PyStart/lessons/1.4/" },
-      { title: "Урок 1.13 — Введение", href: "/PyStart/lessons/1.1/" },
-      { title: "Урок 1.14 — Переменные", href: "/PyStart/lessons/1.2/" },
-      { title: "Урок 1.15 — Типы данных", href: "/PyStart/lessons/1.3/" },
-      { title: "Урок 1.16 — Условия", href: "/PyStart/lessons/1.4/" },
-    ],
-  },
-]
+const chapters = await getChapters()
 ---
 
 <Layout title='Оглавление'>
@@ -72,19 +15,19 @@ const sections = [
   >
     <AccordionGroup>
       {
-        sections.map((section) => (
+        chapters.map((chapter) => (
           <li class='accordion-group__item'>
             <Accordion
-              title={section.title}
-              id={section.title}
+              title={chapter.title}
+              id={chapter.title}
             >
               <div class='links'>
-                {section.lessons.map(({ href, title }) => (
+                {chapter.lessons.map(({ href, label }) => (
                   <a
                     class='link'
                     href={href}
                   >
-                    {title}
+                    {label}
                   </a>
                 ))}
               </div>
@@ -100,7 +43,7 @@ const sections = [
   .links {
     display: grid;
     justify-items: start;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     padding-inline: 5px;
     gap: 15px;
 
@@ -129,7 +72,7 @@ const sections = [
     a::before {
       @include square(10px);
 
-      content: "";
+      content: '';
       background-color: currentColor;
       border-radius: 50%;
       box-shadow: 0 0 5px 1px currentColor;
@@ -148,14 +91,14 @@ const sections = [
 </style>
 
 <script>
-  import { gsap } from "gsap"
-  import { TextPlugin } from "gsap/TextPlugin"
+  import { gsap } from 'gsap'
+  import { TextPlugin } from 'gsap/TextPlugin'
   gsap.registerPlugin(TextPlugin)
 
   const tl = gsap.timeline()
 
   tl.fromTo(
-    ".section__header",
+    '.section__header',
     {
       y: 20,
     },
@@ -163,20 +106,20 @@ const sections = [
       opacity: 1,
       y: 0,
       duration: 1,
-      ease: "power4.inOut",
+      ease: 'power4.inOut',
     }
-  ).to(".accordion-group__item", {
+  ).to('.accordion-group__item', {
     opacity: 1,
     duration: 0.5,
     stagger: 0.1,
-    ease: "power1.inOut",
+    ease: 'power1.inOut',
 
     onStart: () => {
-      gsap.set(".accordion-group__item", { pointerEvents: "none" })
+      gsap.set('.accordion-group__item', { pointerEvents: 'none' })
     },
 
     onComplete: () => {
-      gsap.set(".accordion-group__item", { pointerEvents: "auto" })
+      gsap.set('.accordion-group__item', { pointerEvents: 'auto' })
     },
   })
 </script>
