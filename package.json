@@ -25,10 +25,22 @@
   },
   "devDependencies": {
     "@types/node": "25.9.2",
+    "autoprefixer": "10.5.2",
+    "cssnano": "8.0.2",
     "postcss-html": "1.8.1",
     "postcss-scss": "4.0.9",
     "prettier": "3.8.4",
     "prettier-plugin-astro": "0.14.1",
     "stylelint": "17.13.0"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not ie > 0",
+    "not op_mini all",
+    "not baidu > 0",
+    "not kaios > 0",
+    "not bb > 0",
+    "not and_qq > 0",
+    "not and_uc > 0"
+  ]
 }
