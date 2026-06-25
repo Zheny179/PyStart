@@ -12,15 +12,16 @@ interface ContentItem {
 interface Props {
   className?: string
   content?: ContentItem[]
+  lessonTitle: string
 }
 
-const { className, content = [] } = Astro.props
+const { className, content = [], lessonTitle } = Astro.props
 ---
 
 <div class='content'>
   <CollapseButton
     className='chapter__header'
-    title='Введение в Python'
+    title={lessonTitle}
   />
 
   <LinksList items={content} />
