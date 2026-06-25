@@ -63,4 +63,12 @@
     .chapter__lessons {
     }
   }
+
+  &--active {
+    --link-color: var(--neon-green);
+
+    pointer-events: none;
+    user-select: none;
+    cursor: cell;
+  }
 }
