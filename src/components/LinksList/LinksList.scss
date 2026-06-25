@@ -1,4 +1,6 @@
 .links-list {
+  --link-color: var(--color-white);
+
   list-style: none;
   overflow: hidden;
   display: flex;
@@ -7,19 +9,11 @@
   padding-left: fluid(25, 15);
   padding-top: 10px;
 
-  &__item {
-  }
-
   &__link {
     font-weight: 700;
-    color: var(--color-white);
+    color: var(--link-color);
 
     @include hover {
-      color: var(--neon-green);
-      text-shadow: 0 0 4px var(--neon-green);
-    }
-
-    &--active {
       color: var(--neon-green);
       text-shadow: 0 0 4px var(--neon-green);
     }
