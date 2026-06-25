@@ -8,4 +8,10 @@
   &--open {
     grid-template-rows: auto 1fr;
   }
+
+  &--active {
+    color: var(--neon-pink);
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 }
