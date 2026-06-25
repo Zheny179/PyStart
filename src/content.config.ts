@@ -8,11 +8,11 @@ const lessons = defineCollection({
     pattern: '**/*.{md,mdx}',
   }),
   // описание формы данных
-  schema: ({ defaultSlug }) => z.object({
+  schema: z.object({
     title: z.string(),
-    slug: z.string().default(defaultSlug),
+    chapter: z.string(),
     order: z.number().optional(),
-  })
+  }),
 })
 
 export const collections = { lessons }
