@@ -27,9 +27,10 @@ interface Props {
   chapter?: ChapterData[]
   mode: 'chapters' | 'contents'
   content?: ContentData[]
+  lessonTitle: string
 }
 
-const { className, chapter = [], content = [], mode } = Astro.props
+const { className, chapter = [], content = [], mode, lessonTitle } = Astro.props
 
 const isChapters = mode === 'chapters'
 const isContents = mode === 'contents'
@@ -87,23 +88,17 @@ const isContents = mode === 'contents'
       isChapters ? (
         chapter.map((item) => <Chapter chapter={item} />)
       ) : (
-        <Content content={content} />
+        <Content
+          content={content}
+          lessonTitle={lessonTitle}
+        />
       )
     }
   </nav>
 </aside>
 
 <script>
-  import Navigation from '@/components/Navigation/Navigation'
-  const navigationElements = document.querySelectorAll('[data-navigation]')
+  import InitNavigation from '@/components/Navigation/Navigation'
 
-  navigationElements.forEach((element) => {
-    new Navigation(element)
-
-    element.addEventListener('close-menu', () => {
-      const navigationElement = document.querySelector('.navigation--contents')
-      navigationElement?.classList.remove('navigation--collapsed')
-      document.documentElement.classList.remove('is-lock')
-    })
-  })
+  InitNavigation()
 </script>
