@@ -42,16 +42,16 @@ const chapters = await getChapters()
 <style lang='scss'>
   .links {
     display: grid;
-    justify-items: start;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    padding-inline: 5px;
     gap: 15px;
+    justify-items: start;
+    padding-inline: 5px;
 
     .link {
       position: relative;
       display: flex;
-      align-items: center;
       gap: 10px;
+      align-items: center;
       break-inside: avoid;
 
       @include hover {
@@ -60,9 +60,11 @@ const chapters = await getChapters()
 
       &:visited {
         color: var(--neon-green);
+
         @include hover {
           color: var(--text-primary);
         }
+
         &::before {
           background-color: var(--neon-green);
         }
@@ -72,12 +74,12 @@ const chapters = await getChapters()
     a::before {
       @include square(10px);
 
-      content: '';
-      background-color: currentColor;
-      border-radius: 50%;
-      box-shadow: 0 0 5px 1px currentColor;
       display: block;
       flex-shrink: 0;
+      content: '';
+      background-color: currentcolor;
+      border-radius: 50%;
+      box-shadow: 0 0 5px 1px currentcolor;
     }
   }
 </style>
@@ -85,8 +87,8 @@ const chapters = await getChapters()
 <style is:global>
   .section__header,
   .accordion-group__item {
-    opacity: 0;
     pointer-events: none;
+    opacity: 0;
   }
 </style>
 
