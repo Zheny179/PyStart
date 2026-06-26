@@ -75,4 +75,9 @@
   // ─── Transitions ──────────────────────────────────────────────────────
   --transition-duration: 0.2s;
   --transition-duration-longer: 0.4s;
+  
+  // ─── Header ──────────────────────────────────────────────────────
+  --header-content-h: 29px;
+  --header-pad-initial: #{fluid(30, 20)};
+  --header-pad-scrolled: 20px;
 }
