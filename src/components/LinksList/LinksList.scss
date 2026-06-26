@@ -1,17 +1,39 @@
 .links-list {
   --link-color: var(--color-white);
 
-  list-style: none;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  padding-left: fluid(25, 15);
   padding-top: 10px;
+  padding-left: fluid(25, 15);
+  overflow: hidden;
+  list-style: none;
 
   &__link {
     font-weight: 700;
     color: var(--link-color);
+    
+    &--nested {
+      position: relative;
+      padding-left: 18px;
+      
+      &::before {
+        @include square(10px);
+        @include abs-y;
+
+        position: absolute;
+        top: 1em;
+        left: 0;
+        content: '';
+        background-color: var(--nested-color, var(--neon-green));
+        border-radius: var(--border-radius-xxxs);
+        box-shadow: 0 0 8px var(--nested-color, var(--neon-green));
+        transform: translateY(-50%);
+        transition:
+          background-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+    }
 
     @include hover {
       color: var(--neon-green);
