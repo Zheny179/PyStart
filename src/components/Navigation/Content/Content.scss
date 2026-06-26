@@ -1,9 +1,9 @@
 .content {
   display: grid;
-  transition-duration: var(--transition-duration-longer);
-  transition: grid-template-rows var(--transition-duration) ease;
-  align-content: start;
   grid-template-rows: auto 0fr;
+  align-content: start;
+  transition: grid-template-rows var(--transition-duration) ease;
+  transition-duration: var(--transition-duration-longer);
 
   &--open {
     grid-template-rows: auto 1fr;
