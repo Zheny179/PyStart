@@ -1,13 +1,17 @@
 .navigation {
   position: sticky;
-  top: calc(100px + clamp(1.25rem, 1.0639312977rem + 0.7633587786vw, 1.875rem));
-  padding: fluid(20, 10);
-  box-shadow: 0 0 12px 0 var(--neon-blue);
-  background: #08080b;
+  top: calc(100px + clamp(1.25rem, 1.0639rem + 0.7634vw, 1.875rem));
   display: grid;
   grid-template-rows: auto 1fr;
-
   row-gap: fluid(20, 10);
+  width: 100%;
+  max-width: 390px;
+  max-height: 70vh;
+  padding: fluid(20, 10);
+  overflow: hidden;
+  background: var(--bg-overlay);
+  border-radius: var(--border-radius-xl) 0 0 var(--border-radius-xl);
+  box-shadow: 0 0 12px 0 var(--neon-blue);
   transition:
     width 0.5s ease 0s,
     grid-template-rows 0.5s ease 0.5s,
@@ -15,17 +19,14 @@
     opacity 0.5s ease 0.5s,
     visibility 0.5s ease 0.5s,
     padding 0.5s ease 0s;
-  max-height: 70vh;
-  max-width: 390px;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 20px 0 0 20px;
 
   &--contents {
     justify-self: end;
+
     .button-menu--contents {
       display: none;
     }
+
     @include laptop {
       row-gap: 0;
 
@@ -40,7 +41,7 @@
   }
 
   &--chapters {
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 var(--border-radius-xl) var(--border-radius-xl) 0;
 
     .button-menu--contents {
       display: none;
@@ -55,7 +56,6 @@
     grid-template-rows: auto 0fr;
     row-gap: 0;
     width: 80px;
-
     transition:
       grid-template-rows 0.5s ease 0s,
       row-gap 0.5s ease 0s,
@@ -64,9 +64,9 @@
 
     .navigation__nav {
       @include hide;
-      padding: 0;
-      min-height: 0;
 
+      min-height: 0;
+      padding: 0;
       transition:
         opacity 0.3s ease 0s,
         visibility 0.3s ease 0s;
@@ -74,6 +74,7 @@
 
     .navigation__btn:nth-child(1) {
       border-color: var(--neon-green-glow);
+
       & > span {
         background-color: var(--neon-green);
       }
@@ -85,12 +86,22 @@
 
     .navigation__btn-arrow {
       @include hide;
+
       width: 0;
+    }
+
+    .button-up {
+      width: 0;
+     transition: opacity var(--transition-duration) ease 0.3s;
+
+
+      @include hide;
     }
   }
 
   &__header {
     display: flex;
+    align-items: start;
     justify-content: space-between;
 
     &--reverse {
@@ -104,8 +115,8 @@
 
   .button-menu--contents {
     @include hover {
-      box-shadow: none;
       color: var(--color-white);
+      box-shadow: none;
     }
   }
 
@@ -119,9 +130,9 @@
     }
 
     &-arrow {
+      color: var(--color-black);
       background-color: var(--color-white);
       border-radius: 50%;
-      color: var(--color-black);
       transition:
         opacity 0.3s ease 0.2s,
         box-shadow var(--transition-duration),
@@ -130,23 +141,23 @@
 
       &.animat {
         svg {
-          animation: rotateArrow var(--transition-duration-longer) ease;
+          animation: rotate-arrow var(--transition-duration-longer) ease;
         }
       }
     }
   }
 
   &__nav {
-    transition-duration: var(--transition-duration);
     display: flex;
     flex-direction: column;
     row-gap: fluid(30, 15);
-    overflow-y: auto;
-    padding: fluid(10, 5);
     min-height: 0;
+    padding: fluid(10, 5);
+    overflow-y: auto;
     transition:
       opacity 0.3s ease 0.7s,
       visibility 0.3s ease 0.7s;
+    transition-duration: var(--transition-duration);
 
     @include laptop {
       padding: 0;
@@ -154,22 +165,22 @@
   }
 
   @include laptop {
+    clip-path: circle(0% at 0 20%);
     transition:
       clip-path 1s cubic-bezier(0.23, -0.66, 0.21, 0.89),
       padding 0.5s ease 0s;
-    clip-path: circle(0% at 0 20%);
 
     &--chapters,
     &--contents {
       position: fixed;
       inset: 0;
       z-index: 100;
-      height: 100vh;
       max-width: 100vw;
+      height: 100vh;
       max-height: 100vh;
+      padding: 20px;
       border-radius: 0;
       box-shadow: none;
-      padding: 20px;
     }
 
     &--contents {
@@ -177,26 +188,27 @@
     }
 
     &--collapsed {
-      clip-path: circle(150% at 0 100%);
-
       grid-template-rows: auto 1fr;
       row-gap: 0;
       width: 100%;
+      clip-path: circle(150% at 0 100%);
 
       .navigation__nav {
         @include show;
+
         padding: 0;
       }
 
-      .navigation__btn-arrow {
+      .navigation__btn-arrow, .button-up {
         @include show;
+
         width: 40px;
       }
     }
   }
 }
 
-@keyframes rotateArrow {
+@keyframes rotate-arrow {
   0%,
   100% {
     rotate: 0deg;
@@ -204,5 +216,23 @@
 
   50% {
     rotate: -90deg;
+  }
+}
+
+.button-up {
+  padding: 5px;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  transition:
+    opacity var(--transition-duration) ease 0.3s,
+    visibility var(--transition-duration) ease;
+
+
+  @include hover {
+    background-color: var(--color-black);
+  }
+
+  .icon {
+    justify-content: center;
   }
 }
