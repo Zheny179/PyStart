@@ -2,7 +2,6 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import { getCollection, render } from 'astro:content'
 import Navigation from '@/components/Navigation/Navigation.astro'
-import Button from '@/components/Button/Button.astro'
 import ButtonMenu from '@/components/ButtonMenu/ButtonMenu.astro'
 import { getChapters } from '@/module/getChapters'
 
@@ -21,7 +20,6 @@ export async function getStaticPaths() {
 
 const { lesson } = Astro.props
 
-const lessonTitle = lesson.data.title
 const chapterData = await getChapters({
   currentLessonId: lesson.id,
 })
@@ -31,6 +29,7 @@ const { Content, headings } = await render(lesson)
 const contentsData = headings.map((heading) => ({
   label: heading.text,
   href: `#${heading.slug}`,
+  depth: heading.depth,
 }))
 ---
 
@@ -58,7 +57,6 @@ const contentsData = headings.map((heading) => ({
       </div>
       <Navigation
         content={contentsData}
-        lessonTitle={lessonTitle}
         mode='contents'
       />
     </div>
@@ -86,77 +84,50 @@ const contentsData = headings.map((heading) => ({
 
 <style lang='scss'>
   .nav {
+    position: sticky;
+    top: calc(var(--header-content-h) + 2 * var(--header-pad-initial));
+    z-index: 99;
     display: flex;
+    gap: 15px;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
-    gap: 15px;
-    border-bottom: 1px solid var(--border-color);
-    border-top: 1px solid var(--border-color);
-  }
+    padding: fluid(30, 20) fluid(100, 20);
+    background-color: var(--bg-primary);
+    border-top: var(--border);
+    border-bottom: var(--border);
+    animation-name: scrolling-nav;
+    animation-fill-mode: both;
+    animation-timeline: scroll();
 
-  .aside {
-    position: sticky;
-    top: calc(100px + fluid(30, 20));
-
-    border: 1px solid var(--border-color);
-    border-radius: 0 20px 20px 0;
-    padding: 20px;
-    width: 390px;
-    height: 880px;
-    box-shadow: 0 0 12px 0 var(--neon-blue);
-    background: var(--bg-overlay);
-
-    &:nth-last-child(1) {
-      border-radius: 20px 0 0 20px;
-    }
-
-    &__btn {
-      @include square(45px);
-
-      color: var(--color-white);
-      background-color: transparent;
-      border: none;
-      padding: 0;
-      display: inline-flex;
-
-      &--arrow {
-        @include flex-center;
-
-        color: var(--color-black);
-        background-color: var(--color-white);
-        border-radius: 50%;
+    @keyframes scrolling-nav {
+      to {
+        top: calc(var(--header-content-h) + 2 * var(--header-pad-scrolled));
       }
-    }
-
-    &__header {
-      display: flex;
-      justify-content: space-between;
     }
   }
 
   .primary-container {
     width: 100%;
-    border-radius: 20px 20px 0 0;
     padding: fluid(25, 5) fluid(30, 20);
-    box-shadow: 0 0 12px 0 var(--neon-blue);
     background: var(--bg-overlay);
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    box-shadow: 0 0 12px 0 var(--neon-blue);
 
     @include laptop {
-      box-shadow: none;
       background: var(--bg-primary);
+      box-shadow: none;
     }
   }
 
   .page {
-    --left-aside-width: #{fluid(390, 200)};
-    --right-aside-width: #{fluid(390, 200)};
+    --left-aside-width: #{fluid(390, 100)};
+    --right-aside-width: #{fluid(390, 100)};
 
     display: grid;
-    padding-top: 20px;
-    grid-template-columns: var(--left-aside-width) 3fr var(--right-aside-width);
+    grid-template-columns: var(--left-aside-width) minmax(600px, 1fr) var(--right-aside-width);
     column-gap: fluid(60, 0);
     align-items: baseline;
+    padding-top: 20px;
     transition: all 1s ease 0.1s;
 
     &:has(.navigation--chapters.navigation--collapsed) {
@@ -175,47 +146,47 @@ const contentsData = headings.map((heading) => ({
 
 <style lang='scss' is:global>
   blockquote {
-    border: 2px solid var(--neon-green);
-    border-radius: 12px;
     padding: 15px;
     margin: 20px 0;
     font-size: 1.1em;
+    border: 2px solid var(--neon-green);
+    border-radius: var(--border-radius-l);
   }
 
   code:not(pre code) {
-    font-family: var(--font-family-secondary), sans-serif;
-    font-size: 18px;
-    letter-spacing: -0.1em;
-    color: var(--neon-green);
-    text-shadow: 0 0 1px var(--neon-green);
-    border-radius: 5px;
     padding: 3px;
-    box-shadow: 0 0 5px 0 #34c759;
-    background: #08080b;
+    font-family: var(--font-family-secondary), sans-serif;
+    font-size: fluid(18, 16);
+    color: var(--neon-green);
+    letter-spacing: -0.1em;
+    text-shadow: 0 0 1px var(--neon-green);
+    background: var(--bg-overlay);
+    border-radius: var(--border-radius-xxs);
+    box-shadow: 0 0 5px 0 var(--neon-green-glow);
+  }
+
+  p {
+      overflow-wrap: break-word;
   }
 
   .astro-code {
-    border-radius: var(--border-radius-xl);
-    padding: 50px 20px;
-    box-shadow: 0 0 12px 0 var(--neon-blue);
-    gap: 20px;
-    background-color: var(--bg-primary) !important;
-    font-weight: 700;
-    font-size: 22px;
-    margin: 50px 0;
     position: relative;
-
-    code {
-      white-space: pre-line;
-      word-wrap: break-word;
-    }
+    gap: 20px;
+    max-width: 100%;
+    padding: 50px 20px;
+    margin: 50px 0;
+    font-size: fluid(22, 18);
+    font-weight: 700;
+    background-color: var(--bg-primary) !important;
+    border-radius: var(--border-radius-xl);
+    box-shadow: 0 0 12px 0 var(--neon-blue);
 
     &::before {
-      content: attr(data-language);
       position: absolute;
       top: 5px;
       left: 20px;
       color: var(--neon-green-alpha-mid);
+      content: attr(data-language);
     }
   }
 
@@ -223,6 +194,11 @@ const contentsData = headings.map((heading) => ({
     position: absolute;
     top: 5px;
     right: 15px;
+    padding: 5px;
+    font-size: fluid(18, 16);
+    color: var(--neon-green);
+    border: none;
+    box-shadow: none;
   }
 
   pre.astro-code {
@@ -239,13 +215,13 @@ const contentsData = headings.map((heading) => ({
   }
 
   pre.astro-code .line::before {
-    counter-increment: line;
-    content: counter(line);
     display: inline-block;
     margin-right: 1.5rem;
-    text-align: right;
     color: #6a737d;
+    text-align: right;
     user-select: none;
+    content: counter(line);
+    counter-increment: line;
   }
 
   h1 {
@@ -278,11 +254,11 @@ const contentsData = headings.map((heading) => ({
     text-shadow: 0 0 4px 0 #dbdbdb;
   }
 
-  .copy-code-button {
-    border: none;
-    box-shadow: none;
-    font-size: 18px;
-    color: var(--neon-green);
-    padding: 5px;
+  p:has(code) {
+    line-height: 1.9;
+  }
+
+  body {
+    line-height: 1.6;
   }
 </style>
