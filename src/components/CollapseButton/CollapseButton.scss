@@ -4,25 +4,23 @@
   display: flex;
   column-gap: 15px;
   align-items: center;
-  width: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
   justify-content: space-between;
-
-  border-radius: 15px;
-  background: var(--neon-green);
+  width: 100%;
   padding: fluid(15, 5);
-
   font-weight: 700;
-  text-align: justify;
   color: var(--bg-primary);
+  text-align: start;
+  cursor: pointer;
+  background: none;
+  background: var(--neon-green);
+  border: none;
+  border-radius: 15px;
   transition-duration: var(--transition-duration);
 
   @include hover {
-    box-shadow: var(--shadow-neon-green-glow);
-    background-color: transparent;
     color: var(--color-white);
+    background-color: transparent;
+    box-shadow: var(--shadow-neon-green-glow);
   }
 
   &__title {
@@ -30,8 +28,8 @@
   }
 
   &__arrow {
-    transition: transform var(--transition-duration) ease;
     transform: rotate(0deg);
+    transition: transform var(--transition-duration) ease;
   }
 
   &--open {
@@ -45,25 +43,25 @@
   }
 
   @include laptop {
-    border: 2px solid var(--text-primary);
     padding: 15px;
-    background-color: transparent;
     color: var(--text-primary);
+    background-color: transparent;
+    border: 2px solid var(--text-primary);
 
     &:active {
-      scale: 1;
       background-color: var(--neon-blue-alpha-low);
+      scale: 1;
     }
 
     @include hover {
-      box-shadow: none;
       border-color: var(--neon-green-alpha-mid);
+      box-shadow: none;
     }
 
     &--active {
+      color: var(--neon-green);
       background-color: transparent;
       border: 2px solid var(--neon-green);
-      color: var(--neon-green);
     }
   }
 }
