@@ -5,6 +5,7 @@ export interface LinkItem {
   label: string
   href: string
   isActive?: boolean
+  depth?: number
 }
 
 interface Props {
@@ -22,25 +23,47 @@ const {
   linkClass = 'links-list__link h4',
   activeClass = 'links-list__link--active',
 } = Astro.props
+
+const depthColors = {
+  1: 'var(--neon-purple)',   // h1
+  2: 'var(--neon-pink)',     // h2
+  3: 'var(--neon-blue)',     // h3
+  4: 'var(--neon-green)',    // h4
+  5: 'var(--neon-yellow)',   // h5
+  6: 'var(--text-primary)'   // h6
+}
 ---
 
 <ul class:list={[listClass]}>
   {
-    items.map((item) => (
-      <li class:list={[itemClass]}>
-        <a
-          class:list={[
-            linkClass,
-            {
-              [activeClass]: item.isActive,
-            },
-          ]}
-          href={item.href}
-        >
-          {item.label}
-        </a>
-      </li>
-    ))
+    items.map((item) => {
+      const indentFactor = item.depth ? Math.max(0, item.depth - 2) : 0
+      const paddingLeft = indentFactor * 5
+
+      const circleColor = item.depth ? depthColors[item.depth] || 'var(--neon-green)' : 'var(--neon-green)'
+
+      const styles = [
+        paddingLeft > 0 ? `padding-left: ${paddingLeft}px` : '',
+        item.depth  ? `--nested-color: ${circleColor}` : ''
+      ].filter(Boolean).join('; ')
+
+      return (
+        <li class:list={[itemClass]} style={styles || undefined}>
+          <a
+            class:list={[
+              linkClass,
+              {
+                [activeClass]: item.isActive,
+                'links-list__link--nested': typeof item.depth === 'number',
+              },
+            ]}
+            href={item.href}
+          >
+            {item.label}
+          </a>
+        </li>
+      )
+    })
   }
 </ul>
 
