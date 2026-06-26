@@ -3,6 +3,7 @@ import './Navigation.scss'
 import Chapter from '@/components/Navigation/Chapter/Chapter.astro'
 import Content from '@/components/Navigation/Content/Content.astro'
 import ButtonMenu from '@/components/ButtonMenu/ButtonMenu.astro'
+import Button from '@/components/Button/Button.astro'
 
 interface Lesson {
   label: string
@@ -14,6 +15,7 @@ interface ChapterData {
   title: string
   isOpen?: boolean
   lessons: Lesson[]
+  depth?: number
 }
 
 interface ContentData {
@@ -25,12 +27,11 @@ interface ContentData {
 interface Props {
   className?: string
   chapter?: ChapterData[]
-  mode: 'chapters' | 'contents'
+  mode?: 'chapters' | 'contents'
   content?: ContentData[]
-  lessonTitle: string
 }
 
-const { className, chapter = [], content = [], mode, lessonTitle } = Astro.props
+const { className, chapter = [], content = [], mode } = Astro.props
 
 const isChapters = mode === 'chapters'
 const isContents = mode === 'contents'
@@ -73,14 +74,24 @@ const isContents = mode === 'contents'
       }}
     />
 
-    <ButtonMenu
-      className='navigation__btn-arrow'
-      mode='arrow'
-      extraAttrs={{
-        'data-navigation-button-arrow': '',
-        ariaLabel: 'Открыть меню',
-      }}
-    />
+    {isChapters ? (
+      <ButtonMenu
+        className='navigation__btn-arrow'
+        mode='arrow'
+        extraAttrs={{
+          'data-navigation-button-arrow': '',
+          ariaLabel: 'Открыть меню',
+        }}
+     />
+    ) : (
+      <Button
+        className='button-up'
+        type='button'
+        mode='black'
+        iconName='arrow-up'
+      />
+    )}
+
   </header>
 
   <nav class='navigation__nav'>
@@ -90,7 +101,6 @@ const isContents = mode === 'contents'
       ) : (
         <Content
           content={content}
-          lessonTitle={lessonTitle}
         />
       )
     }
@@ -98,7 +108,19 @@ const isContents = mode === 'contents'
 </aside>
 
 <script>
-  import InitNavigation from '@/components/Navigation/Navigation'
+  import InitNavigation from '@/components/Navigation/Navigation';
 
   InitNavigation()
+
+  const buttonUp = document.querySelector('.button-up')
+
+  buttonUp?.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
+    document.querySelector('.navigation--collapsed')?.classList.remove('navigation--collapsed')
+    document.documentElement.classList.remove('is-lock')
+  })
 </script>
