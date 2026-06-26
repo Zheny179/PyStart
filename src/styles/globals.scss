@@ -93,7 +93,7 @@ a {
   color: inherit;
 
   @include hover {
-    color: var(--color-black);
+    color: var(--neon-green);
   }
 
   &[class] {
