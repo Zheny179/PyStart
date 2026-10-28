@@ -10,19 +10,17 @@
   padding: fluid(20, 10);
   overflow: hidden;
   background: var(--bg-overlay);
-  border-radius: var(--border-radius-xl) 0 0 var(--border-radius-xl);
+  border-radius: 0 var(--border-radius-xl) var(--border-radius-xl) 0;
   box-shadow: 0 0 12px 0 var(--neon-blue);
   transition:
     width 0.5s ease 0s,
     grid-template-rows 0.5s ease 0.5s,
     row-gap 0.5s ease 0.5s,
-    opacity 0.5s ease 0.5s,
+    opacity 0.5s ease 1s,
     visibility 0.5s ease 0.5s,
     padding 0.5s ease 0s;
 
   &--contents {
-    justify-self: end;
-
     .button-menu--contents {
       display: none;
     }
@@ -31,24 +29,16 @@
       row-gap: 0;
 
       .button-menu--contents {
-        display: block;
+        display: flex;
+      }
+
+      .navigation__title {
+        @include show;
       }
 
       .button-menu--white {
         display: none;
       }
-    }
-  }
-
-  &--chapters {
-    border-radius: 0 var(--border-radius-xl) var(--border-radius-xl) 0;
-
-    .button-menu--contents {
-      display: none;
-    }
-
-    @include laptop {
-      row-gap: 0;
     }
   }
 
@@ -80,21 +70,19 @@
       }
     }
 
-    .button-menu--contents {
-      color: var(--neon-green);
-    }
-
     .navigation__btn-arrow {
       @include hide;
-
       width: 0;
     }
 
     .button-up {
       width: 0;
-     transition: opacity var(--transition-duration) ease 0.3s;
+      transition: opacity var(--transition-duration) ease 0.3s;
 
+      @include hide;
+    }
 
+    .navigation__title {
       @include hide;
     }
   }
@@ -170,7 +158,6 @@
       clip-path 1s cubic-bezier(0.23, -0.66, 0.21, 0.89),
       padding 0.5s ease 0s;
 
-    &--chapters,
     &--contents {
       position: fixed;
       inset: 0;
@@ -199,7 +186,8 @@
         padding: 0;
       }
 
-      .navigation__btn-arrow, .button-up {
+      .navigation__btn-arrow,
+      .button-up {
         @include show;
 
         width: 40px;
@@ -226,7 +214,6 @@
   transition:
     opacity var(--transition-duration) ease 0.3s,
     visibility var(--transition-duration) ease;
-
 
   @include hover {
     background-color: var(--color-black);
