@@ -3,8 +3,6 @@ function ScrollSpy() {
   const tocLinks = document.querySelectorAll('.content .links-list__link')
   const visibleHeadings = new Set()
 
-  console.log(tocLinks)
-
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
