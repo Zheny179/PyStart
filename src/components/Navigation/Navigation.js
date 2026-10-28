@@ -1,10 +1,7 @@
-import Chapter from './Chapter/Chapter'
-
 class Navigation {
   selectors = {
     navigationButtonArrow: '[data-navigation-button-arrow]',
     navigationButton: '[data-navigation-button]',
-    chapter: '.chapter',
   }
 
   stateClasses = {
@@ -24,7 +21,6 @@ class Navigation {
       this.selectors.navigationButton
     )
 
-    this.chapters = []
     this.init()
   }
 
@@ -32,8 +28,6 @@ class Navigation {
     this.navigationButtonElements.forEach((navigationButtonElement) => {
       navigationButtonElement?.addEventListener('click', this.toggleNavigation)
     })
-
-    this.initChapters()
 
     if (this.navigationButtonArrowElement) {
       this.navigationButtonArrowElement.addEventListener(
@@ -65,25 +59,11 @@ class Navigation {
 
   handleArrowClick = () => {
     this.navigationButtonArrowElement.classList.add(this.stateClasses.animate)
-    this.openAllChapters()
   }
 
   handleAnimationEnd = () => {
     this.navigationButtonArrowElement.classList.remove(
       this.stateClasses.animate
-    )
-  }
-
-  initChapters() {
-    const chapterElements = this.navigationElement.querySelectorAll(
-      this.selectors.chapter
-    )
-    this.chapters = Array.from(chapterElements).map((el) => new Chapter(el))
-  }
-
-  openAllChapters() {
-    this.chapters.forEach(
-      (chapter) => typeof chapter.open === 'function' && chapter.open()
     )
   }
 }
