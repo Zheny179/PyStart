@@ -3,26 +3,35 @@ import PageLayout from '@/layouts/PageLayout.astro'
 import { getCollection, render } from 'astro:content'
 import Navigation from '@/components/Navigation/Navigation.astro'
 import ButtonMenu from '@/components/ButtonMenu/ButtonMenu.astro'
-import { getChapters } from '@/module/getChapters'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.astro'
+import LessonNav from '@/components/LessonNav/LessonNav.astro'
+
+const base_url = import.meta.env.BASE_URL
 
 /*
- * getCollection — получить все записи
+getStaticPaths() — Astro получает список всех уроков и генерирует URL для каждого
+getCollection('lessons') — достаем урок из коллекции по ID
+render(lesson) — превращаем Markdown в HTML-компонент <Content />
+headings.map() — строим оглавление из заголовков H2–H6
  */
 
 export async function getStaticPaths() {
   const lessonsCollection = await getCollection('lessons')
+  const sorted = [...lessonsCollection].sort(
+    (a, b) => a.data.order - b.data.order
+  )
 
-  return lessonsCollection.map((lesson) => ({
+  return sorted.map((lesson, index) => ({
     params: { id: lesson.id },
-    props: { lesson },
+    props: {
+      lesson,
+      prev: sorted[index - 1] ?? null,
+      next: sorted[index + 1] ?? null,
+    },
   }))
 }
 
-const { lesson } = Astro.props
-
-const chapterData = await getChapters({
-  currentLessonId: lesson.id,
-})
+const { lesson, prev, next } = Astro.props
 
 const { Content, headings } = await render(lesson)
 
@@ -31,16 +40,22 @@ const contentsData = headings.map((heading) => ({
   href: `#${heading.slug}`,
   depth: heading.depth,
 }))
+
+const breadcrumbsItems = [
+  { label: 'Главная', href: base_url },
+  { label: 'Оглавление', href: `${base_url}lessons/` },
+  {
+    label: lesson.data.chapter,
+    href: `${base_url}lessons/`,
+  },
+  { label: lesson.data.title },
+]
 ---
 
 <PageLayout title={lesson.data.title}>
   <main>
     <nav class='nav visible-laptop'>
-      <ButtonMenu
-        mode='white'
-        extraAttrs={{ 'data-nav-toggle': 'chapters' }}
-      />
-
+      <span class='h3'>Содержание</span>
       <ButtonMenu
         mode='contents'
         extraAttrs={{ 'data-nav-toggle': 'contents' }}
@@ -48,17 +63,19 @@ const contentsData = headings.map((heading) => ({
     </nav>
     <div class='page'>
       <Navigation
-        chapter={chapterData}
-        mode='chapters'
-      />
-      <div class='primary-container'>
-        <h1>{lesson.data.title}</h1>
-        <Content />
-      </div>
-      <Navigation
         content={contentsData}
         mode='contents'
       />
+      <div class='primary-container'>
+        <Breadcrumbs items={breadcrumbsItems} />
+        <h1 class='visually-hidden'>{lesson.data.title}</h1>
+        <Content />
+        <LessonNav
+          lesson={lesson}
+          prev={prev}
+          next={next}
+        />
+      </div>
     </div>
   </main>
 </PageLayout>
@@ -84,9 +101,6 @@ const contentsData = headings.map((heading) => ({
 
 <style lang='scss'>
   .nav {
-    position: sticky;
-    top: calc(var(--header-content-h) + 2 * var(--header-pad-initial));
-    z-index: 99;
     display: flex;
     gap: 15px;
     align-items: center;
@@ -95,19 +109,11 @@ const contentsData = headings.map((heading) => ({
     background-color: var(--bg-primary);
     border-top: var(--border);
     border-bottom: var(--border);
-    animation-name: scrolling-nav;
-    animation-fill-mode: both;
-    animation-timeline: scroll();
-
-    @keyframes scrolling-nav {
-      to {
-        top: calc(var(--header-content-h) + 2 * var(--header-pad-scrolled));
-      }
-    }
   }
 
   .primary-container {
     width: 100%;
+    min-width: 0;
     padding: fluid(25, 5) fluid(30, 20);
     background: var(--bg-overlay);
     border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
@@ -121,21 +127,16 @@ const contentsData = headings.map((heading) => ({
 
   .page {
     --left-aside-width: #{fluid(390, 100)};
-    --right-aside-width: #{fluid(390, 100)};
 
     display: grid;
-    grid-template-columns: var(--left-aside-width) minmax(600px, 1fr) var(--right-aside-width);
+    grid-template-columns: var(--left-aside-width) 1fr auto;
     column-gap: fluid(60, 0);
     align-items: baseline;
     padding-top: 20px;
-    transition: all 1s ease 0.1s;
-
-    &:has(.navigation--chapters.navigation--collapsed) {
-      --left-aside-width: 100px;
-    }
+    transition: grid-template-columns 1s ease 0.1s;
 
     &:has(.navigation--contents.navigation--collapsed) {
-      --right-aside-width: 100px;
+      --left-aside-width: 100px;
     }
 
     @include laptop {
@@ -166,12 +167,11 @@ const contentsData = headings.map((heading) => ({
   }
 
   p {
-      overflow-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .astro-code {
     position: relative;
-    gap: 20px;
     max-width: 100%;
     padding: 50px 20px;
     margin: 50px 0;
