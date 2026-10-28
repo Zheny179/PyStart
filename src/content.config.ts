@@ -1,6 +1,6 @@
-import { defineCollection } from 'astro:content' // конфигурацию коллекции
 import { glob } from 'astro/loaders' // загрузчиков (loaders)
 import { z } from 'astro/zod' // валидации данных в TypeScript
+import { defineCollection } from 'astro:content' // конфигурацию коллекции
 
 const lessons = defineCollection({
   loader: glob({
@@ -11,7 +11,8 @@ const lessons = defineCollection({
   schema: z.object({
     title: z.string(),
     chapter: z.string(),
-    order: z.number().optional(),
+    order: z.number(),
+    slug: z.string(),
   }),
 })
 
