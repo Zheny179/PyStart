@@ -54,7 +54,7 @@
   }
 
   &--contents {
-    @include square(40px);
+    @include fluid-text(50, 40);
 
     color: var(--color-white);
     background-color: transparent;
