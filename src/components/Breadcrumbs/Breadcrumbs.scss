@@ -1,0 +1,33 @@
+.breadcrumbs {
+  margin-bottom: 30px;
+  &__list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: var(--text-secondary);
+
+    &:hover {
+      color: var(--neon-green);
+    }
+  }
+
+  &__current {
+    color: var(--neon-purple);
+  }
+
+  &__separator {
+    margin: 0 8px;
+    color: var(--neon-green);
+  }
+}
