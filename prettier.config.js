@@ -2,7 +2,7 @@
 export default {
   semi: false,
   singleQuote: true,
-  jsxSingleQuote: true,
+  jsxSingleQuote: false,
   tabWidth: 2,
   useTabs: false,
   trailingComma: 'es5',
@@ -10,7 +10,6 @@ export default {
   arrowParens: 'always',
   bracketSpacing: true,
   bracketSameLine: false,
-  jsxBracketSameLine: false,
   quoteProps: 'as-needed',
   htmlWhitespaceSensitivity: 'ignore',
   singleAttributePerLine: true,
