@@ -124,4 +124,42 @@ const chapters = await getChapters()
       gsap.set('.accordion-group__item', { pointerEvents: 'auto' })
     },
   })
+
+  function openAccordionFromHash() {
+    const hash = window.location.hash
+
+    if (!hash) {
+      return
+    }
+
+    const targetID = decodeURIComponent(hash.substring(1))
+    const contentElement = document.getElementById(targetID)
+
+    if (!contentElement) {
+      return
+    }
+
+    const accordionWrapperElement = contentElement.closest('.accordion')
+    const summaryElement = accordionWrapperElement?.querySelector(
+      '.accordion__summary'
+    ) as HTMLElement
+
+    if (!summaryElement) {
+      return
+    }
+
+    const details = accordionWrapperElement?.querySelector(
+      '.accordion__details'
+    )
+
+    if (!(details && !details.hasAttribute('open'))) {
+      return
+    }
+
+    summaryElement.click()
+    contentElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  window.addEventListener('DOMContentLoaded', openAccordionFromHash)
+  window.addEventListener('hashchange', openAccordionFromHash)
 </script>
