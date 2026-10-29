@@ -20,6 +20,15 @@
     visibility 0.5s ease 0.5s,
     padding 0.5s ease 0s;
 
+  &__title {
+    @include show;
+
+    transition:
+      opacity 0.4s ease 0.5s,
+      visibility 0.4s ease 0.5s,
+      transform 0.4s ease 0.5s;
+  }
+
   &--contents {
     .button-menu--contents {
       display: none;
@@ -84,6 +93,12 @@
 
     .navigation__title {
       @include hide;
+
+      transition:
+        opacity 0.2s ease 0s,
+        visibility 0.2s ease 0s,
+        transform 0.2s ease 0s;
+      transform: translateX(-20px);
     }
   }
 
