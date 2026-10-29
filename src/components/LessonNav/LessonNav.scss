@@ -24,8 +24,8 @@
 
   &__link--next {
     grid-column: 2;
-    text-align: right;
     align-items: flex-end;
+    text-align: right;
   }
 
   &__direction {
@@ -46,18 +46,18 @@
 
     &__link--next {
       grid-column: 1;
-      text-align: left;
       align-items: flex-start;
+      text-align: left;
     }
   }
 
   &__link--chapter {
-    border-color: var(--neon-pink);
     background: linear-gradient(
       135deg,
       var(--bg-overlay) 0%,
       color-mix(in srgb, var(--neon-pink) 8%, var(--bg-overlay)) 100%
     );
+    border-color: var(--neon-pink);
 
     @include hover {
       border-color: var(--neon-pink);
@@ -71,12 +71,12 @@
   }
 
   &__link--finish {
-    border-color: var(--neon-purple);
     background: linear-gradient(
       135deg,
       var(--bg-overlay) 0%,
       color-mix(in srgb, var(--neon-purple) 8%, var(--bg-overlay)) 100%
     );
+    border-color: var(--neon-purple);
 
     @include hover {
       border-color: var(--neon-purple);

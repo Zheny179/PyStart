@@ -34,23 +34,23 @@ const isContents = mode === 'contents'
       'navigation--contents': isContents,
     },
   ]}
-  data-navigation=''
+  data-navigation=""
 >
   <header class:list={['navigation__header']}>
     <ButtonMenu
-      className='navigation__btn'
-      mode='white'
+      className="navigation__btn"
+      mode="white"
       extraAttrs={{
         'data-navigation-button': '',
         ariaLabel: 'Свернуть панель',
       }}
     />
 
-    <span class='h3 navigation__title'>Содержание</span>
+    <span class="h3 navigation__title">Содержание</span>
 
     <ButtonMenu
-      className='navigation__btn'
-      mode='contents'
+      className="navigation__btn"
+      mode="contents"
       extraAttrs={{
         'data-navigation-button': '',
         ariaLabel: 'Свернуть панель',
@@ -58,7 +58,7 @@ const isContents = mode === 'contents'
     />
   </header>
 
-  <nav class='navigation__nav'>
+  <nav class="navigation__nav">
     <Content content={content} />
   </nav>
 </aside>

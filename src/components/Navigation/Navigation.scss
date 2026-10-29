@@ -81,6 +81,7 @@
 
     .navigation__btn-arrow {
       @include hide;
+
       width: 0;
     }
 
@@ -94,11 +95,11 @@
     .navigation__title {
       @include hide;
 
+      transform: translateX(-20px);
       transition:
         opacity 0.2s ease 0s,
         visibility 0.2s ease 0s,
         transform 0.2s ease 0s;
-      transform: translateX(-20px);
     }
   }
 

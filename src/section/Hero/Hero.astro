@@ -8,7 +8,8 @@ import Ellipse from '@/components/Ellipse/Ellipse.astro'
   <canvas
     class="hero__bg"
     id="hero-canvas"
-  ></canvas>
+  >
+  </canvas>
 
   <Ellipse
     color="green"
@@ -25,22 +26,21 @@ import Ellipse from '@/components/Ellipse/Ellipse.astro'
 
   <div class="container hero__inner">
     <h1 class="hero__title">
-      Пошаговый интерактивный учебник — от основ до
-      продвинутых техник.
-      Код с подсветкой синтаксиса, встроенные примеры и тесты.
+      Пошаговый интерактивный учебник — от основ до продвинутых техник. Код с
+      подсветкой синтаксиса, встроенные примеры и тесты.
     </h1>
     <Button
       className="hero__button"
       href="/PyStart/lessons/"
       label="Начать изучение"
-      iconName='arrow-left'
+      iconName="arrow-left"
     />
   </div>
 </section>
 
 <script>
-  import {gsap} from 'gsap'
-  import HeroAnimation from "@/section/Hero/Hero";
+  import HeroAnimation from '@/section/Hero/Hero'
+  import { gsap } from 'gsap'
 
   new HeroAnimation()
 
@@ -49,13 +49,21 @@ import Ellipse from '@/components/Ellipse/Ellipse.astro'
     const offsetX = isMobile ? -8 : -20
     const offsetY = isMobile ? -8 : -20
 
-    gsap.timeline()
-      .to('.hero',        { opacity: 1, ease: 'power2.out' })
-      .to('.hero__bg',    { opacity: 1, duration: 1 }, '-=0.5')
-      .fromTo('.hero__title',  { x: offsetX }, { x: 0, duration: 0.4, opacity: 1 })
-      .fromTo('.hero__button', { y: offsetY }, { y: 0, duration: 1,   opacity: 1 })
+    gsap
+      .timeline()
+      .to('.hero', { opacity: 1, ease: 'power2.out' })
+      .to('.hero__bg', { opacity: 1, duration: 1 }, '-=0.5')
+      .fromTo(
+        '.hero__title',
+        { x: offsetX },
+        { x: 0, duration: 0.4, opacity: 1 }
+      )
+      .fromTo(
+        '.hero__button',
+        { y: offsetY },
+        { y: 0, duration: 1, opacity: 1 }
+      )
   }
-
 
   const hasVisited = sessionStorage.getItem('logo_animated')
 

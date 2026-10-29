@@ -1,22 +1,22 @@
 ---
 import './TextPlate.scss'
-import {textPlateData} from "@/data/textPlateData"
+import { textPlateData } from '@/data/textPlateData'
 
-const {items} = Astro.props
+const { items } = Astro.props
 const plateList = items || textPlateData
 ---
 
 <div class="text-plate">
-  {plateList.map(({title, desc}) => (
-    <div class="text-plate__item">
-      <header class="text-plate__header">
-        <h3 class="text-plate__title">{title}</h3>
-      </header>
-      <div class="text-plate__body">
-        <p class="text-plate__desc">
-          {desc}
-        </p>
+  {
+    plateList.map(({ title, desc }) => (
+      <div class="text-plate__item">
+        <header class="text-plate__header">
+          <h3 class="text-plate__title">{title}</h3>
+        </header>
+        <div class="text-plate__body">
+          <p class="text-plate__desc">{desc}</p>
+        </div>
       </div>
-    </div>
-  ))}
+    ))
+  }
 </div>

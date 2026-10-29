@@ -2,25 +2,30 @@
 import './Card.scss'
 import Image from 'astro/components/Image.astro'
 
-const {items = []} = Astro.props
+const { items = [] } = Astro.props
 ---
 
 <div class="card">
-  {items.map(({title, desc, img, contentPosition}) => (
-    <div
-      class:list={['card__item', {
-        [`card__item--${contentPosition}`]: contentPosition,
-      }]}
-    >
-      <div class="card__content">
-        <h3 class="card__title">{title}</h3>
-        <p class="card__desc">{desc}</p>
+  {
+    items.map(({ title, desc, img, contentPosition }) => (
+      <div
+        class:list={[
+          'card__item',
+          {
+            [`card__item--${contentPosition}`]: contentPosition,
+          },
+        ]}
+      >
+        <div class="card__content">
+          <h3 class="card__title">{title}</h3>
+          <p class="card__desc">{desc}</p>
+        </div>
+        <Image
+          class="card__img hidden-mobile"
+          src={img}
+          alt=""
+        />
       </div>
-      <Image
-        class="card__img hidden-mobile"
-        src={img}
-        alt=""
-      />
-    </div>
-  ))}
+    ))
+  }
 </div>

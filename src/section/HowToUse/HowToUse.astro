@@ -1,30 +1,32 @@
 ---
 import './HowToUse.scss'
-import SecondarySection
-  from "@/components/Section/SecondarySection/SecondarySection.astro"
-import Accordion from "@/components/Accordion/Accordion.astro"
-import AccordionGroup from "@/components/AccordionGroup/AccordionGroup.astro"
-import {workingProcessSteps} from "@/data/workingProcessSteps"
-import Button from "@/components/Button/Button.astro"
+import SecondarySection from '@/components/Section/SecondarySection/SecondarySection.astro'
+import Accordion from '@/components/Accordion/Accordion.astro'
+import AccordionGroup from '@/components/AccordionGroup/AccordionGroup.astro'
+import { workingProcessSteps } from '@/data/workingProcessSteps'
+import Button from '@/components/Button/Button.astro'
 ---
+
 <SecondarySection
   className="how-to-use"
   title="Как правильно работать с учебником"
 >
   <div class="how-to-use__inner">
     <AccordionGroup>
-      {workingProcessSteps.map(({title, desc, isOpen}) => (
-        <li class="accordion-group__item">
-          <Accordion
-            title={title}
-            name="how-to-use"
-            id="how-to-use"
-            isOpen={isOpen}
-          >
-            {desc}
-          </Accordion>
-        </li>
-      ))}
+      {
+        workingProcessSteps.map(({ title, desc, isOpen }) => (
+          <li class="accordion-group__item">
+            <Accordion
+              title={title}
+              name="how-to-use"
+              id="how-to-use"
+              isOpen={isOpen}
+            >
+              {desc}
+            </Accordion>
+          </li>
+        ))
+      }
     </AccordionGroup>
     <Button
       className="how-to-use__link"
@@ -36,56 +38,62 @@ import Button from "@/components/Button/Button.astro"
 </SecondarySection>
 
 <script>
-  import {gsap} from "gsap"
-  import {ScrollTrigger} from "gsap/ScrollTrigger"
-  import {TextPlugin} from "gsap/TextPlugin"
+  import { gsap } from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+  import { TextPlugin } from 'gsap/TextPlugin'
 
   gsap.registerPlugin(ScrollTrigger, TextPlugin)
   const hasVisited = sessionStorage.getItem('logo_animated')
 
   if (!hasVisited) {
-
-    const items = document.querySelectorAll(".accordion-group__item")
+    const items = document.querySelectorAll('.accordion-group__item')
 
     if (items.length > 0) {
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: ".how-to-use",
-          start: "top 50%",
-        }
+          trigger: '.how-to-use',
+          start: 'top 50%',
+        },
       })
 
-      gsap.set(items, {opacity: 0, pointerEvents: 'none'})
+      gsap.set(items, { opacity: 0, pointerEvents: 'none' })
 
       items.forEach((item) => {
-        const titleElement = item.querySelector(".accordion__title")
+        const titleElement = item.querySelector('.accordion__title')
 
         if (titleElement) {
-          const originalText = titleElement.textContent || ""
-          titleElement.textContent = ""
+          const originalText = titleElement.textContent || ''
+          titleElement.textContent = ''
 
-          tl
-            .fromTo('.how-to-use .section__header', {
-              opacity: 0
-            }, {
+          tl.fromTo(
+            '.how-to-use .section__header',
+            {
+              opacity: 0,
+            },
+            {
               opacity: 1,
-              duration: 0.7
-            })
+              duration: 0.7,
+            }
+          )
             .to(item, {
               opacity: 1,
               duration: 0.4,
             })
-            .to(titleElement, {
-              text: originalText,
-              duration: originalText.length * 0.02,
-              ease: "none",
-              onStart: () => {
-                gsap.set(item, {pointerEvents: "none"})
+            .to(
+              titleElement,
+              {
+                text: originalText,
+                duration: originalText.length * 0.02,
+                ease: 'none',
+                onStart: () => {
+                  gsap.set(item, { pointerEvents: 'none' })
+                },
+                onComplete: () => {
+                  gsap.set(item, { pointerEvents: 'auto' })
+                },
               },
-              onComplete: () => {
-                gsap.set(item, {pointerEvents: "auto"})
-              }
-            }, "-=0.4")
+              '-=0.4'
+            )
         }
       })
     }

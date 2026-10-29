@@ -1,12 +1,12 @@
 ---
 import './Socials.scss'
-import {Icon} from 'astro-icon/components'
+import { Icon } from 'astro-icon/components'
 
 interface Props {
-  className?: string,
+  className?: string
 }
 
-const {className} = Astro.props
+const { className } = Astro.props
 
 const socials = [
   {
@@ -22,22 +22,23 @@ const socials = [
 ]
 ---
 
-
 <div class:list={['soc1als', className]}>
   <ul class="soc1als__list">
-    {socials.map(({icon, link, title}) => (
-      <li class="soc1als__item">
-        <a
-          class="soc1als__link"
-          href={link}
-        >
-          <Icon
-            class="soc1als__img"
-            name={icon}
-            title={title}
-          />
-        </a>
-      </li>
-    ))}
+    {
+      socials.map(({ icon, link, title }) => (
+        <li class="soc1als__item">
+          <a
+            class="soc1als__link"
+            href={link}
+          >
+            <Icon
+              class="soc1als__img"
+              name={icon}
+              title={title}
+            />
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </div>

@@ -22,8 +22,8 @@ const isNewChapterPrev =
 ---
 
 <nav
-  class='lesson-nav'
-  aria-label='Навигация по урокам'
+  class="lesson-nav"
+  aria-label="Навигация по урокам"
 >
   {
     prev && (
@@ -34,14 +34,14 @@ const isNewChapterPrev =
           { 'lesson-nav__link--chapter': isNewChapterPrev },
         ]}
         href={makeHref(prev)}
-        rel='prev'
+        rel="prev"
       >
-        <span class='lesson-nav__direction'>
+        <span class="lesson-nav__direction">
           {isNewChapterPrev
             ? `← Предыдущая глава: ${prev.data.chapter}`
             : '← Назад'}
         </span>
-        <span class='lesson-nav__title'>{prev.data.title}</span>
+        <span class="lesson-nav__title">{prev.data.title}</span>
       </a>
     )
   }
@@ -55,22 +55,22 @@ const isNewChapterPrev =
           { 'lesson-nav__link--chapter': isNewChapterNext },
         ]}
         href={makeHref(next)}
-        rel='next'
+        rel="next"
       >
-        <span class='lesson-nav__direction'>
+        <span class="lesson-nav__direction">
           {isNewChapterNext
             ? `Следующая глава: ${next.data.chapter} →`
             : 'Далее →'}
         </span>
-        <span class='lesson-nav__title'>{next.data.title}</span>
+        <span class="lesson-nav__title">{next.data.title}</span>
       </a>
     ) : (
       <a
-        class='lesson-nav__link lesson-nav__link--next lesson-nav__link--finish'
+        class="lesson-nav__link lesson-nav__link--next lesson-nav__link--finish"
         href={`${base_url}lessons/`}
       >
-        <span class='lesson-nav__direction'>Курс завершён</span>
-        <span class='lesson-nav__title'>Все уроки</span>
+        <span class="lesson-nav__direction">Учебник завершён</span>
+        <span class="lesson-nav__title">Все уроки</span>
       </a>
     )
   }

@@ -2,7 +2,7 @@ class OverlayMenu {
   classes = {
     root: '#full-screen-menu',
     burgerButton: '#hamburger-btn',
-    closeButton: '#menu-close-btn'
+    closeButton: '#menu-close-btn',
   }
 
   stated = {

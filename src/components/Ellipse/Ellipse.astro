@@ -14,11 +14,18 @@ const {
 } = Astro.props
 
 const style = {
-  width, height, top, left, right, bottom, opacity,
+  width,
+  height,
+  top,
+  left,
+  right,
+  bottom,
+  opacity,
 }
 ---
 
 <div
   class:list={['ellipse-glare', `ellipse-glare--${color}`, className]}
   style={style}
-></div>
+>
+</div>

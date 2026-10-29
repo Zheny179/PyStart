@@ -11,11 +11,11 @@ interface Props {
 const { currentUrl } = Astro.props
 ---
 
-<header class='header'>
-  <div class='header__inner'>
+<header class="header">
+  <div class="header__inner">
     <Logo />
     <ButtonMenu
-      mode='hamburger'
+      mode="hamburger"
       extraAttrs={{ id: 'hamburger-btn' }}
     />
     <OverlayMenu currentUrl={currentUrl} />

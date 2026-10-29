@@ -36,8 +36,10 @@ class Particle {
     this.x += this.speedX
     this.y += this.speedY
     if (
-      this.x < 0 || this.x > this._cssW() ||
-      this.y < 0 || this.y > this._cssH()
+      this.x < 0 ||
+      this.x > this._cssW() ||
+      this.y < 0 ||
+      this.y > this._cssH()
     ) {
       this.reset()
     }
@@ -46,7 +48,7 @@ class Particle {
   draw() {
     this.ctx.beginPath()
     this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-    this.ctx.fillStyle = `rgba(${ this.color }, ${ this.opacity })`
+    this.ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`
     this.ctx.fill()
   }
 }
@@ -72,11 +74,13 @@ class HeroAnimation {
 
     // ResizeObserver — реагирует только на реальное изменение canvas,
     // не на dvh-прыжки при скролле
-    this._resizeObserver = new ResizeObserver(debounce(() => {
-      this.resizeCanvas()
-      this.particles = []
-      this.init()
-    }, 200))
+    this._resizeObserver = new ResizeObserver(
+      debounce(() => {
+        this.resizeCanvas()
+        this.particles = []
+        this.init()
+      }, 200)
+    )
     this._resizeObserver.observe(this.canvasElement)
 
     this.init()
@@ -115,7 +119,7 @@ class HeroAnimation {
 
     this.ctx.clearRect(0, 0, cssW, cssH)
 
-    this.particles.forEach(p => {
+    this.particles.forEach((p) => {
       p.update()
       p.draw()
     })
@@ -134,7 +138,7 @@ class HeroAnimation {
           this.ctx.beginPath()
           this.ctx.moveTo(this.particles[i].x, this.particles[i].y)
           this.ctx.lineTo(this.particles[j].x, this.particles[j].y)
-          this.ctx.strokeStyle = `rgba(0, 255, 136, ${ 0.03 * (1.5 - dist / THRESHOLD) })`
+          this.ctx.strokeStyle = `rgba(0, 255, 136, ${0.03 * (1.5 - dist / THRESHOLD)})`
           this.ctx.lineWidth = 0.5
           this.ctx.stroke()
         }

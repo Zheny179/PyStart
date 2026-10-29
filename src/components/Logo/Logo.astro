@@ -2,10 +2,10 @@
 import './Logo.scss'
 
 interface Props {
-  className?: string,
+  className?: string
 }
 
-const {className = ''} = Astro.props
+const { className = '' } = Astro.props
 ---
 
 <a
@@ -17,8 +17,8 @@ const {className = ''} = Astro.props
 </a>
 
 <script>
-  import {gsap} from 'gsap'
-  import {TextPlugin} from 'gsap/TextPlugin'
+  import { gsap } from 'gsap'
+  import { TextPlugin } from 'gsap/TextPlugin'
 
   gsap.registerPlugin(TextPlugin)
 
@@ -33,42 +33,57 @@ const {className = ''} = Astro.props
     if (!cursorElement) return
 
     if (hasVisited) {
-      textElement.textContent = "Py:Start"
+      textElement.textContent = 'Py:Start'
 
       window.dispatchEvent(new CustomEvent('logoAnimationComplete'))
 
       return
     }
 
-    gsap.set(cursorElement, {display: 'inline-flex'})
+    gsap.set(cursorElement, { display: 'inline-flex' })
 
     const blinkTween = gsap.to(cursorElement, {
       opacity: 0.4,
-      ease: "power1.out",
+      ease: 'power1.out',
       repeat: -1,
       yoyo: true,
-      duration: 0.4
+      duration: 0.4,
     })
 
-    gsap.timeline()
-      .fromTo(cursorElement, {height: '0%'}, {
-        height: '1em',
-        duration: 0.6,
-        delay: 0.5
-      })
-      .to(textElement, {
-        text: {value: "Py:Start",}, duration: 2, ease: "none",
-      }, "+=0.4")
-      .to(cursorElement, {
-        height: 0,
-        duration: 0.6,
-        onComplete: () => {
-          blinkTween.kill()
-          gsap.set(cursorElement, {display: 'none'})
-
-          sessionStorage.setItem('logo_animated', 'true')
-          window.dispatchEvent(new CustomEvent('logoAnimationComplete'))
+    gsap
+      .timeline()
+      .fromTo(
+        cursorElement,
+        { height: '0%' },
+        {
+          height: '1em',
+          duration: 0.6,
+          delay: 0.5,
         }
-      }, "+=0.2")
+      )
+      .to(
+        textElement,
+        {
+          text: { value: 'Py:Start' },
+          duration: 2,
+          ease: 'none',
+        },
+        '+=0.4'
+      )
+      .to(
+        cursorElement,
+        {
+          height: 0,
+          duration: 0.6,
+          onComplete: () => {
+            blinkTween.kill()
+            gsap.set(cursorElement, { display: 'none' })
+
+            sessionStorage.setItem('logo_animated', 'true')
+            window.dispatchEvent(new CustomEvent('logoAnimationComplete'))
+          },
+        },
+        '+=0.2'
+      )
   })
 </script>
