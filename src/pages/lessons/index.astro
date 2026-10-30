@@ -8,23 +8,26 @@ import { getChapters } from '@/module/getChapters'
 const chapters = await getChapters()
 ---
 
-<Layout title="Оглавление">
+<Layout
+  title='Оглавление'
+  desc='Полное практическое руководство по программированию на Python для начинающих: от установки интерпретатора и первых строк кода до создания полноценных веб-приложений, скриптов автоматизации и работы с Data Science.'
+>
   <SecondarySection
     neonStroke={false}
-    title="Оглавление"
+    title='Оглавление'
   >
     <AccordionGroup>
       {
         chapters.map((chapter) => (
-          <li class="accordion-group__item">
+          <li class='accordion-group__item'>
             <Accordion
               title={chapter.title}
               id={chapter.title}
             >
-              <div class="links">
+              <div class='links'>
                 {chapter.lessons.map(({ href, label }) => (
                   <a
-                    class="link"
+                    class='link'
                     href={href}
                   >
                     {label}
@@ -39,7 +42,7 @@ const chapters = await getChapters()
   </SecondarySection>
 </Layout>
 
-<style lang="scss">
+<style lang='scss'>
   .links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

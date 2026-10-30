@@ -13,6 +13,7 @@ const lessons = defineCollection({
     chapter: z.string(),
     order: z.number(),
     slug: z.string(),
+    desc: z.string().optional(),
   }),
 })
 
