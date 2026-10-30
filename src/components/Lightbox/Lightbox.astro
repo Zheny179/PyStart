@@ -16,14 +16,6 @@ import './Lightbox.scss'
 </dialog>
 <script>
   function initLightbox() {
-    const imagesList = document.querySelectorAll<HTMLElement>(
-      '[data-image-component]'
-    )
-
-    if (imagesList.length === 0) {
-      return
-    }
-
     let dialogElement = document.querySelector(
       '[data-lightbox]'
     ) as HTMLDialogElement
@@ -74,7 +66,7 @@ import './Lightbox.scss'
 
     document.addEventListener('click', (e) => {
       const imgElement = (e.target as HTMLElement).closest(
-        '[data-image-component]'
+        '.markdown-body img'
       ) as HTMLImageElement
 
       if (!imgElement || imgElement.closest('a')) {

@@ -75,9 +75,3 @@
     }
   }
 }
-
-img[data-image-component] {
-  @include hover {
-    cursor: zoom-in;
-  }
-}
