@@ -1,0 +1,93 @@
+---
+import './Lightbox.scss'
+---
+
+<dialog
+  class='lightbox'
+  data-lightbox=''
+>
+  <div class='lightbox__box'>
+    <img
+      class='lightbox__img'
+      src=''
+      alt=''
+    />
+  </div>
+</dialog>
+<script>
+  function initLightbox() {
+    const imagesList = document.querySelectorAll<HTMLElement>(
+      '[data-image-component]'
+    )
+
+    if (imagesList.length === 0) {
+      return
+    }
+
+    let dialogElement = document.querySelector(
+      '[data-lightbox]'
+    ) as HTMLDialogElement
+
+    if (!dialogElement) {
+      dialogElement = document.createElement('dialog')
+      dialogElement.classList.add('lightbox')
+      dialogElement.setAttribute('data-lightbox', '')
+      dialogElement.innerHTML = `
+            <div class="lightbox__box">
+              <img src="" alt="" class="lightbox__img"/>
+            </div>
+          `
+      document.body.appendChild(dialogElement)
+    }
+
+    let closeTimeout: number | null = null
+
+    const closeWithAnimation = () => {
+      if (closeTimeout) {
+        clearTimeout(closeTimeout)
+      }
+
+      dialogElement.classList.add('is-closing')
+      closeTimeout = window.setTimeout(() => {
+        dialogElement.classList.remove('is-closing')
+        dialogElement.close()
+        closeTimeout = null
+      }, 250)
+    }
+
+    dialogElement.addEventListener('click', (e) => {
+      closeWithAnimation()
+    })
+
+    dialogElement.addEventListener('cancel', (e) => {
+      e.preventDefault()
+      closeWithAnimation()
+    })
+
+    dialogElement.addEventListener('close', () => {
+      document.documentElement.classList.remove('is-lock')
+    })
+
+    const lightboxImgElement = dialogElement.querySelector(
+      '.lightbox__img'
+    ) as HTMLImageElement
+
+    document.addEventListener('click', (e) => {
+      const imgElement = (e.target as HTMLElement).closest(
+        '[data-image-component]'
+      ) as HTMLImageElement
+
+      if (!imgElement || imgElement.closest('a')) {
+        return
+      }
+
+      document.documentElement.classList.add('is-lock')
+
+      lightboxImgElement.src = imgElement.src
+      lightboxImgElement.alt = imgElement.alt
+      dialogElement.showModal()
+    })
+  }
+
+  initLightbox()
+</script>
