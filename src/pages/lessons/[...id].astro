@@ -49,7 +49,7 @@ const breadcrumbsItems = [
   title=`Глава ${lesson.data.slug}: ${lesson.data.title}`
   desc={lesson.data.desc}
 >
-  <main>
+  <main class='markdown-body'>
     <nav class='nav visible-laptop'>
       <span class='h3'>Содержание</span>
       <ButtonMenu
@@ -76,6 +76,176 @@ const breadcrumbsItems = [
   </main>
 </PageLayout>
 
+<style lang='scss' is:global>
+  .markdown-body {
+    img {
+      @include hover {
+        cursor: zoom-in;
+      }
+    }
+
+    .nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: space-between;
+      padding: fluid(30, 20) fluid(100, 20);
+      background-color: var(--bg-primary);
+      border-top: var(--border);
+      border-bottom: var(--border);
+    }
+
+    .primary-container {
+      width: 100%;
+      min-width: 0;
+      padding: fluid(25, 5) fluid(30, 20);
+      background: var(--bg-overlay);
+      border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+      box-shadow: 0 0 12px 0 var(--neon-blue);
+
+      @include laptop {
+        background: var(--bg-primary);
+        box-shadow: none;
+      }
+    }
+
+    .page {
+      --left-aside-width: #{fluid(390, 100)};
+
+      display: grid;
+      grid-template-columns: var(--left-aside-width) 1fr auto;
+      column-gap: fluid(60, 0);
+      align-items: baseline;
+      padding-top: 20px;
+      transition: grid-template-columns 1s ease 0.1s;
+
+      &:has(.navigation--contents.navigation--collapsed) {
+        --left-aside-width: 100px;
+      }
+
+      @include laptop {
+        display: flex;
+      }
+    }
+
+    blockquote {
+      padding: 15px;
+      margin: 20px 0;
+      font-size: 1.1em;
+      border: 2px solid var(--neon-green);
+      border-radius: var(--border-radius-l);
+    }
+
+    code:not(pre code) {
+      padding: 3px;
+      font-family: var(--font-family-secondary), sans-serif;
+      font-size: fluid(18, 16);
+      color: var(--neon-green);
+      letter-spacing: -0.1em;
+      text-shadow: 0 0 1px var(--neon-green);
+      background: var(--bg-overlay);
+      border-radius: var(--border-radius-xxs);
+      box-shadow: 0 0 5px 0 var(--neon-green-glow);
+    }
+
+    p {
+      overflow-wrap: break-word;
+    }
+
+    .astro-code {
+      position: relative;
+      max-width: 100%;
+      padding: 50px 20px;
+      margin: 50px 0;
+      font-size: fluid(22, 18);
+      font-weight: 700;
+      background-color: var(--bg-primary) !important;
+      border-radius: var(--border-radius-xl);
+      box-shadow: 0 0 12px 0 var(--neon-blue);
+
+      &::before {
+        position: absolute;
+        top: 5px;
+        left: 20px;
+        color: var(--neon-green-alpha-mid);
+        content: attr(data-language);
+      }
+    }
+
+    .copy-code-button {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      padding: 5px;
+      font-size: fluid(18, 16);
+      color: var(--neon-green);
+      border: none;
+      box-shadow: none;
+    }
+
+    pre.astro-code {
+      counter-reset: line;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      scroll-margin-top: 150px;
+    }
+
+    pre.astro-code .line::before {
+      display: inline-block;
+      margin-right: 1.5rem;
+      color: #6a737d;
+      text-align: right;
+      user-select: none;
+      content: counter(line);
+      counter-increment: line;
+    }
+
+    h1 {
+      color: var(--neon-purple);
+      text-shadow: 0 0 3px 0 #8a38f5;
+    }
+
+    h2 {
+      color: var(--neon-pink);
+      text-shadow: 0 0 3px 0 var(--neon-pink);
+    }
+
+    h3 {
+      color: var(--neon-blue);
+      text-shadow: 0 0 4px 0 var(--neon-blue);
+    }
+
+    h4 {
+      color: var(--neon-green);
+      text-shadow: 0 0 4px 0 var(--neon-green);
+    }
+
+    h5 {
+      color: var(--neon-yellow);
+      text-shadow: 0 0 4px 0 var(--neon-yellow);
+    }
+
+    h6 {
+      color: var(--text-primary);
+      text-shadow: 0 0 4px 0 #dbdbdb;
+    }
+
+    p:has(code) {
+      line-height: 1.9;
+    }
+
+    body {
+      line-height: 1.6;
+    }
+  }
+</style>
+
 <script>
   import CopyCode from '@/module/CopyCode'
   import ScrollSpy from '@/module/ScrollSpy'
@@ -94,167 +264,3 @@ const breadcrumbsItems = [
     })
   })
 </script>
-
-<style lang='scss'>
-  .nav {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    justify-content: space-between;
-    padding: fluid(30, 20) fluid(100, 20);
-    background-color: var(--bg-primary);
-    border-top: var(--border);
-    border-bottom: var(--border);
-  }
-
-  .primary-container {
-    width: 100%;
-    min-width: 0;
-    padding: fluid(25, 5) fluid(30, 20);
-    background: var(--bg-overlay);
-    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
-    box-shadow: 0 0 12px 0 var(--neon-blue);
-
-    @include laptop {
-      background: var(--bg-primary);
-      box-shadow: none;
-    }
-  }
-
-  .page {
-    --left-aside-width: #{fluid(390, 100)};
-
-    display: grid;
-    grid-template-columns: var(--left-aside-width) 1fr auto;
-    column-gap: fluid(60, 0);
-    align-items: baseline;
-    padding-top: 20px;
-    transition: grid-template-columns 1s ease 0.1s;
-
-    &:has(.navigation--contents.navigation--collapsed) {
-      --left-aside-width: 100px;
-    }
-
-    @include laptop {
-      display: flex;
-    }
-  }
-</style>
-
-<style lang='scss' is:global>
-  blockquote {
-    padding: 15px;
-    margin: 20px 0;
-    font-size: 1.1em;
-    border: 2px solid var(--neon-green);
-    border-radius: var(--border-radius-l);
-  }
-
-  code:not(pre code) {
-    padding: 3px;
-    font-family: var(--font-family-secondary), sans-serif;
-    font-size: fluid(18, 16);
-    color: var(--neon-green);
-    letter-spacing: -0.1em;
-    text-shadow: 0 0 1px var(--neon-green);
-    background: var(--bg-overlay);
-    border-radius: var(--border-radius-xxs);
-    box-shadow: 0 0 5px 0 var(--neon-green-glow);
-  }
-
-  p {
-    overflow-wrap: break-word;
-  }
-
-  .astro-code {
-    position: relative;
-    max-width: 100%;
-    padding: 50px 20px;
-    margin: 50px 0;
-    font-size: fluid(22, 18);
-    font-weight: 700;
-    background-color: var(--bg-primary) !important;
-    border-radius: var(--border-radius-xl);
-    box-shadow: 0 0 12px 0 var(--neon-blue);
-
-    &::before {
-      position: absolute;
-      top: 5px;
-      left: 20px;
-      color: var(--neon-green-alpha-mid);
-      content: attr(data-language);
-    }
-  }
-
-  .copy-code-button {
-    position: absolute;
-    top: 5px;
-    right: 15px;
-    padding: 5px;
-    font-size: fluid(18, 16);
-    color: var(--neon-green);
-    border: none;
-    box-shadow: none;
-  }
-
-  pre.astro-code {
-    counter-reset: line;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    scroll-margin-top: 150px;
-  }
-
-  pre.astro-code .line::before {
-    display: inline-block;
-    margin-right: 1.5rem;
-    color: #6a737d;
-    text-align: right;
-    user-select: none;
-    content: counter(line);
-    counter-increment: line;
-  }
-
-  h1 {
-    color: var(--neon-purple);
-    text-shadow: 0 0 3px 0 #8a38f5;
-  }
-
-  h2 {
-    color: var(--neon-pink);
-    text-shadow: 0 0 3px 0 var(--neon-pink);
-  }
-
-  h3 {
-    color: var(--neon-blue);
-    text-shadow: 0 0 4px 0 var(--neon-blue);
-  }
-
-  h4 {
-    color: var(--neon-green);
-    text-shadow: 0 0 4px 0 var(--neon-green);
-  }
-
-  h5 {
-    color: var(--neon-yellow);
-    text-shadow: 0 0 4px 0 var(--neon-yellow);
-  }
-
-  h6 {
-    color: var(--text-primary);
-    text-shadow: 0 0 4px 0 #dbdbdb;
-  }
-
-  p:has(code) {
-    line-height: 1.9;
-  }
-
-  body {
-    line-height: 1.6;
-  }
-</style>
