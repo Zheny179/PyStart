@@ -1,0 +1,505 @@
+---
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout
+  title="Редактор"
+  desc="Онлайн редактор Python"
+>
+  <div class="editor">
+    <div
+      id="status"
+      class="status loading"
+    >
+      Инициализация...
+    </div>
+    <div id="editor-container"></div>
+
+    <div class="controls">
+      <button
+        id="run-btn"
+        disabled
+      >
+        Запустить (Ctrl+Enter)
+      </button>
+      <button id="clear-btn">Очистить вывод</button>
+    </div>
+
+    <div
+      id="output"
+      class="output-container"
+    >
+      <div class="output-line output-info">
+        Вывод программы будет отображён здесь после выполнения...
+      </div>
+    </div>
+  </div>
+</Layout>
+<script src="https://unpkg.com/pyodide@314.0.7/pyodide.js"></script>
+<style>
+  .editor {
+    padding-block: 50px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .status {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #333;
+    margin-bottom: 20px;
+  }
+
+  .status.loading {
+    background: #0e639c;
+  }
+
+  .status.ready {
+    background: #28a745;
+  }
+
+  #editor-container {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  #run-btn {
+    background: #28a745;
+    color: white;
+  }
+
+  #run-btn:hover {
+    background: #218838;
+  }
+
+  #run-btn:disabled {
+    background: #555;
+    cursor: not-allowed;
+  }
+
+  #clear-btn {
+    background: #6c757d;
+    color: white;
+  }
+
+  #clear-btn:hover {
+    background: #5a6268;
+  }
+
+  .output-container {
+    background: #0d0d0d;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 15px;
+    min-height: 150px;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+  }
+
+  .output-line {
+    margin: 2px 0;
+  }
+
+  .output-stdout {
+    color: #d4d4d4;
+  }
+
+  .output-stderr {
+    color: #f48771;
+  }
+
+  .output-info {
+    color: #569cd6;
+    font-style: italic;
+  }
+</style>
+
+<script>
+  // ============================================
+  // ИНТЕРАКТИВНАЯ СРЕДА ВЫПОЛНЕНИЯ PYTHON
+  // Monaco Editor + Pyodide
+  // ============================================
+
+  import * as monaco from 'monaco-editor'
+
+  monaco.editor.defineTheme('custom-dark', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'keyword', foreground: 'ff79c6', fontStyle: 'bold' },
+      { token: 'string', foreground: 'f1fa8c' },
+      { token: 'comment', foreground: '6272a4', fontStyle: 'italic' },
+      { token: 'number', foreground: 'bd93f9' },
+    ],
+    colors: {
+      'editor.background': '#08080B',
+      'editor.lineHighlightBackground': '#08080B',
+      'editor.foreground': '#f8f8f2',
+      'editorCursor.foreground': '#aeafad',
+      'editorLineNumber.foreground': '#666666',
+      'editorLineNumber.activeForeground': '#ffffff',
+    },
+  })
+
+  // ============================================
+  // 1. ИНИЦИАЛИЗАЦИЯ MONACO EDITOR
+  // ============================================
+
+  const editorContainer = document.getElementById(
+    'editor-container'
+  ) as HTMLElement
+
+  // Начальный код для редактора
+  const initialCode = `print('Hello World!')`
+
+  // Создание редактора
+  const editor = monaco.editor.create(editorContainer, {
+    value: initialCode,
+    language: 'python',
+    theme: 'custom-dark',
+    automaticLayout: true,
+    fontSize: 21,
+    minimap: { enabled: false },
+    tabSize: 4,
+    insertSpaces: true,
+    folding: true,
+    autoClosingBrackets: 'always',
+    autoClosingQuotes: 'always',
+    scrollBeyondLastLine: false,
+    renderLineHighlight: 'all',
+    lineNumbers: 'on',
+    formatOnPaste: true,
+    unicodeHighlight: {
+      ambiguousCharacters: false,
+    },
+  })
+
+  // ============================================
+  // 2. СИСТЕМА ВЫВОДА
+  // ============================================
+
+  // Добавление строки в область вывода
+  function addOutputLine(text, type = 'stdout') {
+    const outputContainer = document.getElementById('output')
+
+    // Создание элемента div для новой строки
+    const lineElement = document.createElement('div')
+    lineElement.className = `output-line output-${type}`
+    lineElement.textContent = text
+
+    // Добавление строки в контейнер
+    outputContainer.appendChild(lineElement)
+
+    // Автоматическая прокрутка к последней строке
+    outputContainer.scrollTop = outputContainer.scrollHeight
+  }
+
+  // Очистка области вывода
+  function clearOutput() {
+    const outputContainer = document.getElementById('output')
+    outputContainer.innerHTML = ''
+  }
+
+  // ============================================
+  // 3. ЗАГРУЗКА PYODIDE
+  // ============================================
+
+  // Глобальная переменная для хранения экземпляра Pyodide
+  let pyodide = null
+
+  // Функция загрузки интерпретатора
+  async function loadPyodideInterpreter() {
+    // Получение ссылок на элементы интерфейса
+    const statusElement = document.getElementById('status')
+    const runButton = document.getElementById('run-btn')
+
+    try {
+      console.log('Инициализация загрузки Pyodide...')
+
+      // Обновление индикатора состояния
+      statusElement.textContent = 'Загрузка интерпретатора Python...'
+      statusElement.className = 'status loading'
+
+      // Проверка доступности loadPyodide
+      if (typeof window.loadPyodide === 'undefined') {
+        throw new Error(
+          'Скрипт pyodide.js не был загружен. ' +
+            'Проверьте интернет-соединение и правильность URL в index.html.'
+        )
+      }
+
+      // Загрузка Pyodide с CDN
+      pyodide = await window.loadPyodide({
+        indexURL: 'https://unpkg.com/pyodide@314.0.7/',
+      })
+
+      // Проверка работоспособности
+      const pythonVersion = pyodide.runPython(`
+import sys
+sys.version
+    `)
+
+      console.log('Pyodide загружен успешно')
+      console.log('Версия Python:', pythonVersion)
+
+      // Обновление интерфейса
+      statusElement.textContent = '✓ Интерпретатор готов к работе'
+      statusElement.className = 'status ready'
+      runButton.disabled = false
+
+      addOutputLine(
+        `✓ Интерпретатор Python ${pythonVersion.split('\\n')[0]} успешно загружен`,
+        'success'
+      )
+    } catch (error) {
+      console.error('Ошибка загрузки Pyodide:', error)
+
+      statusElement.textContent = '✗ Ошибка загрузки интерпретатора'
+      statusElement.className = 'status error'
+
+      addOutputLine(`✗ Критическая ошибка: ${error.message}`, 'stderr')
+      addOutputLine('Возможные причины:', 'info')
+      addOutputLine('• Отсутствие интернет-соединения', 'info')
+      addOutputLine('• Блокировка CDN блокировщиком рекламы', 'info')
+      addOutputLine('• Недоступность сервера unpkg.com', 'info')
+      addOutputLine('Откройте консоль браузера (F12) для подробностей.', 'info')
+    }
+  }
+
+  // Запуск загрузки при старте
+  loadPyodideInterpreter()
+
+  // ============================================
+  // 4. ВЫПОЛНЕНИЕ PYTHON-КОДА
+  // ============================================
+
+  async function executePythonCode() {
+    // Проверка готовности интерпретатора
+    if (!pyodide) {
+      addOutputLine(
+        '⏳ Интерпретатор ещё не загружен, пожалуйста, подождите...',
+        'stderr'
+      )
+      return
+    }
+
+    // Извлечение кода из редактора
+    const sourceCode = editor.getValue()
+
+    // Получение ссылки на кнопку запуска
+    const runButton = document.getElementById('run-btn')
+
+    // Блокировка кнопки
+    runButton.disabled = true
+    runButton.textContent = '⏳ Выполнение...'
+
+    // Очистка предыдущего вывода
+    clearOutput()
+    addOutputLine('>>> Начало выполнения программы...', 'info')
+
+    // Замер времени выполнения
+    const startTime = performance.now()
+
+    try {
+      // Проверка наличия input() в коде
+      const hasInput = sourceCode.includes('input(')
+
+      // Подмена стандартных потоков
+      pyodide.runPython(`
+import sys
+from io import StringIO
+
+_original_stdout = sys.stdout
+_original_stderr = sys.stderr
+_original_stdin = sys.stdin
+
+sys.stdout = StringIO()
+sys.stderr = StringIO()
+    `)
+
+      // Если есть input(), запрашиваем данные у пользователя
+      if (hasInput) {
+        addOutputLine('⌨ Программа ожидает ввод данных...', 'info')
+        const userInput = prompt('Введите данные для функции input():', '')
+
+        if (userInput !== null) {
+          pyodide.runPython(`
+class InputEmulator:
+    def __init__(self, data):
+        self.data = data
+        self.index = 0
+
+    def readline(self):
+        if self.index < len(self.data):
+            result = self.data[self.index]
+            self.index += 1
+            return result + '\\n'
+        return ''
+
+sys.stdin = InputEmulator([${JSON.stringify(userInput)}])
+        `)
+        } else {
+          addOutputLine('⚠ Ввод данных отменён', 'stderr')
+          pyodide.runPython(`
+class InputEmulator:
+    def __init__(self, data):
+        self.data = data
+        self.index = 0
+
+    def readline(self):
+        return ''
+
+sys.stdin = InputEmulator([])
+        `)
+        }
+      }
+
+      // Выполнение кода пользователя
+      await pyodide.runPythonAsync(sourceCode)
+
+      // Извлечение перехваченного вывода
+      const capturedStdout = pyodide.runPython('sys.stdout.getvalue()')
+      const capturedStderr = pyodide.runPython('sys.stderr.getvalue()')
+
+      // Восстановление потоков
+      pyodide.runPython(`
+sys.stdout = _original_stdout
+sys.stderr = _original_stderr
+sys.stdin = _original_stdin
+    `)
+
+      // Замер времени
+      const endTime = performance.now()
+      const executionTime = (endTime - startTime).toFixed(2)
+
+      // Отображение результата
+      if (capturedStdout && capturedStdout.trim()) {
+        addOutputLine(capturedStdout, 'stdout')
+      }
+
+      if (capturedStderr && capturedStderr.trim()) {
+        addOutputLine(capturedStderr, 'stderr')
+      }
+
+      if (!capturedStdout && !capturedStderr) {
+        addOutputLine('✓ Программа выполнена успешно (нет вывода)', 'success')
+      }
+
+      addOutputLine(`\n\n⏱ Время выполнения: ${executionTime} мс`, 'info')
+    } catch (error) {
+      addOutputLine(`✗ Ошибка выполнения: ${error.message}`, 'stderr')
+
+      // Попытка извлечь traceback
+      try {
+        const errorTraceback = pyodide.runPython('sys.stderr.getvalue()')
+        if (errorTraceback && errorTraceback.trim()) {
+          addOutputLine('\\n--- Трассировка ошибки ---', 'stderr')
+          addOutputLine(errorTraceback, 'stderr')
+        }
+      } catch (extractionError) {
+        console.error('Не удалось извлечь traceback:', extractionError)
+      }
+
+      // Восстановление потоков
+      try {
+        pyodide.runPython(`
+sys.stdout = _original_stdout
+sys.stderr = _original_stderr
+sys.stdin = _original_stdin
+      `)
+      } catch (restoreError) {
+        console.error('Не удалось восстановить потоки:', restoreError)
+      }
+    } finally {
+      runButton.disabled = false
+      runButton.textContent = '▶ Запустить (Ctrl+Enter)'
+    }
+  }
+
+  // ============================================
+  // 5. АВТОСОХРАНЕНИЕ
+  // ============================================
+
+  // Функция debounce для оптимизации
+  function debounce(func, wait) {
+    let timeout
+    return function (...args) {
+      clearTimeout(timeout)
+      timeout = setTimeout(() => func(...args), wait)
+    }
+  }
+
+  // Автосохранение с задержкой 1 секунда
+  const autoSave = debounce(() => {
+    localStorage.setItem('python-sandbox-code', editor.getValue())
+    console.log('Код автосохранён')
+  }, 1000)
+
+  // Подписка на изменение содержимого
+  editor.onDidChangeModelContent(autoSave)
+
+  // Загрузка сохранённого кода при старте
+  const savedCode = localStorage.getItem('python-sandbox-code')
+  if (savedCode) {
+    editor.setValue(savedCode)
+    console.log('Загружен сохранённый код из localStorage')
+  }
+
+  // ============================================
+  // 7. ОБРАБОТЧИКИ СОБЫТИЙ
+  // ============================================
+
+  // Кнопка запуска
+  document
+    .getElementById('run-btn')
+    .addEventListener('click', executePythonCode)
+
+  // Кнопка очистки
+  document.getElementById('clear-btn').addEventListener('click', clearOutput)
+
+  // Горячая клавиша Ctrl+Enter
+  editor.addCommand(
+    monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+    executePythonCode
+  )
+
+  // Горячая клавиша Ctrl+S
+  editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+    localStorage.setItem('python-sandbox-code', editor.getValue())
+    addOutputLine('💾 Код сохранён', 'success')
+  })
+
+  console.log('Python Sandbox инициализирован')
+</script>
